@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="{% url 'plates:create' %}" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  {{ imageForm }}
+  <button type="submit">게시글 업로드</button>
+</form>
+{% endblock content %}
