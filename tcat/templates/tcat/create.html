@@ -2,6 +2,18 @@
 {% load static %}
 {% block style %}
   <link rel="stylesheet" href="{% static 'css/create.css' %}">
+  <style>
+    #kakaoSearchResult, #naverSearchResult {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    #kakaoSearchResult img, #naverSearchResult img {
+      width: 500px;
+      height: 500px;
+      object-fit: cover;
+    }
+    </style>
 
 {% endblock style %}
 
@@ -64,7 +76,107 @@
     </form>    
   </div>
 
+<!-- 카카오 검색 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<form id="kakaoSearchForm">
+  <input type="text" id="kakaoQuery" placeholder="검색어를 입력하세요">
+  <button type="submit">카카오 검색</button>
+</form>
+<button id="kakaoLoadMore">더보기</button>
+
+<div id="kakaoSearchResult"></div>
+
+<script>
+var kakaoImages = [];
+var kakaoVisibleImages = 8;
+
+function showKakaoImages() {
+    $("#kakaoSearchResult").empty();
+    for (var i = 0; i < kakaoVisibleImages && i < kakaoImages.length; i++) {
+        var img = $('<img />', { 
+          'src': kakaoImages[i]['thumbnail_url'], 
+          'alt': kakaoImages[i]['display_sitename']
+        });
+        $('#kakaoSearchResult').append(img);
+    }
+}
+
+$("#kakaoLoadMore").click(function() {
+    kakaoVisibleImages += 8;
+    showKakaoImages();
+});
+
+$("#kakaoSearchForm").submit(function(e) {
+  e.preventDefault();
+
+  var query = $("#kakaoQuery").val();
+
+  $.ajax({
+    url: "{% url 'tcat:kakao_image_search' %}",
+    data: {
+      'query': query
+    },
+    dataType: 'json',
+    success: function(data) {
+      kakaoImages = data['documents'];
+      kakaoVisibleImages = 8;
+      showKakaoImages();
+    }
+  });
+});
+</script>
+
+<!-- 네이버 검색 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<form id="naverSearchForm">
+  <input type="text" id="naverQuery" placeholder="검색어를 입력하세요">
+  <button type="submit">네이버 검색</button>
+</form>
+<button id="naverLoadMore">더보기</button>
+
+<div id="naverSearchResult"></div>
+
+<script>
+var naverImages = [];
+var naverVisibleImages = 8;
+
+function showNaverImages() {
+    $("#naverSearchResult").empty();
+    for (var i = 0; i < naverVisibleImages && i < naverImages.length; i++) {
+        var img = $('<img />', { 
+          'src': naverImages[i]['thumbnail'], 
+          'alt': naverImages[i]['title']
+        });
+        $('#naverSearchResult').append(img);
+    }
+}
+
+$("#naverLoadMore").click(function() {
+    naverVisibleImages += 8;
+    showNaverImages();
+});
+
+$("#naverSearchForm").submit(function(e) {
+  e.preventDefault();
+
+  var query = $("#naverQuery").val();
+
+  $.ajax({
+    url: "{% url 'tcat:naver_image_search' %}",
+    data: {
+      'query': query
+    },
+    dataType: 'json',
+    success: function(data) {
+      naverImages = data['items'];
+      naverVisibleImages = 8;
+      showNaverImages();
+    }
+  });
+});
+</script>
 
 
 
