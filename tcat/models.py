@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from ckeditor.fields import RichTextField
+
 
 # Create your models here.
 class Tcat(models.Model):
@@ -9,8 +11,9 @@ class Tcat(models.Model):
     price = models.IntegerField()
     image = models.ImageField(blank=True, null=True, upload_to='ticket_diarys/')
     image_url = models.URLField(blank=True)
-    review = models.CharField(max_length=50)
+    review = RichTextField()
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    categori = models.CharField(max_length=50)
 
 
 # class TcatImage(models.Model):

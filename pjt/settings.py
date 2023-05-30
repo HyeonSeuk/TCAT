@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'ckeditor',
     'tcat',
     'accounts',
     'bootstrap_datepicker_plus',

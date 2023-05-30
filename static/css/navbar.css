@@ -1,0 +1,74 @@
+:root {
+    --main-color: #FF9A76;
+    --second-color: #FFEADB;
+    --third-color: #F7C5A8;
+    --fourth-color: #679B9B;
+}
+
+.nav__div {
+    min-width: 850px;
+    height: 85px;
+    border-bottom: 1px solid rgb(224, 224, 224);
+}
+
+.container-fluid {
+    width: 500px;
+}
+
+.nav__div--logo--img {
+    height: 75px;
+    width: auto;
+}
+
+.fa-magnifying-glass {
+    color: #cecece;
+    /* --bs-btn-border-color: none; */
+}
+
+.nav__div--login {
+    text-decoration: none;
+    color: black;
+}
+
+.nav__div--signup {
+    text-decoration: none;
+    color: var(--main-color);
+}
+
+.container{
+    height: auto;
+    min-height: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+footer {
+    /* flex-shrink: 0; */
+    /* background-color: var(--second-color); */
+    background-color: rgb(241, 241, 241);
+
+    height: 400px;
+    padding: 40px;
+}
+
+.footer__div {
+    height: 100%;
+
+}
+
+.footer__div--line {
+    border-left: 1px solid rgb(168, 168, 168);
+}
+
+.footer__div--link {
+    padding-left: 50px;
+}
+
+.footer__div--link > a {
+    text-decoration: none;
+    /* font-weight: bold; */
+    font-size: 16px;
+    color: black
+}
+
+

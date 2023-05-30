@@ -1,11 +1,79 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block style %}
+  <link rel="stylesheet" href="{% static 'css/create.css' %}">
+
+{% endblock style %}
+
 
 {% block content %}
-<form action="{% url 'tcat:create' %}" method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ tcat_form.as_p }}
-  {{ image_form }}
-  <button type="submit">게시글 업로드</button>
-</form>
+  <div class="create__total">
+    <!--header-->
+    <div class="create__header">
+      <div><a class="create__header--text" href="{% url 'tcat:index' %}">취소</a></div>
+      <div>기록 추가</div>
+      <div type="submit" onclick="document.getElementById('tcatForm').submit();">
+        등록
+      </div>
+    </div>
+
+    <!--main-->
+    <form id="tcatForm" action="{% url 'tcat:create' %}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="create__main">
+        <!--image-->
+        <div class="d-flex main__image">
+          <div>웹이미지</div>
+          <div>앨범사진</div>
+        </div>
+        <!--contents-->
+        <div class="main__contents">
+          <div class="contents__title">
+            <div class="contents__title--title">제목</div>
+            <div>{{ form.title }}</div>
+          </div>
+          <div class="d-flex contents__date">
+            <div class="contents__title--title">일시</div>
+            <input type="date" value={{ form.date }}
+            {% comment %} <div>{{ form.date }}</div> {% endcomment %}
+          </div>
+          <div class="d-flex contents__location">
+            <div class="contents__title--title">장소</div>
+            <div>{{ form.location }}</div>
+          </div>
+          <div class="d-flex contents__price">
+            <div class="contents__title--title">금액</div>
+            <div>{{ form.price }}</div>
+          </div>
+          <div class="d-flex contents__categori">
+            <div class="contents__title--title">카테고리</div>
+            <div>{{ form.categori }}</div>
+          </div>
+          <div id="new_add">
+          </div>
+          <div class="contents__add">
+            <input type="button" value="+ 추가" onclick='createDiv()'>
+            <input type="button" value="- 삭제" onclick="deleteDiv()">
+          </div>
+          <div class="d-flex contents__review">
+            {{ form.media }}
+            <div>{{ form.review }}</div>
+          </div>
+        </div>
+      </div>
+    </form>    
+  </div>
+
+
+
+
+
+
+
 
 {% endblock content %}
+
+{% block javascript %}
+  <script type="text/javascript" src="{% static 'js/create.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+{% endblock javascript %}

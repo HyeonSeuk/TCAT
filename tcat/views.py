@@ -8,6 +8,7 @@ from .forms import TcatForm
 from django.http import JsonResponse
 from django.conf import settings
 
+
 # Create your views here.
 def index_redirect(request):
     return redirect('tcat:index')
@@ -73,8 +74,12 @@ def index(request):
     return render(request, 'tcat/index.html', context)
 
 
-def detail(request):
-    return render(request, 'tcat/detail.html')
+def detail(request, tcat_pk):
+    tcat = Tcat.objects.get(pk=tcat_pk)
+    context = {
+        'tcat': tcat,
+    }
+    return render(request, 'tcat/detail.html', context)
 
 
 def create(request):
@@ -112,3 +117,4 @@ def all_events(request):
         })
 
     return JsonResponse(out, safe=False)
+
