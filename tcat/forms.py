@@ -1,7 +1,6 @@
 from django import forms
-from .models import Tcat, TcatImage
+from .models import Tcat
 from ckeditor.widgets import CKEditorWidget
-
 
 class TcatForm(forms.ModelForm):
     class Meta:
@@ -13,6 +12,7 @@ class TcatForm(forms.ModelForm):
             'price',
             'categori',
             'review',
+            'image',
         )
 
         widget = {
@@ -49,9 +49,3 @@ class TcatForm(forms.ModelForm):
                 TcatImage.objects.create(tcat=instance, image=image)
         return instance
 
-
-class TcatImageForm(forms.ModelForm):
-    class Meta:
-        model = TcatImage
-        fields = ('image',)
-        widgets = {'image': forms.FileInput(attrs={'multiple': True})}
