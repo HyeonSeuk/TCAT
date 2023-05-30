@@ -118,3 +118,42 @@ def all_events(request):
 
     return JsonResponse(out, safe=False)
 
+
+def kakao_image_search(request):
+    query = request.GET.get('query')  # 검색할 쿼리 파라미터를 가져옵니다.
+    REST_API_KEY = '8969178c6cfa4eeab6adcea83593d5aa'  # 위에서 얻은 REST API 키를 입력합니다.
+
+    headers = {
+        "Authorization": "KakaoAK {}".format(REST_API_KEY)
+    }
+
+    params = {
+        "query": query
+    }
+
+    response = requests.get("https://dapi.kakao.com/v2/search/image", headers=headers, params=params)
+    result = response.json()
+
+    return JsonResponse(result)  # 검색 결과를 반환합니다.
+
+def naver_image_search(request):
+    query = request.GET.get('query')  # 검색할 쿼리 파라미터를 가져옵니다.
+    CLIENT_ID = '6QiN42Ji89EyMmmQ685s'  # 네이버 개발자 센터에서 얻은 클라이언트 ID
+    CLIENT_SECRET = 's39U1HlM5h'  # 네이버 개발자 센터에서 얻은 클라이언트 비밀키
+
+    headers = {
+        "X-Naver-Client-Id": CLIENT_ID,
+        "X-Naver-Client-Secret": CLIENT_SECRET
+    }
+
+    params = {
+        "query": query,
+        "display": 10,
+        "start": 1,
+        "sort": "sim"
+    }
+
+    response = requests.get("https://openapi.naver.com/v1/search/image", headers=headers, params=params)
+    result = response.json()
+
+    return JsonResponse(result)
