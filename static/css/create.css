@@ -1,0 +1,107 @@
+.tcat__root--color {
+  color: #FF9A76;
+  color: #FFEADB;
+  color: #F7C5A8;
+  color: #679B9B;
+}
+
+div {
+  border: 1px solid lightcoral;
+}
+
+.create__total {
+  width: 1080px;
+  margin: 0 auto;
+}
+
+.create__header {
+  display: flex;
+  font-size: 35px;
+  font-weight: 500;
+  justify-content: space-between;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 50px;
+  border-bottom: 1px solid #323232;
+}
+
+.create__header--text {
+  text-decoration: none;
+  color: black;
+}
+
+.create__main {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.main__image{
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.main__contents {
+
+}
+
+.contents__title {
+  display: flex;
+  font-size: 25px;
+  height: 50px;
+  margin-bottom: 12px;
+}
+
+.new-contents__title {
+  display: flex;
+  font-size: 25px;
+  height: 50px;
+  margin-bottom: 12px;
+}
+
+.contents__title--title{
+  padding-top: 7px;
+  width: 150px;
+}
+
+.contents__title--input{
+  height: 50px;
+  width: 880px;
+}
+
+.contents__date {
+  font-size: 25px;
+  margin-bottom: 12px;
+}
+
+input[type="date"]{ 
+  border: none;
+}
+
+/* ::-webkit-calendar-picker-indicator{
+  padding: 5px;
+} */
+
+.contents__location {
+  font-size: 25px;
+  margin-bottom: 12px;
+}
+
+.contents__price {
+  font-size: 25px;
+  margin-bottom: 12px;
+}
+
+.contents__categori {
+  font-size: 25px;
+  margin-bottom: 12px;
+}
+
+.contents__add {
+  font-size: 25px;
+  margin-bottom: 12px;
+}
+
+.contents__review {
+  font-size: 25px;
+  margin-bottom: 12px;
+}

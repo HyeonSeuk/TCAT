@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from ckeditor.fields import RichTextField
+
 
 # Create your models here.
 class Tcat(models.Model):
@@ -7,8 +9,10 @@ class Tcat(models.Model):
     date = models.DateField()
     location = models.CharField(max_length=50)
     price = models.IntegerField()
-    review = models.CharField(max_length=50)
+    # review = models.CharField(max_length=50)
+    review = RichTextField()
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    categori = models.CharField(max_length=50)
 
 
 class TcatImage(models.Model):
