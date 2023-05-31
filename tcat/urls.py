@@ -12,6 +12,7 @@ urlpatterns = [
     path('<int:tcat_pk>/delete/', views.delete, name='delete'),
     path('<int:tcat_pk>/update/', views.update, name='update'),
     path('all_events/', views.all_events, name='all_events'),
+    path('capture/', views.capture, name='capture'),
     path('kakao_image_search/', kakao_image_search, name='kakao_image_search'),
     path('naver_image_search/', naver_image_search, name='naver_image_search'),
 ]

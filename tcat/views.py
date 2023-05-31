@@ -7,7 +7,8 @@ from .models import Tcat
 from .forms import TcatForm
 from django.http import JsonResponse
 from django.conf import settings
-
+from django.views.decorators.csrf import csrf_exempt
+import base64
 
 # Create your views here.
 def index_redirect(request):
@@ -98,7 +99,7 @@ def create(request):
         
         else:
             return redirect('tcat:detail', tcat.pk)
-            
+
     else:
         tcat_form = TcatForm()
 
@@ -148,6 +149,24 @@ def all_events(request):
         })
 
     return JsonResponse(out, safe=False)
+
+@csrf_exempt
+def capture(request):
+    data = request.POST.__getitem__('data')
+    data = data[22:] #앞의 필요없는 부분 제거
+
+    filename = 'calendar.png'
+    img_path  = settings.MEDIA_ROOT+ '/'+ filename
+    
+    image = open(img_path, "wb")
+    # `base64.b64decode()`를 통하여 디코딩을 하고 파일에 써준다.
+    image.write(base64.b64decode(data))
+    image.close()
+
+    # filename을 json형식에 맞추어 response를 보내준다.
+    answer = {'filename': filename}
+
+    return JsonResponse(answer)
 
 
 def kakao_image_search(request):

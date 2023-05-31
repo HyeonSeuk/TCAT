@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
+{% load socialaccount %}
 
 {% block content %}
 <form method="post">
-        {% csrf_token %}
+    {% csrf_token %}
 
-          {{ form.as_p }}
-      
-        </div>
-        <button type="submit">로그인</button>
-      </form>
-{% endblock content %}
+    {{ form.as_p }}
+
+    </div>
+    <button type="submit">로그인</button>
+  </form>
+  <a href="{% provider_login_url 'kakao' method='oauth2' %}" class="social--login">
+    카카오 로그인
+  </a>
+  {% endblock content %}
