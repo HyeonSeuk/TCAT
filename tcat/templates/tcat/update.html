@@ -18,7 +18,7 @@
     </div>
 
     <!--main-->
-    <form id="tcatForm" action="{% url 'tcat:create' %}" method="POST" enctype="multipart/form-data">
+    <form id="tcatForm" action="{% url 'tcat:update' tcat.pk %}" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="create__main">
         <!--image-->
