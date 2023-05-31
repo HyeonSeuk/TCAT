@@ -33,4 +33,3 @@ function deleteDiv() {
     lastTitleContainer.parentNode.removeChild(lastTitleContainer); // 요소 삭제
   }
 }
-

@@ -1,6 +1,7 @@
 // FullCalendar 
 document.addEventListener('DOMContentLoaded', function () {
   var calendarEl = document.getElementById('calendar');
+  var datepickerEl = document.querySelector('.datepicker');
 
   var calendar = new FullCalendar.Calendar(calendarEl, {
     locale: 'ko',
@@ -8,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     editable: true,
     dayMaxEvents: 1,
     headerToolbar: {
-      left: 'title',
+      start: '',
       right: 'prev,next today'
     },
     events: function(info, successCallback, failureCallback) {
@@ -55,7 +56,8 @@ document.addEventListener('DOMContentLoaded', function () {
     format: 'yyyy-mm-dd',
     language: 'ko',
     autoclose: true,
-    todayHighlight: true
+    todayHighlight: true,
+    startDate: null
   }).on('changeDate', function (e) {
     var selectedDate = moment(e.date).format('YYYY-MM-DD');
     calendar.gotoDate(selectedDate);
@@ -65,5 +67,33 @@ document.addEventListener('DOMContentLoaded', function () {
   var initialDate = moment($('.datepicker').val(), 'YYYY-MM-DD');
   if (initialDate.isValid()) {
     calendar.gotoDate(initialDate);
-  }  
+  }
+
+  var initialDate = moment().format('YYYY-MM-DD'); // 오늘 날짜
+  $(datepickerEl).datepicker('setDate', initialDate);
+
+  // FullCalendar 헤더의 "next" 버튼 클릭 이벤트
+  var nextButton = calendarEl.querySelector('.fc-next-button');
+  nextButton.addEventListener('click', function () {
+    calendar.incrementDate({ months: 1 });
+    var currentDate = calendar.getDate().toISOString().split('T')[0];
+    $(datepickerEl).datepicker('setDate', currentDate);
+  });
+
+  // FullCalendar 헤더의 "prev" 버튼 클릭 이벤트
+  var prevButton = calendarEl.querySelector('.fc-prev-button');
+  prevButton.addEventListener('click', function () {
+    calendar.incrementDate({ months: 1 });
+    var currentDate = calendar.getDate().toISOString().split('T')[0];
+    $(datepickerEl).datepicker('setDate', currentDate);
+  });
+
+   // FullCalendar 헤더의 "today" 버튼 클릭 이벤트
+  var todayButton = calendarEl.querySelector('.fc-today-button');
+  todayButton.addEventListener('click', function () {
+    var todayDate = moment().format('YYYY-MM-DD');
+    $(datepickerEl).datepicker('setDate', todayDate);
+    calendar.gotoDate(todayDate);
+  });
+
 });

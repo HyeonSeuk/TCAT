@@ -42,10 +42,3 @@ class TcatForm(forms.ModelForm):
 
 
 
-    # def save(self, commit=True):
-    #     instance = super().save(commit)
-    #     if self.cleaned_data.get('images'):
-    #         for image in self.cleaned_data.get('images'):
-    #             TcatImage.objects.create(tcat=instance, image=image)
-    #     return instance
-
