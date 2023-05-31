@@ -3,8 +3,8 @@
 
 {% block style %}
 
-  <!-- Bootstrap Datepicker -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<!-- Bootstrap Datepicker -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 
 <link rel="stylesheet" href="{% static 'css/index.css' %}">
 
@@ -13,11 +13,13 @@
 
 {% block content %}
 
+<button type="button" id="save">Capture</button>
+
 <div class="header-datepicker">
   <input type="text" class="datepicker" data-provide="datepicker">
+  <div id="calendar"></div>
 </div>
 
-<div id="calendar"></div>
 
 <button onclick="window.location.href = '{% url 'tcat:create' %}';">이동</button>
 
@@ -63,9 +65,6 @@
 {% endblock content %}
 
 {% block javascript %}
-<script src='{% static "js/index.global.js" %}'></script> <!-- 달력 -->
-<script src='{% static "js/calendar.js" %}'></script> <!-- 달력 -->
-
 <!-- moment -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <!-- jQuery -->
@@ -78,4 +77,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ko.min.js"></script>
 <script src="https://kit.fontawesome.com/7c2def04d0.js" crossorigin="anonymous"></script>
+<!-- HTML2Canvas -->
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+<script src='{% static "js/index.global.js" %}'></script> <!-- 달력 -->
+<script src='{% static "js/calendar.js" %}'></script> <!-- 달력 -->
 {% endblock javascript %}
