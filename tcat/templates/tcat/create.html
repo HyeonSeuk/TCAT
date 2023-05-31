@@ -2,19 +2,6 @@
 {% load static %}
 {% block style %}
   <link rel="stylesheet" href="{% static 'css/create.css' %}">
-  <style>
-    #kakaoSearchResult, #naverSearchResult {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-    #kakaoSearchResult img, #naverSearchResult img {
-      width: 500px;
-      height: 500px;
-      object-fit: cover;
-    }
-    </style>
-
 {% endblock style %}
 
 
@@ -35,7 +22,7 @@
       <div class="create__main">
         <!--image-->
         <div class="d-flex main__image">
-          <div>웹이미지</div>
+          <button id="webImageButton">웹 이미지</button>
           <div>앨범사진</div>
         </div>
         <!--contents-->
@@ -76,111 +63,107 @@
     </form>    
   </div>
 
-<!-- 카카오 검색 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<form id="kakaoSearchForm">
-  <input type="text" id="kakaoQuery" placeholder="검색어를 입력하세요">
-  <button type="submit">카카오 검색</button>
-</form>
-<button id="kakaoLoadMore">더보기</button>
 
-<div id="kakaoSearchResult"></div>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <!-- 통합 검색 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <form id="searchForm">
+      <input type="text" id="query" placeholder="검색어를 입력하세요">
+    </form>
+    <div>
+      <button id="kakaoSearchButton">카카오 검색</button>
+      <button id="naverSearchButton">네이버 검색</button>
+    </div>
+    <button id="loadMore">더보기</button>
+    
+    <div id="searchResult"></div>
+    
+    <script>
+    var images = [];
+    var visibleImages = 8;
+    var searchSource = '';
+    
+    function showImages() {
+        $("#searchResult").empty();
+        for (var i = 0; i < visibleImages && i < images.length; i++) {
+            var img = $('<img />', { 
+              'src': searchSource === 'kakao' ? images[i]['thumbnail_url'] : images[i]['thumbnail'], 
+              'alt': searchSource === 'kakao' ? images[i]['display_sitename'] : images[i]['title']
+            });
+            $('#searchResult').append(img);
+        }
+    }
+    
+    $("#loadMore").click(function() {
+        visibleImages += 8;
+        showImages();
+    });
+    
+    $("#kakaoSearchButton").click(function() {
+        searchSource = 'kakao';
+        searchImages("{% url 'tcat:kakao_image_search' %}");
+    });
+
+    $("#naverSearchButton").click(function() {
+        searchSource = 'naver';
+        searchImages("{% url 'tcat:naver_image_search' %}");
+    });
+
+    function searchImages(url) {
+        var query = $("#query").val();
+    
+        $.ajax({
+            url: url,
+            data: {
+              'query': query
+            },
+            dataType: 'json',
+            success: function(data) {
+              images = searchSource === 'kakao' ? data['documents'] : data['items'];
+              visibleImages = 8;
+              showImages();
+            }
+        });
+    }
+    </script>
+  </div>
+
+</div>
 
 <script>
-var kakaoImages = [];
-var kakaoVisibleImages = 8;
+  // Get the modal
+  var modal = document.getElementById("myModal");
 
-function showKakaoImages() {
-    $("#kakaoSearchResult").empty();
-    for (var i = 0; i < kakaoVisibleImages && i < kakaoImages.length; i++) {
-        var img = $('<img />', { 
-          'src': kakaoImages[i]['thumbnail_url'], 
-          'alt': kakaoImages[i]['display_sitename']
-        });
-        $('#kakaoSearchResult').append(img);
+  // Get the button that opens the modal
+  var btn = document.getElementById("webImageButton");
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks on the button, open the modal
+  btn.onclick = function() {
+    modal.style.display = "block";
+  }
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
     }
-}
-
-$("#kakaoLoadMore").click(function() {
-    kakaoVisibleImages += 8;
-    showKakaoImages();
-});
-
-$("#kakaoSearchForm").submit(function(e) {
-  e.preventDefault();
-
-  var query = $("#kakaoQuery").val();
-
-  $.ajax({
-    url: "{% url 'tcat:kakao_image_search' %}",
-    data: {
-      'query': query
-    },
-    dataType: 'json',
-    success: function(data) {
-      kakaoImages = data['documents'];
-      kakaoVisibleImages = 8;
-      showKakaoImages();
-    }
-  });
-});
+  }
 </script>
-
-<!-- 네이버 검색 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<form id="naverSearchForm">
-  <input type="text" id="naverQuery" placeholder="검색어를 입력하세요">
-  <button type="submit">네이버 검색</button>
-</form>
-<button id="naverLoadMore">더보기</button>
-
-<div id="naverSearchResult"></div>
-
-<script>
-var naverImages = [];
-var naverVisibleImages = 8;
-
-function showNaverImages() {
-    $("#naverSearchResult").empty();
-    for (var i = 0; i < naverVisibleImages && i < naverImages.length; i++) {
-        var img = $('<img />', { 
-          'src': naverImages[i]['thumbnail'], 
-          'alt': naverImages[i]['title']
-        });
-        $('#naverSearchResult').append(img);
-    }
-}
-
-$("#naverLoadMore").click(function() {
-    naverVisibleImages += 8;
-    showNaverImages();
-});
-
-$("#naverSearchForm").submit(function(e) {
-  e.preventDefault();
-
-  var query = $("#naverQuery").val();
-
-  $.ajax({
-    url: "{% url 'tcat:naver_image_search' %}",
-    data: {
-      'query': query
-    },
-    dataType: 'json',
-    success: function(data) {
-      naverImages = data['items'];
-      naverVisibleImages = 8;
-      showNaverImages();
-    }
-  });
-});
-</script>
-
-
-
-
 
 
 {% endblock content %}
