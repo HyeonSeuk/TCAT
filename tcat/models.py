@@ -7,13 +7,13 @@ from ckeditor.fields import RichTextField
 class Tcat(models.Model):
     title = models.CharField(max_length=100)
     date = models.DateField()
-    location = models.CharField(max_length=50)
-    price = models.IntegerField()
+    location = models.CharField(max_length=50, blank=True, null=True)
+    price = models.IntegerField(blank=True, null=True)
     image = models.ImageField(blank=True, null=True, upload_to='ticket_diarys/')
     image_url = models.URLField(blank=True)
-    review = RichTextField()
+    review = RichTextField(blank=True, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    categori = models.CharField(max_length=50)
+    categori = models.CharField(max_length=50, blank=True, null=True)
 
 
 # class TcatImage(models.Model):

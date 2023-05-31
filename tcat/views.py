@@ -90,12 +90,13 @@ def create(request):
             tcat = tcat_form.save(commit=False)
             tcat.user = request.user
             tcat.save()
+            return redirect('tcat:detail', tcat.pk)
 
         if tcat.image:
             tcat.image_url = settings.MEDIA_URL + str(tcat.image)
             tcat.save()
 
-            return redirect('tcat:index')
+            return redirect('tcat:detail', tcat.pk)
     else:
         tcat_form = TcatForm()
 

@@ -23,10 +23,11 @@
     <!--header-->
     <div class="create__header">
       <div><a class="create__header--text" href="{% url 'tcat:index' %}">취소</a></div>
-      <div>기록 추가</div>
-      <div type="submit" onclick="document.getElementById('tcatForm').submit();">
+      <div class="create__header--title">기록 추가</div>
+      {% comment %} <div type="submit" onclick="document.getElementById('tcatForm').submit();">
         등록
       </div>
+      <input type="submit" onclick="document.getElementById('tcatForm').submit();"> {% endcomment %}
     </div>
 
     <!--main-->
@@ -36,18 +37,17 @@
         <!--image-->
         <div class="d-flex main__image">
           <div>웹이미지</div>
-          <div>앨범사진</div>
+          <div>{{ form.image }}앨범사진</div>
         </div>
         <!--contents-->
         <div class="main__contents">
           <div class="contents__title">
             <div class="contents__title--title">제목</div>
-            <div>{{ form.title }}</div>
+            <input type="text" name="title" class="contents__title--input" required>
           </div>
           <div class="d-flex contents__date">
             <div class="contents__title--title">일시</div>
-            <input type="date" value={{ form.date }}>
-            {% comment %} <div>{{ form.date }}</div> {% endcomment %}
+            <input type="date" name="date" required>
           </div>
           <div class="d-flex contents__location">
             <div class="contents__title--title">장소</div>
@@ -73,12 +73,11 @@
           </div>
         </div>
       </div>
+      <input type="submit" value="등록" class="main__input">
     </form>    
   </div>
 
 <!-- 카카오 검색 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 <form id="kakaoSearchForm">
   <input type="text" id="kakaoQuery" placeholder="검색어를 입력하세요">
   <button type="submit">카카오 검색</button>
@@ -87,49 +86,7 @@
 
 <div id="kakaoSearchResult"></div>
 
-<script>
-var kakaoImages = [];
-var kakaoVisibleImages = 8;
-
-function showKakaoImages() {
-    $("#kakaoSearchResult").empty();
-    for (var i = 0; i < kakaoVisibleImages && i < kakaoImages.length; i++) {
-        var img = $('<img />', { 
-          'src': kakaoImages[i]['thumbnail_url'], 
-          'alt': kakaoImages[i]['display_sitename']
-        });
-        $('#kakaoSearchResult').append(img);
-    }
-}
-
-$("#kakaoLoadMore").click(function() {
-    kakaoVisibleImages += 8;
-    showKakaoImages();
-});
-
-$("#kakaoSearchForm").submit(function(e) {
-  e.preventDefault();
-
-  var query = $("#kakaoQuery").val();
-
-  $.ajax({
-    url: "{% url 'tcat:kakao_image_search' %}",
-    data: {
-      'query': query
-    },
-    dataType: 'json',
-    success: function(data) {
-      kakaoImages = data['documents'];
-      kakaoVisibleImages = 8;
-      showKakaoImages();
-    }
-  });
-});
-</script>
-
 <!-- 네이버 검색 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 <form id="naverSearchForm">
   <input type="text" id="naverQuery" placeholder="검색어를 입력하세요">
   <button type="submit">네이버 검색</button>
@@ -138,54 +95,108 @@ $("#kakaoSearchForm").submit(function(e) {
 
 <div id="naverSearchResult"></div>
 
-<script>
-var naverImages = [];
-var naverVisibleImages = 8;
-
-function showNaverImages() {
-    $("#naverSearchResult").empty();
-    for (var i = 0; i < naverVisibleImages && i < naverImages.length; i++) {
-        var img = $('<img />', { 
-          'src': naverImages[i]['thumbnail'], 
-          'alt': naverImages[i]['title']
-        });
-        $('#naverSearchResult').append(img);
-    }
-}
-
-$("#naverLoadMore").click(function() {
-    naverVisibleImages += 8;
-    showNaverImages();
-});
-
-$("#naverSearchForm").submit(function(e) {
-  e.preventDefault();
-
-  var query = $("#naverQuery").val();
-
-  $.ajax({
-    url: "{% url 'tcat:naver_image_search' %}",
-    data: {
-      'query': query
-    },
-    dataType: 'json',
-    success: function(data) {
-      naverImages = data['items'];
-      naverVisibleImages = 8;
-      showNaverImages();
-    }
-  });
-});
-</script>
-
-
-
-
-
 
 {% endblock content %}
 
+
 {% block javascript %}
   <script type="text/javascript" src="{% static 'js/create.js' %}"></script>
-  <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+  
+<!-- 카카오 검색 -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script>
+    var kakaoImages = [];
+    var kakaoVisibleImages = 8;
+    
+    function showKakaoImages() {
+        $("#kakaoSearchResult").empty();
+        for (var i = 0; i < kakaoVisibleImages && i < kakaoImages.length; i++) {
+            var img = $('<img />', { 
+              'src': kakaoImages[i]['thumbnail_url'], 
+              'alt': kakaoImages[i]['display_sitename']
+            });
+            $('#kakaoSearchResult').append(img);
+        }
+    }
+    
+    $("#kakaoLoadMore").click(function() {
+        kakaoVisibleImages += 8;
+        showKakaoImages();
+    });
+    
+    $("#kakaoSearchForm").submit(function(e) {
+      e.preventDefault();
+    
+      var query = $("#kakaoQuery").val();
+    
+      $.ajax({
+        url: "{% url 'tcat:kakao_image_search' %}",
+        data: {
+          'query': query
+        },
+        dataType: 'json',
+        success: function(data) {
+          kakaoImages = data['documents'];
+          kakaoVisibleImages = 8;
+          showKakaoImages();
+        }
+      });
+    });
+  </script>
+
+  <!-- 네이버 검색 -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script>
+    var naverImages = [];
+    var naverVisibleImages = 8;
+    
+    function showNaverImages() {
+        $("#naverSearchResult").empty();
+        for (var i = 0; i < naverVisibleImages && i < naverImages.length; i++) {
+            var img = $('<img />', { 
+              'src': naverImages[i]['thumbnail'], 
+              'alt': naverImages[i]['title']
+            });
+            $('#naverSearchResult').append(img);
+        }
+    }
+    
+    $("#naverLoadMore").click(function() {
+        naverVisibleImages += 8;
+        showNaverImages();
+    });
+    
+    $("#naverSearchForm").submit(function(e) {
+      e.preventDefault();
+    
+      var query = $("#naverQuery").val();
+    
+      $.ajax({
+        url: "{% url 'tcat:naver_image_search' %}",
+        data: {
+          'query': query
+        },
+        dataType: 'json',
+        success: function(data) {
+          naverImages = data['items'];
+          naverVisibleImages = 8;
+          showNaverImages();
+        }
+      });
+    });
+  </script>
+
+<script>
+  function submitForm() {
+    var titleInput = document.getElementById('title');
+    if (titleInput.value.trim() === '') {
+      alert('제목을 입력해주세요.');
+      return false;
+    }
+    return true;
+  }
+</script>
+
 {% endblock javascript %}
