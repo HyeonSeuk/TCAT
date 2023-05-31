@@ -48,4 +48,3 @@ class TcatForm(forms.ModelForm):
             for image in self.cleaned_data.get('images'):
                 TcatImage.objects.create(tcat=instance, image=image)
         return instance
-
