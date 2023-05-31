@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
 
+{% block style %}
+{% endblock style %}
+
 {% block content %}
 
 detail
+
+{% if tcat.image %}
+<img src="{{ tcat.image.url }}" alt="이미지">
+{% endif %}
 <div>{{ tcat.title }}</div>
 <div>{{ tcat.date }}</div>
 <div>{{ tcat.location }}</div>
@@ -11,4 +18,7 @@ detail
 <div>{{ tcat.review | safe }}</div>
 
 {% endblock content %}
+
+{% block javascript %}
+{% endblock javascript %}
 

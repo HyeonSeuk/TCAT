@@ -1,12 +1,8 @@
-.tcat__root--color {
-  color: #FF9A76;
-  color: #FFEADB;
-  color: #F7C5A8;
-  color: #679B9B;
-}
-
-div {
-  border: 1px solid lightcoral;
+:root {
+  --main-color: #FF9A76;
+  --second-color: #FFEADB;
+  --third-color: #F7C5A8;
+  --fourth-color: #679B9B;
 }
 
 .create__total {
@@ -18,7 +14,6 @@ div {
   display: flex;
   font-size: 35px;
   font-weight: 500;
-  justify-content: space-between;
   margin-left: 20px;
   margin-right: 20px;
   margin-bottom: 50px;
@@ -35,9 +30,14 @@ div {
   margin-right: 20px;
 }
 
+.create__header--title {
+  margin-left: 380px;
+}
+
 .main__image{
   justify-content: center;
   margin-bottom: 20px;
+  border: 1px solid lightcoral;
 }
 
 .main__contents {
@@ -45,13 +45,6 @@ div {
 }
 
 .contents__title {
-  display: flex;
-  font-size: 25px;
-  height: 50px;
-  margin-bottom: 12px;
-}
-
-.new-contents__title {
   display: flex;
   font-size: 25px;
   height: 50px;
@@ -86,6 +79,18 @@ input[type="date"]{
   margin-bottom: 12px;
 }
 
+.new-contents__location {
+  display: flex;
+  font-size: 25px;
+  height: 50px;
+  margin-bottom: 12px;
+  border: 1px solid black;
+}
+
+.new-contents__location > div {
+  border: 1px solid black;
+}
+
 .contents__price {
   font-size: 25px;
   margin-bottom: 12px;
@@ -105,6 +110,18 @@ input[type="date"]{
   font-size: 25px;
   margin-bottom: 12px;
 }
+
+
+.main__input {
+  font-size: 35px;
+  font-weight: 500;
+  position: absolute;
+  right: 430px;
+  top: 120px;
+  border: none;
+  background-color: white;
+  padding: 0;
+
 #kakaoSearchResult, #naverSearchResult {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -145,4 +162,5 @@ input[type="date"]{
 color: black;
 text-decoration: none;
 cursor: pointer;
+
 }
