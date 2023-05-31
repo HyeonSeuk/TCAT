@@ -110,6 +110,7 @@ input[type="date"]{
   font-size: 25px;
   margin-bottom: 12px;
 }
+
 .main__input {
   font-size: 35px;
   font-weight: 500;
@@ -120,6 +121,7 @@ input[type="date"]{
   background-color: white;
   padding: 0;
 }
+
 #kakaoSearchResult, #naverSearchResult {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

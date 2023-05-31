@@ -95,11 +95,11 @@ def create(request):
         if tcat.image:
             tcat.image_url = settings.MEDIA_URL + str(tcat.image)
             tcat.save()
-
             return redirect('tcat:detail', tcat.pk)
         
         else:
             return redirect('tcat:detail', tcat.pk)
+
     else:
         tcat_form = TcatForm()
 
@@ -108,6 +108,34 @@ def create(request):
     }
 
     return render(request, 'tcat/create.html', context)
+
+
+def delete(request, tcat_pk):
+    tcat = Tcat.objects.get(pk=tcat_pk)
+    if request.user == tcat.user:
+        tcat.delete()
+    return redirect('tcat:index')
+
+
+def update(request, tcat_pk):
+    tcat = Tcat.objects.get(pk=tcat_pk)
+    if request.user == tcat.user:
+        if request.method == "POST":
+            form = TcatForm(request.POST, request.FILES, instance=tcat)
+            if form.is_valid():
+                form.save()
+                return redirect('tcat:detail', tcat.pk)
+        else:
+            form = TcatForm(instance=tcat)
+    else:
+        return redirect('tcat:index')
+    
+    context = {
+        'tcat': tcat,
+        'form': 'form'
+    }
+
+    return render(request, 'tcat/update.html', context)
 
 
 def all_events(request):
