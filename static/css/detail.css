@@ -10,6 +10,11 @@
   margin-left: 770px;
 }
 
+.button__capture > button {
+  background-color: white;
+  border: none;
+}
+
 .button__update{
   margin-left: 40px;
 }
