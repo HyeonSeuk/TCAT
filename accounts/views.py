@@ -7,6 +7,7 @@ from .forms import CustomUserCreationForm, CustomAuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
+from django.contrib.auth import authenticate
 
 def login(request):
     if request.user.is_authenticated:
@@ -48,14 +49,21 @@ def signup(request):
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
-            auth_login(request, user)
-            return redirect('tcat:index')
+            user = authenticate(
+                username=user.username,
+                password=form.cleaned_data['password1']
+            )
+            if user is not None:
+                auth_login(request, user)
+                return redirect('tcat:index')
     else:
         form = CustomUserCreationForm()
+
     context = {
         'form': form,
     }
     return render(request, 'accounts/signup.html', context)
+
 
 @login_required
 def profile(request, username):
