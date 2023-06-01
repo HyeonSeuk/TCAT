@@ -1,9 +1,13 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
 class CustomUserCreationForm(UserCreationForm):
+    image = forms.ImageField(label='프로필 사진', label_suffix='', 
+        widget=forms.ClearableFileInput (
+        attrs={'class': 'form-control mb-2', 'style': 'width: 360px;',}))
+
     username = forms.CharField(label='아이디', label_suffix='', widget=forms.TextInput(
         attrs={'class': 'form-control', 'style': 'width: 360px;','placeholder': '아이디 (2~15자)','id':'user_id',}))
     
@@ -25,3 +29,27 @@ class CustomUserCreationForm(UserCreationForm):
             'password1',
             'password2',
         )
+
+
+class CustomAuthenticationForm(AuthenticationForm):
+    username = forms.CharField(
+        label='', label_suffix='',
+        widget=forms.TextInput(
+            attrs={
+                'autofocus': True, 
+                'class': 'form-control',
+                'style': 'width: 360px; height: 40px;',
+                'placeholder': '아이디',
+                }))
+
+    password = forms.CharField(
+        label='', label_suffix='',
+        strip=False, 
+        widget=forms.PasswordInput(
+            attrs={
+                'autocomplete': 'current-password', 
+                'class': 'form-control',
+                'style': 'width: 360px; height: 40px;',
+                'placeholder': '비밀번호',
+                }))
+    
