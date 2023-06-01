@@ -35,17 +35,10 @@ class TcatForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['title'].widget.attrs['class'] = 'contents__title--input'
+        # self.fields['title'].widget.attrs['class'] = 'contents__title--input'
         self.fields['location'].widget.attrs['class'] = 'contents__title--input'
         self.fields['price'].widget.attrs['class'] = 'contents__title--input'
         self.fields['categori'].widget.attrs['class'] = 'contents__title--input'
-        self.fields['review'].widget.attrs['class'] = 'contents__title--input'
 
 
-    def save(self, commit=True):
-        instance = super().save(commit)
-        if self.cleaned_data.get('images'):
-            for image in self.cleaned_data.get('images'):
-                TcatImage.objects.create(tcat=instance, image=image)
-        return instance
 

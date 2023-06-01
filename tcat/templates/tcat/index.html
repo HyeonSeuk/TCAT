@@ -2,21 +2,24 @@
 {% load static %}
 
 {% block style %}
-<style>
-.fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
-  min-height: 190px;
-}
-</style>
+
+<!-- Bootstrap Datepicker -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+
 {% endblock style %}
 
 
 {% block content %}
 
+<button type="button" id="save">Capture</button>
 
-<input type="text" name="date_field" class="datepicker" data-provide="datepicker">
+<div class="header-datepicker">
+  <input type="text" class="datepicker" data-provide="datepicker">
+  <div id="calendar"></div>
+</div>
 
-
-<div id='calendar'></div>
 
 <button onclick="window.location.href = '{% url 'tcat:create' %}';">이동</button>
 
@@ -62,6 +65,21 @@
 {% endblock content %}
 
 {% block javascript %}
+<!-- moment -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- FullCalendar -->
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.8/index.global.min.js'></script>
+<!-- Bootstrap -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- Bootstrap Datepicker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ko.min.js"></script>
+<script src="https://kit.fontawesome.com/7c2def04d0.js" crossorigin="anonymous"></script>
+<!-- HTML2Canvas -->
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
 <script src='{% static "js/index.global.js" %}'></script> <!-- 달력 -->
 <script src='{% static "js/calendar.js" %}'></script> <!-- 달력 -->
 {% endblock javascript %}
