@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomAuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
@@ -12,12 +13,19 @@ def login(request):
         return redirect('tcat:index')
 
     if request.method == 'POST':
-        form = AuthenticationForm(request, request.POST)
+        form = CustomAuthenticationForm(request, request.POST)
         if form.is_valid():
-            auth_login(request, form.get_user())
-            return redirect('tcat:index')
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+            # auth_login(request, form.get_user())
+            if user is not None:
+                auth_login(request, form.get_user())
+                return redirect('tcat:index')
+            else:
+                form.add_error(None, '아이디 또는 비밀번호가 올바르지 않습니다.')              
     else:
-        form = AuthenticationForm()
+        form = CustomAuthenticationForm()
 
     context = {
         'form': form,

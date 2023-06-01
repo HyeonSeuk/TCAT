@@ -17,7 +17,7 @@
   <body>
     <!-- 네브바 로고 및 로그인 버튼 -->
     <nav class='nav__div d-flex justify-content-between align-items-center p-3 mb-4'>
-      <a href="#" class='m-0'>
+      <a href="{% url 'tcat:index' %}" class='m-0'>
         <img src="{% static 'image/logo2.png' %}" style='height: 80px;' alt="...">
       </a>
 
@@ -62,13 +62,13 @@
         <div style='width: 50%;'>footer</div>
         <div class='footer__div--line'></div>
         <div class='d-flex flex-column footer__div--link' style='width: 50%;'>
-          <p class='mb-4' style='color: var(--main-color); font-weight: bold; font-size: 22px;'>About Team</p>
+          <p class='mb-5' style='color: var(--main-color); font-weight: bold; font-size: 22px;'>About Team</p>
           <a href="https://github.com/YongJuDo">도용주</a>
-          <hr>
+          <hr style='border-top: 1px solid black;'>
           <a href="https://github.com/j1-y00n">변지윤</a>
-          <hr>
+          <hr style='border-top: 1px solid black;'>
           <a href="https://github.com/HyeonSeuk">서현석</a>
-          <hr>
+          <hr style='border-top: 1px solid black;'>
           <a href="https://github.com/ldwlgus12">전지현</a>
         </div>
       </div>
