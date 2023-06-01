@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
 class CustomUserCreationForm(UserCreationForm):
-    image = forms.ImageField(label='프로필 사진', label_suffix='', 
+    image = forms.ImageField(label='프로필 사진', label_suffix='', required=False,
         widget=forms.ClearableFileInput (
         attrs={'class': 'form-control mb-2', 'style': 'width: 360px;',}))
 
