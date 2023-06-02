@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <h2>검색 결과</h2>
+    {% if results %}
+        {% for result in results %}
+            <div>
+                {% if result.type == 'user' %}
+                    <a href="{% url 'accounts:profile' result.username %}">
+                        <img src="{{ result.image }}" alt="{{ result.username }}'s profile picture">
+                    </a>
+                {% elif result.type == 'tcat' %}
+                    {% if request.user.username == result.creator %}  <!-- 현재 로그인된 사용자가 게시물 작성자와 같은 경우에만 링크 생성 -->
+                        <a href="{% url 'tcat:detail' result.tcat_pk %}">
+                            <img src="{{ result.image }}" alt="이미지" class="detail__image">
+                        </a>
+                    {% else %}
+                        <img src="{{ result.image }}" alt="이미지" class="detail__image">
+                    {% endif %}
+                    <div>{{ result.date }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>검색한 결과를 찾을 수 없습니다.</p>
+    {% endif %}
+{% endblock %}
+
+
+
+
