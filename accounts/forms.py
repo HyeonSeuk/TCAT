@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-
+from captcha.fields import ReCaptchaField
 
 class CustomUserCreationForm(UserCreationForm):
     image = forms.ImageField(label='프로필 사진', label_suffix='', required=False,
@@ -20,6 +20,8 @@ class CustomUserCreationForm(UserCreationForm):
     password2 = forms.CharField(label='비밀번호 확인', label_suffix='', widget=forms.PasswordInput(
         attrs={'class': 'form-control placeholder-font', 'style': 'width: 360px;','placeholder': '비밀번호 확인',}))
 
+    captcha = ReCaptchaField()
+
     class Meta(UserCreationForm.Meta):
         model = get_user_model()
         fields = (
@@ -28,7 +30,9 @@ class CustomUserCreationForm(UserCreationForm):
             'email',
             'password1',
             'password2',
+            'captcha',
         )
+
 
 
 class CustomAuthenticationForm(AuthenticationForm):
