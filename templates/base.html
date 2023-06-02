@@ -22,15 +22,15 @@
       </a>
 
       <div class="container-fluid">
-        <form class="d-flex" role="search">
-          <div class="position-relative" style='width: 100%;'>
-            <input class="form-control" type="search" placeholder="콘텐츠, 컬렉션, 유저를 검색하세요." aria-label="Search">
-            <button class="btn position-absolute end-0 top-0" type="submit" >
-              <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-          </div>
+        <form class="d-flex" role="search" method="GET" action="{% url 'tcat:search' %}">
+            <div class="position-relative" style='width: 100%;'>
+                <input class="form-control" name="query" type="search" placeholder="콘텐츠, 컬렉션, 유저를 검색하세요." aria-label="Search">
+                <button class="btn position-absolute end-0 top-0" type="submit">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
         </form>
-      </div>
+    </div>
       
       {% if request.user.is_authenticated %}
         <form action="{% url 'accounts:logout' %}">

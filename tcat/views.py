@@ -9,7 +9,11 @@ from django.http import JsonResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 import base64
+from django.db.models import Q
+from accounts.models import User
+from tcat.models import Tcat
 from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 def index_redirect(request):
@@ -239,3 +243,38 @@ def naver_image_search(request):
     result = response.json()
 
     return JsonResponse(result)
+
+def search(request):
+    query = request.GET.get('query')
+    results = []
+    if query:
+        # 유저 이름으로 검색
+        users = User.objects.filter(Q(username__icontains=query))
+        for user in users:
+            results.append({
+                'type': 'user',
+                'username': user.username,
+                'image': user.image.url,
+            })
+
+        # 제목으로 검색
+        tcats = Tcat.objects.filter(title__icontains=query)
+        for tcat in tcats:
+            results.append({
+                'type': 'tcat',
+                'username': tcat.user.username,
+                'image': tcat.image.url,
+                'date': tcat.date,
+                'tcat_pk': tcat.pk,
+                'creator': tcat.user.username,
+            })
+    return render(request, 'tcat/search.html', {'results': results})
+
+
+
+
+
+
+
+
+
