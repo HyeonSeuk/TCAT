@@ -4,11 +4,12 @@ from bs4 import BeautifulSoup
 import re
 from datetime import datetime
 from .models import Tcat
-from .forms import TcatForm
+from .forms import TcatForm, DynamicFieldFormSet
 from django.http import JsonResponse
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 import base64
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index_redirect(request):
@@ -86,25 +87,39 @@ def detail(request, tcat_pk):
 def create(request):
     if request.method == 'POST':
         tcat_form = TcatForm(request.POST, request.FILES)
+        dynamic_form = DynamicFieldFormSet(request.POST, prefix='dynamic_form')
 
         if tcat_form.is_valid():
             tcat = tcat_form.save(commit=False)
             tcat.user = request.user
             tcat.save()
 
+
+        if dynamic_form.is_valid():
+            for form in dynamic_form:
+                dynamic_field = form.save(commit=False)
+                dynamic_field.tcat = tcat
+                dynamic_field.save()
+                print(f'dynamic_field: {dynamic_field}')
+        else:
+            print(f'유효성 검사: {dynamic_form.errors}')
+            print(f'데이터: {request.POST}')
+
+
         if tcat.image:
             tcat.image_url = settings.MEDIA_URL + str(tcat.image)
             tcat.save()
-            return redirect('tcat:detail', tcat.pk)
-        
-        else:
-            return redirect('tcat:detail', tcat.pk)
 
+        return redirect('tcat:detail', tcat.pk)
+
+        
     else:
         tcat_form = TcatForm()
+        dynamic_form = DynamicFieldFormSet()
 
     context = {
         'form': tcat_form,
+        'dynamic_form': dynamic_form,
     }
 
     return render(request, 'tcat/create.html', context)
@@ -129,26 +144,43 @@ def update(request, tcat_pk):
             form = TcatForm(instance=tcat)
     else:
         return redirect('tcat:index')
-    
+
     context = {
         'tcat': tcat,
-        'form': 'form'
+        'form': form,
     }
 
     return render(request, 'tcat/update.html', context)
 
 
+@login_required
 def all_events(request):
-    all_events = Tcat.objects.all()
+    all_events = Tcat.objects.filter(user=request.user)
     out = []
     for event in all_events:
         out.append({
             'date': event.date,
             'title': event.title,
             'image_url': event.image_url,
+            'tcat_pk': event.id,  # 수정된 부분
         })
 
     return JsonResponse(out, safe=False)
+
+
+@csrf_exempt
+def update_event(request):
+    if request.method == 'POST':
+        event_id = request.POST.get('event_id')
+        new_date = request.POST.get('new_date')
+        event = Tcat.objects.get(id=event_id, user=request.user)
+        event.date = new_date
+        event.save()
+                
+        return JsonResponse({'status': 'success'})
+    
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+
 
 @csrf_exempt
 def capture(request):
