@@ -16,6 +16,11 @@ class Tcat(models.Model):
     categori = models.CharField(max_length=50, blank=True, null=True)
 
 
+class DynamicField(models.Model):
+    tcat = models.ForeignKey(Tcat, on_delete=models.CASCADE, related_name='dynamic_field')
+    field_title = models.CharField(max_length=255, null=True)
+    field_value = models.CharField(max_length=255, null=True)
+
 # class TcatImage(models.Model):
 #     tcat = models.ForeignKey(Tcat, on_delete=models.CASCADE, related_name='images')
 #     image = models.ImageField(blank=True, null=True, upload_to='ticket_diarys/')
