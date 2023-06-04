@@ -132,7 +132,7 @@ def update(request, tcat_pk):
     
     context = {
         'tcat': tcat,
-        'form': 'form'
+        'form': form,
     }
 
     return render(request, 'tcat/update.html', context)

@@ -1,13 +1,296 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1>login</h1>
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+  <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock style %}
 
-</body>
-</html>
+{% block content %}
+  <div>
+    <!--header-->
+    <div class="d-flex profile__header">
+      <div>
+        <div class="d-flex">
+          <!--유저 프로필 이미지-->
+          {% if person.image %}
+            <div><img src="{{ person.image.url }}" alt="유저프로필이미지" class="user__profile--img"></div>
+          {% else %}
+            <div><img src="{% static 'image/no-profile-img.png' %}" alt="no-유저프로필이미지" class="user__profile--noimg"></div>
+          {% endif %}
+          <!--유저 레벨 이미지-->
+          <div class="user__level">
+            {% if person.tcat_set.count >= 0 and person.tcat_set.count < 5 %}
+              <img src="{% static 'image/Lv1.png' %}" alt="Lv1" class="user__level--img">
+            {% endif %}
+            {% if person.tcat_set.count >= 5 and person.tcat_set.count < 10 %}
+              <img src="{% static 'image/Lv2.png' %}" alt="Lv2" class="user__level--img">
+            {% endif %}
+            {% if person.tcat_set.count >= 10 and person.tcat_set.count < 20 %}
+              <img src="{% static 'image/Lv3.png' %}" alt="Lv3" class="user__level--img">
+            {% endif %}
+            {% if person.tcat_set.count >= 20 and person.tcat_set.count < 30 %}
+              <img src="{% static 'image/Lv4.png' %}" alt="Lv4" class="user__level--img">
+            {% endif %}
+            {% if person.tcat_set.count >= 30 %}
+              <img src="{% static 'image/Lv5.png' %}" alt="Lv5" class="user__level--img">
+            {% endif %}            
+          </div>
+        </div>
+        <!--유저이름-->
+        <div class="user__name">
+          {{person.username}} (Lv
+          {% if person.tcat_set.count >= 0 and person.tcat_set.count < 5 %}
+              1)
+            {% endif %}
+            {% if person.tcat_set.count >= 5 and person.tcat_set.count < 10 %}
+              2)
+            {% endif %}
+            {% if person.tcat_set.count >= 10 and person.tcat_set.count < 20 %}
+              3)
+            {% endif %}
+            {% if person.tcat_set.count >= 20 and person.tcat_set.count < 30 %}
+              4)
+            {% endif %}
+            {% if person.tcat_set.count >= 30 %}
+              5)
+            {% endif %}
+        </div>
+      </div>  
+     
+    </div>
+
+    <!--contents-->
+    <div>
+      <div class="d-flex profile__contents">
+        <div class="d-flex profile__contents--box">
+          <div class="contents__box-title">게시물</div>
+          <div>{{ person.tcat_set.all|length }}</div>
+        </div>
+        <div class="d-flex profile__contents--box contents__">
+          <div class="contents__box-title box__title--follow" type="button" data-bs-toggle="modal" data-bs-target="#followersModal">팔로워</div>
+          <div id="followers-count">{{ person.followers.all|length }}</div>
+        </div>
+        <div class="d-flex profile__contents--box">
+          <div class="contents__box-title box__title--follow" type="button" data-bs-toggle="modal" data-bs-target="#followingsModal">팔로잉</div>
+          <div id="followings-count">{{ person.followings.all|length }}</div>
+        </div>
+      </div>
+       <!-- 팔로우/언팔로우 버튼-->
+       <div class="user__follow--btn">
+        {% if request.user.is_authenticated %}
+          {% if request.user != person %}
+            <form id="follow-form" data-user-id="{{ person.pk }}">
+              {% csrf_token %} 
+              {% if request.user in person.followers.all %}
+                <input class="unfollow__btn" type="submit" value="언팔로우">
+              {% else %}
+                <input class="follow__btn" type="submit" value="팔로우">
+              {% endif %}
+            </form>
+          {% endif %}
+        {% endif %}
+      </div>  
+      <!--캘린더 버튼 비동기 적용해야함-->
+      {% if request.user in person.followers.all and person in request.user.followers.all %}
+        <div><a href="">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#679B9B" class="bi bi-calendar-week" viewBox="0 0 16 16">
+            <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+          </svg>
+        </a></div>
+      {% endif %}
+    </div>
+  </div>
+
+<!-- 팔로워 Modal -->
+<div class="modal fade" id="followersModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">팔로워 목록</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% for followers in person.followers.all %}
+          <div class="modal__username">
+            <a id="followers-list" class="modal__username--text" href="{% url 'accounts:profile' followers %}">{{ followers }}</a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--팔로잉 Modal -->
+<div class="modal fade" id="followingsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">팔로잉 목록</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% for followings in person.followings.all %}
+          <div class="modal__username">
+            <a id="followings-list" class="modal__username--text" href="{% url 'accounts:profile' followings %}">{{ followings }}</a>
+          </div>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr style="margin-top:50px;">
+<div>
+  아이콘 출처 :       <a href="https://www.flaticon.com/free-icons/cat" title="cat icons"  style="font-size: 14px; color: gray;">Cat icons created by Freepik - Flaticon</a>
+</div>  
+
+{% endblock content %}
+
+
+{% block javascript %}
+  <script type="text/javascript" src="{% static 'js/profile.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+{% endblock javascript %}
+
+
+
+
+
+{% comment %} {% block content %}
+  <div>
+    <!--header-->
+    <div class="d-flex profile__header">
+      <div>
+        <div class="d-flex">
+          <!--유저 프로필 이미지-->
+          {% if person.image %}
+            <div><img src="{{ person.image.url }}" alt="유저프로필이미지" class="user__profile--img"></div>
+          {% else %}
+            <div><img src="{% static 'image/no-profile-img.png' %}" alt="no-유저프로필이미지" class="user__profile--noimg"></div>
+          {% endif %}
+          <!--유저 레벨 이미지-->
+          <div class="user__level">
+            {% if person.tcat_set.count >= 0 and person.tcat_set.count < 5 %}
+              <img src="{% static 'image/Lv1.png' %}" alt="Lv1" class="user__level--img">
+            {% endif %}
+            {% if person.tcat_set.count >= 5 and person.tcat_set.count < 10 %}
+              <img src="{% static 'image/Lv2.png' %}" alt="Lv2" class="user__level--img">
+            {% endif %}
+            {% if person.tcat_set.count >= 10 and person.tcat_set.count < 20 %}
+              <img src="{% static 'image/Lv3.png' %}" alt="Lv3" class="user__level--img">
+            {% endif %}
+            {% if person.tcat_set.count >= 20 and person.tcat_set.count < 30 %}
+              <img src="{% static 'image/Lv4.png' %}" alt="Lv4" class="user__level--img">
+            {% endif %}
+            {% if person.tcat_set.count >= 30 %}
+              <img src="{% static 'image/Lv5.png' %}" alt="Lv5" class="user__level--img">
+            {% endif %}            
+          </div>
+        </div>
+        <!--유저이름-->
+        <div class="user__name">
+          {{person.username}} (Lv
+          {% if person.tcat_set.count >= 0 and person.tcat_set.count < 5 %}
+              1)
+            {% endif %}
+            {% if person.tcat_set.count >= 5 and person.tcat_set.count < 10 %}
+              2)
+            {% endif %}
+            {% if person.tcat_set.count >= 10 and person.tcat_set.count < 20 %}
+              3)
+            {% endif %}
+            {% if person.tcat_set.count >= 20 and person.tcat_set.count < 30 %}
+              4)
+            {% endif %}
+            {% if person.tcat_set.count >= 30 %}
+              5)
+            {% endif %}
+        </div>
+      </div>  
+      <!-- 팔로우/언팔로우 버튼-->
+      <div class="user__follow--btn">
+        {% if request.user.is_authenticated %}
+          {% if request.user != person %}
+            <form id="follow-form" data-user-id="{{ person.pk }}">
+              {% csrf_token %} 
+              {% if request.user in person.followers.all %}
+                <input class="unfollow__btn" type="submit" value="언팔로우">
+              {% else %}
+                <input class="follow__btn" type="submit" value="팔로우">
+              {% endif %}
+            </form>
+          {% endif %}
+        {% endif %}
+      </div>  
+    </div>
+
+    <!--contents-->
+    <div>
+      <div class="d-flex profile__contents">
+        <div class="d-flex profile__contents--box">
+          <div class="contents__box-title">게시물</div>
+          <div>{{ person.tcat_set.all|length }}</div>
+        </div>
+        <div class="d-flex profile__contents--box contents__">
+          <div class="contents__box-title box__title--follow" type="button" data-bs-toggle="modal" data-bs-target="#followersModal">팔로워</div>
+          <div id="followers-count">{{ person.followers.all|length }}</div>
+        </div>
+        <div class="d-flex profile__contents--box">
+          <div class="contents__box-title box__title--follow" type="button" data-bs-toggle="modal" data-bs-target="#followingsModal">팔로잉</div>
+          <div id="followings-count">{{ person.followings.all|length }}</div>
+        </div>
+      </div>
+      <!--캘린더 버튼 비동기 적용해야함-->
+      {% if request.user in person.followers.all and person in request.user.followers.all %}
+        <div><a href="">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#679B9B" class="bi bi-calendar-week" viewBox="0 0 16 16">
+            <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+          </svg>
+        </a></div>
+      {% endif %}
+    </div>
+  </div>
+
+<!-- 팔로워 Modal -->
+<div class="modal fade" id="followersModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">팔로워 목록</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% for followers in person.followers.all %}
+          <div class="modal__username">
+            <a id="followers-list" class="modal__username--text" href="{% url 'accounts:profile' followers %}">{{ followers }}</a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--팔로잉 Modal -->
+<div class="modal fade" id="followingsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">팔로잉 목록</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% for followings in person.followings.all %}
+          <div class="modal__username">
+            <a id="followings-list" class="modal__username--text" href="{% url 'accounts:profile' followings %}">{{ followings }}</a>
+          </div>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %} {% endcomment %}
