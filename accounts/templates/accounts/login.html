@@ -1,16 +1,41 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load socialaccount %}
 
 {% block content %}
-<form method="post">
+<div class='d-flex flex-column align-items-center'>
+  <p class='mb-5' style='font-size: 20px;'><b>TCAT 로그인</b></p>
+  <form method="post">
     {% csrf_token %}
+      <p>{{ form.username }}</p>
+      <p>{{ form.password }}</p>
 
-    {{ form.as_p }}
+    <div class='mt-4 d-flex flex-column align-items-center'>
+      <button class='btn mt-2' type="submit" style='background-color: var(--main-color); color:white; width:360px;'>로그인  
+      </button>
 
+      {% if form.errors %}
+        <div class="mt-3 mb-0 alert alert-danger">
+          아이디 또는 비밀번호가 올바르지 않습니다.
+        </div>
+      {% endif %}
+
+      <p class='text-center mt-4 mb-4'>또는 <b>소셜 로그인</b></p>
+      
+      <a href="{% provider_login_url 'kakao' method='oauth2' %}" class="social--login">
+        카카오 로그인
+      </a>
+            
+      <div class='d-flex justify-content-center'>
+        <img src="{% static 'image/kakao.png' %}" alt="kakao_logo" style='width: 60px; height: 60px; border-radius: 50px;'>
+      </div>
+
+      {% comment %} <hr class='mt-4' style='border-top: 1px solid black; margin-top: 5px; margin-bottom: 10px;'> {% endcomment %}
+
+      <p class='text-center mt-4 mb-4'>이 사이트가 처음이신가요?<span class='ms-2'><a href="{% url 'accounts:signup' %}" style='font-weight:bold; color: var(--fourth-color);'>회원가입</a></span></p>
     </div>
-    <button type="submit">로그인</button>
   </form>
-  <a href="{% provider_login_url 'kakao' method='oauth2' %}" class="social--login">
-    카카오 로그인
-  </a>
-  {% endblock content %}
+
+</div>
+{% endblock content %}
+

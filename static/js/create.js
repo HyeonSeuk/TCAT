@@ -1,35 +1,35 @@
+var addButton = document.getElementById('addButton');
+var deleteButton = document.getElementById('deleteButton');
+var maxFields = 5;  // 최대 필드 개수
+
+document.addEventListener('DOMContentLoaded', function() {
+  var selectedDate = localStorage.getItem('selectedDate');
+  var dateInput = document.getElementById('calendar-date-input');
+  dateInput.value = selectedDate;
+});
+
+
 function createDiv() {
-  // 1. <div class="d-flex contents__title"> 요소 복제
-  const titleContainer = document.querySelector('.contents__location');
-  const newTitleContainer = titleContainer.cloneNode(true);
-  
-  // 2. <div class="contents__title--title"> 요소 초기화
-  const titleElement = newTitleContainer.querySelector('.contents__title--title');
-  titleElement.textContent = '';
-  titleElement.contentEditable = true;
-  
-  // 3. 두 번째 <div> 요소 초기화
-  const secondDiv = newTitleContainer.querySelector('.contents__location > div:nth-child(2)');
-  secondDiv.textContent = '';
-  secondDiv.contentEditable = true;
-  
-  // 4. 복제된 요소에서 ".contents__title" 클래스 제거
-  newTitleContainer.classList.remove('contents__location');
-  
-  // 5. 복제된 요소에 "new-contents__price" 클래스 추가
-  newTitleContainer.classList.add('new-contents__location');
-  
-  // 6. 복제된 요소를 <div class="contents__add"> 바로 앞에 추가
-  const addButtonContainer = document.querySelector('.contents__add');
-  addButtonContainer.parentNode.insertBefore(newTitleContainer, addButtonContainer);
+  var newAddContainer = document.getElementById('new_add');
+  var fieldCount = newAddContainer.childElementCount;
+
+  if (fieldCount < maxFields) {
+    var div = document.createElement('div');
+    div.innerHTML = `
+      <input type="text" name="dynamic_formset-field_title" placeholder="필드 제목">
+      <input type="text" name="dynamic_formset-field_value" placeholder="필드 값">
+    `;
+    newAddContainer.appendChild(div);
+  } else {
+    alert("최대 필드 개수는 " + maxFields + "개입니다.");
+  }
 }
 
 function deleteDiv() {
-  const titleContainers = document.querySelectorAll('.contents__loaction'); // 모든 생성된 요소 선택
-  const newTitleContainers = document.querySelectorAll('.new-contents__location'); // 새로 추가된 요소만 선택
+  var newAddContainer = document.getElementById('new_add');
+  var lastFieldContainer = newAddContainer.lastElementChild;
 
-  if (newTitleContainers.length > 0) {
-    const lastTitleContainer = newTitleContainers[newTitleContainers.length - 1]; // 가장 최근에 생성된 요소 선택
-    lastTitleContainer.parentNode.removeChild(lastTitleContainer); // 요소 삭제
+  if (lastFieldContainer) {
+    newAddContainer.removeChild(lastFieldContainer);
   }
 }

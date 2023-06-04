@@ -127,10 +127,10 @@ input[type="date"]{
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
-#kakaoSearchResult img, #naverSearchResult img {
+#searchResult img {
   width: 500px;
   height: 500px;
-  object-fit: cover;
+  object-fit: contain;
 }
 .modal {
   display: none; /* Hidden by default */
@@ -163,4 +163,8 @@ color: black;
 text-decoration: none;
 cursor: pointer;
 
+}
+#enlargedImage img {
+  width: 100%;
+  height: auto;
 }

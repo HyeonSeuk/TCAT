@@ -1,6 +1,12 @@
 from django import forms
-from .models import Tcat
+from .models import Tcat, DynamicField
+from django.forms import formset_factory
 from ckeditor.widgets import CKEditorWidget
+
+class DynamicFieldForm(forms.ModelForm):
+    class Meta:
+        model = DynamicField
+        fields = ('field_title', 'field_value',)
 
 class TcatForm(forms.ModelForm):
     class Meta:
@@ -41,4 +47,8 @@ class TcatForm(forms.ModelForm):
         self.fields['categori'].widget.attrs['class'] = 'contents__title--input'
 
 
+DynamicFieldFormSet = formset_factory(DynamicFieldForm, extra=1, max_num=5)
 
+class CreateTcatForm(forms.Form):
+    tcat_form = TcatForm()
+    dynamic_formset = DynamicFieldFormSet(prefix='dynamic_form')

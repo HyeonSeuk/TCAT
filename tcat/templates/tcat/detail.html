@@ -66,6 +66,15 @@
       <div>{{ tcat.categori }}</div>
     </div>
   </div>
+  {% if tcat.dynamicdata_set.exists %}
+    {% for dynamic_data in tcat.dynamicdata_set.all %}
+      <div class="detail__contents">
+        <div class="detail__contents--title">{{ dynamic_data.field_title }}</div>
+        <div>{{ dynamic_data.field_value }}</div>
+      </div>
+    {% endfor %}
+  {% endif %}
+
 
   <!--리뷰-->
   {% if tcat.review %}

@@ -27,12 +27,11 @@
         <div class="main__contents">
           <div class="contents__title">
             <div class="contents__title--title">제목</div>
-            {% comment %} <input type="text" name="title" class="contents__title--input" required> {% endcomment %}
             <div class="contents__title--input">{{form.title}}</div>
           </div>
           <div class="d-flex contents__date">
             <div class="contents__title--title">일시</div>
-            <input type="date" name="date" required>
+            <input type="date" name="date" value="{{ tcat.date|date:'Y-m-d' }}">
           </div>
           <div class="d-flex contents__location">
             <div class="contents__title--title">장소</div>

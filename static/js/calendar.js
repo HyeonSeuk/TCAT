@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   var calendarEl = document.getElementById('calendar');
   var datepickerEl = document.querySelector('.datepicker');
-
+  
   var calendar = new FullCalendar.Calendar(calendarEl, {
     locale: 'ko',
     droppable: true,
@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', function () {
               title: event.title,
               rendering: 'background',
               extendedProps: {
-                image_url: event.image_url
+                image_url: event.image_url,
+                tcat_pk: event.tcat_pk
               }
             };
           });
@@ -43,9 +44,37 @@ document.addEventListener('DOMContentLoaded', function () {
         };
       } else {
         return {
-          text: arg.event.title
+          html: '<img src="/static/image/noimg.png" alt="No Image" style="width:100%; height:170px;">'
         };
       }
+    },
+    eventClick: function(arg) {
+      var tcatPk = arg.event.extendedProps.tcat_pk;
+      window.location.href = '/tcat/' + tcatPk + '/';
+    },
+    dateClick: function(info) {
+      var selectedDate = info.dateStr;
+      localStorage.setItem('selectedDate', selectedDate);
+      window.location.href = '/tcat/create/';
+    },
+    eventDrop: function(info) {
+      var eventId = info.event.extendedProps.tcat_pk;
+      var newDate = moment(info.event.start).format('YYYY-MM-DD');
+
+      $.ajax({
+        url: '/tcat/update_event/',
+        type: 'POST',
+        data: {
+          event_id: eventId,
+          new_date: newDate
+        },
+        success: function(response) {
+          console.log('Event date updated successfully');
+        },
+        error: function(xhr, status, error) {
+          failureCallback(xhr, status, error);
+        }
+      });
     }
   });
 
