@@ -13,7 +13,9 @@ from django.db.models import Q
 from accounts.models import User
 from tcat.models import Tcat
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Sum
+from django.db.models.functions import TruncMonth
+from django.db.models import Count
 
 # Create your views here.
 def index_redirect(request):
@@ -271,10 +273,26 @@ def search(request):
     return render(request, 'tcat/search.html', {'results': results})
 
 
+def get_monthly_expenses(request):
+    expenses = Tcat.objects.filter(user=request.user)\
+                .annotate(month=TruncMonth('date'))\
+                .values('month')\
+                .annotate(total=Sum('price'))\
+                .order_by('month')
+
+    expenses = list(expenses)
+
+    return JsonResponse(expenses, safe=False)
 
 
+def get_monthly_post_counts(request):
+    posts = Tcat.objects.filter(user=request.user)\
+                .annotate(month=TruncMonth('date'))\
+                .values('month')\
+                .annotate(count=Count('id'))\
+                .order_by('month')
 
+    posts = list(posts)
 
-
-
+    return JsonResponse(posts, safe=False)
 

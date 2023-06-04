@@ -17,4 +17,6 @@ urlpatterns = [
     path('kakao_image_search/', kakao_image_search, name='kakao_image_search'),
     path('naver_image_search/', naver_image_search, name='naver_image_search'),
     path('search/', views.search, name='search'),
+    path('get_monthly_expenses/', views.get_monthly_expenses, name='get_monthly_expenses'),
+    path('get_monthly_post_counts/', views.get_monthly_post_counts, name='get_monthly_post_counts'),
 ]
