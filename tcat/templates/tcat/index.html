@@ -61,10 +61,29 @@
   </div>
 {% endfor %}
 </div>
-
+<!-- 그래프 -->
+<div style="display: flex; justify-content: space-between;">
+  <div style="margin-right: 100px;">
+      <button id="prevYearExpenses">이전 연도</button>
+      <span id="currentYearExpenses"></span>
+      <button id="nextYearExpenses">다음 연도</button>
+      <canvas id="myChartExpenses" width="600" height="400"></canvas>
+  </div>
+  <div>
+      <button id="prevYearPosts">이전 연도</button>
+      <span id="currentYearPosts"></span>
+      <button id="nextYearPosts">다음 연도</button>
+      <canvas id="myChartPosts" width="600" height="400"></canvas>
+  </div>
+</div>
+<!-- 그래프 -->
 {% endblock content %}
 
 {% block javascript %}
+<!-- 그래프 -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src='{% static "js/index.js" %}'></script>
+<script src='{% static "js/index2.js" %}'></script>
 <!-- moment -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <!-- jQuery -->
@@ -79,7 +98,6 @@
 <script src="https://kit.fontawesome.com/7c2def04d0.js" crossorigin="anonymous"></script>
 <!-- HTML2Canvas -->
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
-
 <script src='{% static "js/index.global.js" %}'></script> <!-- 달력 -->
 <script src='{% static "js/calendar.js" %}'></script> <!-- 달력 -->
 {% endblock javascript %}
