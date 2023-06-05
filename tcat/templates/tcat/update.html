@@ -45,12 +45,23 @@
             <div class="contents__title--title">카테고리</div>
             <div>{{ form.categori }}</div>
           </div>
+          
           <div id="new_add">
+            {{ dynamic_form.management_form }}
+            {% for formset_form in dynamic_form %}
+              <div>
+                {{ formset_form.field_title }}
+                {{ formset_form.field_value }}
+              </div>
+            {% endfor %}
           </div>
+          
+
           <div class="contents__add">
             <input type="button" value="+ 추가" onclick='createDiv()'>
             <input type="button" value="- 삭제" onclick="deleteDiv()">
           </div>
+
           <div class="d-flex contents__review">
             {{ form.media }}
             <div>{{ form.review }}</div>

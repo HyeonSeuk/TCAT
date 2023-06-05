@@ -49,8 +49,8 @@ function drawChartPosts() {
     datasets: [{
       label: '월별 총 게시물 수',
       data: monthly_counts,
-      backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      borderColor: 'rgba(75, 192, 192, 1)',
+      backgroundColor: 'rgba(255, 154, 118, 0.2)',
+      borderColor: 'rgba(255, 154, 118, 1)',
       borderWidth: 1
     }]
   };
@@ -60,7 +60,7 @@ function drawChartPosts() {
     data: data,
     options: {
       responsive: true,
-      maintainAspectRatio: false,
+      maintainAspectRatio: true,
       scales: {
         y: {
           beginAtZero: true

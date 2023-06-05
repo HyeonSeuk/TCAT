@@ -5,7 +5,7 @@
 
 <!-- Bootstrap Datepicker -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
 <link rel="stylesheet" href="{% static 'css/index.css' %}">
 
@@ -20,6 +20,32 @@
   <input type="text" class="datepicker" data-provide="datepicker">
   <div id="calendar"></div>
 </div>
+
+<!-- 모달 HTML -->
+<div class="modal" id="eventModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="modalDate"></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex flex-row event-separator">
+          <img class="col-md-5 modal-img" id="modalImage" src="" alt="Event Image">
+          <div class="row">
+            <h5 class="modal-title" id="modalTitle"></h5>
+            <div class="modalLocation" id="modalLocation"></div>
+            <div class="modalReview" id="modalReview"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 <button onclick="window.location.href = '{% url 'tcat:create' %}';">이동</button>
@@ -68,15 +94,20 @@
       <button id="prevYearExpenses">이전 연도</button>
       <span id="currentYearExpenses"></span>
       <button id="nextYearExpenses">다음 연도</button>
-      <canvas id="myChartExpenses" width="600" height="400"></canvas>
+      <div style="width: 600px; height: 400px;">
+        <canvas id="myChartExpenses"></canvas>
+      </div>
   </div>
   <div>
       <button id="prevYearPosts">이전 연도</button>
       <span id="currentYearPosts"></span>
       <button id="nextYearPosts">다음 연도</button>
-      <canvas id="myChartPosts" width="600" height="400"></canvas>
+      <div style="width: 600px; height: 400px;">
+        <canvas id="myChartPosts"></canvas>
+      </div>
   </div>
 </div>
+
 <!-- 그래프 -->
 {% endblock content %}
 
@@ -92,7 +123,7 @@
 <!-- FullCalendar -->
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.8/index.global.min.js'></script>
 <!-- Bootstrap -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <!-- Bootstrap Datepicker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ko.min.js"></script>
