@@ -1,4 +1,8 @@
-// FullCalendar 
+function stripTags(str) {
+  return str.replace(/<[^>]+>/g, '');
+}
+
+// FullCalendar
 document.addEventListener('DOMContentLoaded', function () {
   var calendarEl = document.getElementById('calendar');
   var datepickerEl = document.querySelector('.datepicker');
@@ -22,6 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
             return {
               date: event.date,
               title: event.title,
+              location: event.location,
+              review: stripTags(event.review),
               rendering: 'background',
               extendedProps: {
                 image_url: event.image_url,
@@ -52,6 +58,24 @@ document.addEventListener('DOMContentLoaded', function () {
       var tcatPk = arg.event.extendedProps.tcat_pk;
       window.location.href = '/tcat/' + tcatPk + '/';
     },
+
+    moreLinkClick: function(arg) {
+      var date = moment(arg.date).format('YYYY-MM-DD');
+      var events = arg.allSegs.map(function(seg) {
+        return {
+          title: seg.event.title,
+          image_url: seg.event.extendedProps.image_url,
+          location: seg.event.extendedProps.location,
+          review: seg.event.extendedProps.review ? stripTags(seg.event.extendedProps.review) : '',
+          tcat_pk: seg.event.extendedProps.tcat_pk
+        };
+      });
+  
+      openModal(date, events);
+    
+      arg.event.preventDefault();
+    },
+    
     dateClick: function(info) {
       var selectedDate = info.dateStr;
       localStorage.setItem('selectedDate', selectedDate);
@@ -69,16 +93,64 @@ document.addEventListener('DOMContentLoaded', function () {
           new_date: newDate
         },
         success: function(response) {
-          console.log('Event date updated successfully');
+          console.log('Event date updated');
         },
         error: function(xhr, status, error) {
           failureCallback(xhr, status, error);
         }
       });
-    }
+    },
   });
 
   calendar.render();
+
+  function openModal(date, events) {
+    var modalDate = document.getElementById('modalDate');
+    modalDate.innerText = date;
+  
+    var modalBody = document.querySelector('.modal-body');
+    modalBody.innerHTML = '';
+  
+    events.forEach(function(event) {
+      var eventContainer = document.createElement('div');
+      eventContainer.classList.add('d-flex', 'flex-row', 'event-separator');
+  
+      var eventImage = document.createElement('img');
+      eventImage.classList.add('col-md-5', 'modal-img');
+      eventImage.src = event.image_url || '/static/image/noimg.png'; // 이미지가 없는 경우 대체 이미지로 설정
+      eventContainer.appendChild(eventImage);
+
+      eventContainer.addEventListener('click', function() {
+        window.location.href = '/tcat/' + event.tcat_pk + '/';
+      });
+      
+  
+      var eventInfo = document.createElement('div');
+      eventInfo.classList.add('row');
+  
+      var eventTitle = document.createElement('h5');
+      eventTitle.classList.add('modal-title');
+      eventTitle.innerText = event.title;
+      eventInfo.appendChild(eventTitle);
+
+      var eventLocation = document.createElement('div');
+      eventLocation.classList.add('modalLocation');
+      eventLocation.innerText = event.location;
+      eventInfo.appendChild(eventLocation);
+
+
+      var eventReview = document.createElement('div');
+      eventReview.classList.add('modalReview');
+      eventReview.innerText = event.review ? stripTags(event.review) : '';
+      eventInfo.appendChild(eventReview);
+  
+      eventContainer.appendChild(eventInfo);
+      modalBody.appendChild(eventContainer);
+    });
+  
+    $('#eventModal').modal('show');    
+  }
+  
 
   // Bootstrap Datepicker
   $('.datepicker').datepicker({

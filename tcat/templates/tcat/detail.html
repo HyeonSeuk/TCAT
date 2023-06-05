@@ -66,14 +66,13 @@
       <div>{{ tcat.categori }}</div>
     </div>
   </div>
-  {% if tcat.dynamicdata_set.exists %}
-    {% for dynamic_data in tcat.dynamicdata_set.all %}
-      <div class="detail__contents">
-        <div class="detail__contents--title">{{ dynamic_data.field_title }}</div>
-        <div>{{ dynamic_data.field_value }}</div>
-      </div>
+  {% if tcat.dynamic_field.exists %}
+  <h2>Dynamic Field</h2>
+    {% for field in tcat.dynamic_field.all %}
+      <p>{{ field.field_title }}: {{ field.field_value }}</p>
     {% endfor %}
   {% endif %}
+
 
 
   <!--리뷰-->
@@ -91,5 +90,6 @@
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 <!--capture-->
 <script src='{% static "js/detail.js" %}'></script>
+<script type="text/javascript" src="{% static 'js/create.js' %}"></script>
 {% endblock javascript %}
 
