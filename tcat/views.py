@@ -252,24 +252,49 @@ def search(request):
     if query:
         # 유저 이름으로 검색
         users = User.objects.filter(Q(username__icontains=query))
+        # for user in users:
+        #     results.append({
+        #         'type': 'user',
+        #         'username': user.username,
+        #         'image': user.image.url,
+        #     })
+
         for user in users:
-            results.append({
+            user_data = {
                 'type': 'user',
                 'username': user.username,
-                'image': user.image.url,
-            })
+                'image': None,  # Default value when image is not present
+            }
+            if user.image:
+                user_data['image'] = user.image.url
+            results.append(user_data)
 
         # 제목으로 검색
         tcats = Tcat.objects.filter(title__icontains=query)
+        # for tcat in tcats:
+        #     results.append({
+        #         'type': 'tcat',
+        #         'username': tcat.user.username,
+        #         'image': tcat.image.url,
+        #         'date': tcat.date,
+        #         'tcat_pk': tcat.pk,
+        #         'creator': tcat.user.username,
+        #     })
+
         for tcat in tcats:
-            results.append({
+            tcat_data = {
                 'type': 'tcat',
                 'username': tcat.user.username,
-                'image': tcat.image.url,
+                'image': None,  # Default value when image is not present
                 'date': tcat.date,
                 'tcat_pk': tcat.pk,
                 'creator': tcat.user.username,
-            })
+                'title': tcat.title,
+            }
+            if tcat.image:
+                tcat_data['image'] = tcat.image.url
+            results.append(tcat_data)
+
     return render(request, 'tcat/search.html', {'results': results})
 
 
