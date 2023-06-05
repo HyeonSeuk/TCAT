@@ -60,7 +60,7 @@ function drawChartPosts() {
     data: data,
     options: {
       responsive: true,
-      maintainAspectRatio: false,
+      maintainAspectRatio: true,
       scales: {
         y: {
           beginAtZero: true
