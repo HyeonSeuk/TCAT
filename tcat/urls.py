@@ -7,11 +7,13 @@ app_name = 'tcat'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('other_calendar/<str:username>/', views.other_calendar, name='other_calendar'),
     path('<int:tcat_pk>/', views.detail, name='detail'),
     path('create/', views.create, name='create'),
     path('<int:tcat_pk>/delete/', views.delete, name='delete'),
     path('<int:tcat_pk>/update/', views.update, name='update'),
     path('all_events/', views.all_events, name='all_events'),
+    path('other_events/<str:username>/', views.other_events, name='other_events'),
     path('update_event/', views.update_event, name='update_event'),
     path('capture/', views.capture, name='capture'),
     path('kakao_image_search/', kakao_image_search, name='kakao_image_search'),
