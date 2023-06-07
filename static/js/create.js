@@ -14,8 +14,8 @@ function createDiv() {
   if (fieldCount < maxFields) {
     var div = document.createElement('div');
     div.innerHTML = `
-      <input type="text" name="dynamic_formset-${fieldCount}-field_title" placeholder="필드 제목">
-      <input type="text" name="dynamic_formset-${fieldCount}-field_value" placeholder="필드 값">
+      <input type="text" name="dynamic_formset-${fieldCount}-field_title" placeholder="필드 제목" class="contents__add--title" required>
+      <input type="text" name="dynamic_formset-${fieldCount}-field_value" placeholder="필드 내용" class="contents__add--input" required>
     `;
     newAddContainer.appendChild(div);
     totalFormsInput.value = fieldCount + 1;  // 변경된 부분

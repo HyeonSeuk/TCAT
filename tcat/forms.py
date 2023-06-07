@@ -8,6 +8,13 @@ class DynamicFieldForm(forms.ModelForm):
         model = DynamicField
         fields = ('field_title', 'field_value',)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['field_title'].widget.attrs['class'] = 'contents__add--title'
+        self.fields['field_value'].widget.attrs['class'] = 'contents__add--input'
+        
+
+
 class TcatForm(forms.ModelForm):
     class Meta:
         model = Tcat

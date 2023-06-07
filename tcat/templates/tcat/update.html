@@ -49,17 +49,16 @@
           <div id="new_add">
             {{ dynamic_form.management_form }}
             {% for formset_form in dynamic_form %}
-              <div>
-                {{ formset_form.field_title }}
-                {{ formset_form.field_value }}
+              <div class="d-flex">
+                <div class="contents__add--title">{{ formset_form.field_title }}</div>
+                <div class="contents__add--input">{{ formset_form.field_value }}</div>
               </div>
             {% endfor %}
           </div>
-          
 
           <div class="contents__add">
-            <input type="button" value="+ 추가" onclick='createDiv()'>
-            <input type="button" value="- 삭제" onclick="deleteDiv()">
+            <input type="button" value="+ 필드 추가" onclick='createDiv()' class="contents__add-plus">
+            <input type="button" value="- 필드 삭제" onclick="deleteDiv()" class="contents__add-minus">
           </div>
 
           <div class="d-flex contents__review">

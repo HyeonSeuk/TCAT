@@ -65,13 +65,18 @@
       <div class="detail__contents--title">카테고리</div>
       <div>{{ tcat.categori }}</div>
     </div>
+    <!--동적필드-->
+    {% if tcat.dynamic_field.exists %}
+      {% for field in tcat.dynamic_field.all %}
+        <div class="detail__contents">
+          <div class="detail__contents--title">{{ field.field_title }}</div>
+          <div>{{ field.field_value }}</div>
+        </div>
+      {% endfor %}
+    {% endif %}
+
   </div>
-  {% if tcat.dynamic_field.exists %}
-  <h2>Dynamic Field</h2>
-    {% for field in tcat.dynamic_field.all %}
-      <p>{{ field.field_title }}: {{ field.field_value }}</p>
-    {% endfor %}
-  {% endif %}
+  
 
 
 
@@ -93,3 +98,9 @@
 <script type="text/javascript" src="{% static 'js/create.js' %}"></script>
 {% endblock javascript %}
 
+{% comment %} {% if tcat.dynamic_field.exists %}
+<h2>Dynamic Field</h2>
+  {% for field in tcat.dynamic_field.all %}
+    <p>{{ field.field_title }}: {{ field.field_value }}</p>
+  {% endfor %}
+{% endif %} {% endcomment %}
