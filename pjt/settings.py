@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'imagekit',
+    'captcha',
     
     #allauth
     'django.contrib.sites',
@@ -175,3 +176,7 @@ LOGIN_REDIRECT_URL = '/'  # 로그인 후 리다이렉트 될 경로
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
 ACCOUNT_LOGOUT_ON_GET = True
+
+RECAPTCHA_PUBLIC_KEY = '6LfjBF4mAAAAALbZjYfNf_sYO2saokUQx-Cc619l'
+RECAPTCHA_PRIVATE_KEY = '6LfjBF4mAAAAAOmLLyNCzQ5XYIm16DKv9m__bDjb'
+NOCAPTCHA = False

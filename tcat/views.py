@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 from datetime import datetime
-from .models import Tcat
+from .models import Tcat, DynamicField
 from .forms import TcatForm, DynamicFieldFormSet
 from django.http import JsonResponse
 from django.conf import settings
@@ -13,7 +13,10 @@ from django.db.models import Q
 from accounts.models import User
 from tcat.models import Tcat
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Sum
+from django.db.models.functions import TruncMonth
+from django.db.models import Count
+from django.utils.html import strip_tags
 
 # Create your views here.
 def index_redirect(request):
@@ -82,8 +85,13 @@ def index(request):
 
 def detail(request, tcat_pk):
     tcat = Tcat.objects.get(pk=tcat_pk)
+    try:
+        dynamic = DynamicField.objects.get(tcat=tcat)
+    except:
+        dynamic = None
     context = {
         'tcat': tcat,
+        'dynamic': dynamic,
     }
     return render(request, 'tcat/detail.html', context)
 
@@ -91,23 +99,18 @@ def detail(request, tcat_pk):
 def create(request):
     if request.method == 'POST':
         tcat_form = TcatForm(request.POST, request.FILES)
-        dynamic_form = DynamicFieldFormSet(request.POST, prefix='dynamic_form')
+        dynamic_form = DynamicFieldFormSet(request.POST, prefix='dynamic_formset')
 
         if tcat_form.is_valid():
             tcat = tcat_form.save(commit=False)
             tcat.user = request.user
             tcat.save()
 
-
         if dynamic_form.is_valid():
             for form in dynamic_form:
                 dynamic_field = form.save(commit=False)
                 dynamic_field.tcat = tcat
                 dynamic_field.save()
-                print(f'dynamic_field: {dynamic_field}')
-        else:
-            print(f'유효성 검사: {dynamic_form.errors}')
-            print(f'데이터: {request.POST}')
 
 
         if tcat.image:
@@ -119,7 +122,7 @@ def create(request):
         
     else:
         tcat_form = TcatForm()
-        dynamic_form = DynamicFieldFormSet()
+        dynamic_form = DynamicFieldFormSet(prefix='dynamic_formset')
 
     context = {
         'form': tcat_form,
@@ -138,20 +141,37 @@ def delete(request, tcat_pk):
 
 def update(request, tcat_pk):
     tcat = Tcat.objects.get(pk=tcat_pk)
+    dynamic_fields = DynamicField.objects.filter(tcat=tcat)
+    dynamic_form = DynamicFieldFormSet(request.POST, prefix='dynamic_formset', initial=dynamic_fields.values())
     if request.user == tcat.user:
         if request.method == "POST":
             form = TcatForm(request.POST, request.FILES, instance=tcat)
             if form.is_valid():
+                tcat = form.save(commit=False)
                 form.save()
-                return redirect('tcat:detail', tcat.pk)
+
+            if dynamic_form.is_valid():
+                DynamicField.objects.filter(tcat=tcat).delete()
+                for form in dynamic_form:
+                    dynamic_field = form.save(commit=False)
+                    dynamic_field.tcat = tcat
+                    dynamic_field.save()
+            
+            if tcat.image:
+                tcat.image_url = settings.MEDIA_URL + tcat.image.name
+                tcat.save()
+                    
+            return redirect('tcat:detail', tcat.pk)
         else:
             form = TcatForm(instance=tcat)
+            dynamic_form = DynamicFieldFormSet(prefix='dynamic_formset', initial=dynamic_fields.values())
     else:
         return redirect('tcat:index')
 
     context = {
         'tcat': tcat,
         'form': form,
+        'dynamic_form': dynamic_form,
     }
 
     return render(request, 'tcat/update.html', context)
@@ -166,7 +186,9 @@ def all_events(request):
             'date': event.date,
             'title': event.title,
             'image_url': event.image_url,
-            'tcat_pk': event.id,  # 수정된 부분
+            'location': event.location,
+            'review': strip_tags(event.review),
+            'tcat_pk': event.id,
         })
 
     return JsonResponse(out, safe=False)
@@ -250,31 +272,72 @@ def search(request):
     if query:
         # 유저 이름으로 검색
         users = User.objects.filter(Q(username__icontains=query))
+        # for user in users:
+        #     results.append({
+        #         'type': 'user',
+        #         'username': user.username,
+        #         'image': user.image.url,
+        #     })
+
         for user in users:
-            results.append({
+            user_data = {
                 'type': 'user',
                 'username': user.username,
-                'image': user.image.url,
-            })
+                'image': None,  # Default value when image is not present
+            }
+            if user.image:
+                user_data['image'] = user.image.url
+            results.append(user_data)
 
         # 제목으로 검색
         tcats = Tcat.objects.filter(title__icontains=query)
+        # for tcat in tcats:
+        #     results.append({
+        #         'type': 'tcat',
+        #         'username': tcat.user.username,
+        #         'image': tcat.image.url,
+        #         'date': tcat.date,
+        #         'tcat_pk': tcat.pk,
+        #         'creator': tcat.user.username,
+        #     })
+
         for tcat in tcats:
-            results.append({
+            tcat_data = {
                 'type': 'tcat',
                 'username': tcat.user.username,
-                'image': tcat.image.url,
+                'image': None,  # Default value when image is not present
                 'date': tcat.date,
                 'tcat_pk': tcat.pk,
                 'creator': tcat.user.username,
-            })
+                'title': tcat.title,
+            }
+            if tcat.image:
+                tcat_data['image'] = tcat.image.url
+            results.append(tcat_data)
+
     return render(request, 'tcat/search.html', {'results': results})
 
 
+def get_monthly_expenses(request):
+    expenses = Tcat.objects.filter(user=request.user)\
+                .annotate(month=TruncMonth('date'))\
+                .values('month')\
+                .annotate(total=Sum('price'))\
+                .order_by('month')
+
+    expenses = list(expenses)
+
+    return JsonResponse(expenses, safe=False)
 
 
+def get_monthly_post_counts(request):
+    posts = Tcat.objects.filter(user=request.user)\
+                .annotate(month=TruncMonth('date'))\
+                .values('month')\
+                .annotate(count=Count('id'))\
+                .order_by('month')
 
+    posts = list(posts)
 
-
-
+    return JsonResponse(posts, safe=False)
 

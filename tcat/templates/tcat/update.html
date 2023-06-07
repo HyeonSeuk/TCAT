@@ -11,10 +11,6 @@
     <div class="create__header">
       <div><a class="create__header--text" href="{% url 'tcat:index' %}">취소</a></div>
       <div class="create__header--title">기록 추가</div>
-      {% comment %} <div type="submit" onclick="document.getElementById('tcatForm').submit();">
-        등록
-      </div>
-      <input type="submit" onclick="document.getElementById('tcatForm').submit();"> {% endcomment %}
     </div>
 
     <!--main-->
@@ -31,7 +27,7 @@
         <div class="main__contents">
           <div class="contents__title">
             <div class="contents__title--title">제목</div>
-            <input type="text" name="title" class="contents__title--input">
+            <div class="contents__title--input">{{form.title}}</div>
           </div>
           <div class="d-flex contents__date">
             <div class="contents__title--title">일시</div>
@@ -49,12 +45,23 @@
             <div class="contents__title--title">카테고리</div>
             <div>{{ form.categori }}</div>
           </div>
+          
           <div id="new_add">
+            {{ dynamic_form.management_form }}
+            {% for formset_form in dynamic_form %}
+              <div>
+                {{ formset_form.field_title }}
+                {{ formset_form.field_value }}
+              </div>
+            {% endfor %}
           </div>
+          
+
           <div class="contents__add">
             <input type="button" value="+ 추가" onclick='createDiv()'>
             <input type="button" value="- 삭제" onclick="deleteDiv()">
           </div>
+
           <div class="d-flex contents__review">
             {{ form.media }}
             <div>{{ form.review }}</div>
@@ -64,7 +71,6 @@
       <input type="submit" value="등록" class="main__input">
     </form>    
   </div>
-
 
 
 <!-- The Modal -->

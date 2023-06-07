@@ -1,32 +1,123 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block style %}
+  <link rel="stylesheet" href="{% static 'css/search.css' %}">
+{% endblock style %}
+
 {% block content %}
-    <h2>검색 결과</h2>
-    {% if results %}
-        {% for result in results %}
-            <div>
-                {% if result.type == 'user' %}
-                    <a href="{% url 'accounts:profile' result.username %}">
-                        <img src="{{ result.image }}" alt="{{ result.username }}'s profile picture">
-                    </a>
-                {% elif result.type == 'tcat' %}
-                    {% if request.user.username == result.creator %}  <!-- 현재 로그인된 사용자가 게시물 작성자와 같은 경우에만 링크 생성 -->
-                        <a href="{% url 'tcat:detail' result.tcat_pk %}">
-                            <img src="{{ result.image }}" alt="이미지" class="detail__image">
-                        </a>
-                    {% else %}
-                        <img src="{{ result.image }}" alt="이미지" class="detail__image">
-                    {% endif %}
-                    <div>{{ result.date }}</div>
+  <h2>검색 결과</h2>
+  {% if results %}
+  <!--user 검색결과-->
+    <div class="search__container--user">
+      {% for result in results %}
+        {% if result.type == 'user' %}
+          <div class="result__user">
+            <a href="{% url 'accounts:profile' result.username %}" class="text-decoration-none">
+              <div style="width:200px; margin:0 auto;">
+                {% if result.image %}
+                  <img src="{{ result.image }}" alt="{{ result.username }}'s profile picture" class="user__profile--img">
+                {% else %}
+                  <img src="{% static 'image/no-profile-img.png' %}" alt="{{ result.username }}'s no profile picture" class="user__profile--noimg">
                 {% endif %}
+              </div>
+              <div class="user__name">{{ result.username }}</div>
+            </a>            
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if results %}
+  <!--게시물 검색결과-->
+    <div class="search__container--tcat">
+      {% for result in results %}
+        {% if result.type == 'tcat' %}
+          <div class="result__tcat">
+            <div class="result__header">
+              {% if request.user.username == result.creator %}  <!-- 현재 로그인된 사용자가 게시물 작성자와 같은 경우에만 링크 생성 -->
+                <a href="{% url 'tcat:detail' result.tcat_pk %}">
+                  {% if result.image %}
+                    <img src="{{ result.image }}" alt="이미지" class="">
+                  {% else %}
+                    <img src="{% static 'image/noImg.png' %}" alt="no picture" class="">       
+                  {% endif %}
+                </a>
+              {% else %} <!--로그인된 사용자가 게시글 작성자와 다를 경우-->
+                {% if result.image %}
+                  <img src="{{ result.image }}" alt="이미지" class="">
+                {% else %}
+                  <img src="{% static 'image/noImg.png' %}" alt="no picture" class="">       
+                {% endif %}
+              {% endif %}            
             </div>
-        {% endfor %}
-    {% else %}
-        <p>검색한 결과를 찾을 수 없습니다.</p>
-    {% endif %}
-{% endblock %}
+            <div class="result__contents">
+              <div class="result__contents--title">{{ result.title }}</div>
+              <div class="result__contents--date">{{ result.date }}</div>
+              <div class="result__contents--username"><a href="{% url 'accounts:profile' result.username %}">{{ result.username }}</a></div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>검색한 결과를 찾을 수 없습니다.</p>
+  {% endif %}
+{% endblock content %}
+
+{% block javascript %}
+{% endblock javascript %}
 
 
 
+{% comment %} <h2>검색 결과</h2>
+{% if results %}
+  <div class="search__container">
+    {% for result in results %}
+      <!--user 검색결과-->
+      {% if result.type == 'user' %}
+        <div class="result__user">
+          <a href="{% url 'accounts:profile' result.username %}" style="text-decoration: none;">
+            {% if result.image %}
+              <img src="{{ result.image }}" alt="{{ result.username }}'s profile picture" class="user__profile--img">
+            {% else %}
+              <img src="{% static 'image/no-profile-img.png' %}" alt="{{ result.username }}'s no profile picture" class="user__profile--noimg">
+            {% endif %}
+            <div class="user__name">{{ result.username }}</div>
+          </a>            
+        </div>
 
+      <!--게시물 검색결과-->
+      {% elif result.type == 'tcat' %}
+        <div class="result__tcat">
+          <div class="result__header">
+            {% if request.user.username == result.creator %}  <!-- 현재 로그인된 사용자가 게시물 작성자와 같은 경우에만 링크 생성 -->
+              <a href="{% url 'tcat:detail' result.tcat_pk %}">
+                {% if result.image %}
+                  <img src="{{ result.image }}" alt="이미지" class="">
+                {% else %}
+                  <img src="{% static 'image/noImg.png' %}" alt="no picture" class="">       
+                {% endif %}
+              </a>
+            {% else %} <!--로그인된 사용자가 게시글 작성자와 다를 경우-->
+              {% if result.image %}
+                <img src="{{ result.image }}" alt="이미지" class="">
+              {% else %}
+                <img src="{% static 'image/noImg.png' %}" alt="no picture" class="">       
+              {% endif %}
+            {% endif %}            
+          </div>
+          <div class="result__contents">
+            <div class="result__contents--title">{{ result.title }}</div>
+            <div class="result__contents--username"><a href="{% url 'accounts:profile' result.username %}">{{ result.username }}</a></div>
+            <div class="result__contents--date">{{ result.date }}</div>
+          </div>
+        </div>
+      {% endif %}
+
+    {% endfor %}
+  </div>
+{% else %}
+  <p>검색한 결과를 찾을 수 없습니다.</p>
+{% endif %} {% endcomment %}

@@ -51,7 +51,8 @@
           </div>
 
           <div id="new_add">
-            {% for formset_form in form.dynamic_form %}
+            {{ dynamic_form.management_form }}
+            {% for formset_form in dynamic_form %}
               <div>
                 <input type="text" name="{{ formset_form.prefix }}-field_title" placeholder="필드 제목">
                 <input type="text" name="{{ formset_form.prefix }}-field_value" placeholder="필드 값">
