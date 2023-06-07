@@ -22,13 +22,19 @@
 
       <p class='text-center mt-4 mb-2'>또는 <b>소셜 로그인</b></p>
       
-      <a href="{% provider_login_url 'kakao' method='oauth2' %}" class="social--login">
-        <div class='d-flex justify-content-center'>
-          <img src="{% static 'image/kakao.png' %}" alt="kakao_logo" style='width: 60px; height: 60px; border-radius: 50px;'>
-        </div>
-      </a>
-            
-     
+      <div class='d-flex justify-content-start'>
+        <a href="{% provider_login_url 'kakao' method='oauth2' %}" class="social--login" style='margin-right: 20px;'>
+          <div class='d-flex justify-content-center'>
+            <img src="{% static 'image/kakao.png' %}" alt="kakao_logo" style='width: 60px; height: 60px; border-radius: 50px;'>
+          </div>
+        </a>
+        
+        <a href="{% provider_login_url 'google' method='oauth2' %}" class="social--login">
+          <div class='d-flex justify-content-center'>
+            <img src="{% static 'image/google.png' %}" alt="google_logo" style='width: 60px; height: 60px; border-radius: 50px;'>
+          </div>
+        </a>
+      </div>
 
       {% comment %} <hr class='mt-4' style='border-top: 1px solid black; margin-top: 5px; margin-bottom: 10px;'> {% endcomment %}
 

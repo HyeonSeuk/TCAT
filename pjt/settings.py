@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     
     #provider
+    'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.kakao',
 ]
 
@@ -180,3 +181,13 @@ ACCOUNT_LOGOUT_ON_GET = True
 RECAPTCHA_PUBLIC_KEY = '6LfjBF4mAAAAALbZjYfNf_sYO2saokUQx-Cc619l'
 RECAPTCHA_PRIVATE_KEY = '6LfjBF4mAAAAAOmLLyNCzQ5XYIm16DKv9m__bDjb'
 NOCAPTCHA = False
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '20111938092-n00mi9frj9pibgnjdmo9jk69b6r2aae6.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    }
+}
