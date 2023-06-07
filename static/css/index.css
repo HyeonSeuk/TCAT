@@ -10,6 +10,27 @@
   position: absolute;
 }
 
+.index__ranking {
+  color: #679B9B;
+}
+
+.index__preform--div {
+  width: 200px;
+}
+
+.index__preform--div:hover {
+  background-color: #cad8d8;
+}
+
+.index__perform--img {
+  width: 200px;
+  /* padding: 10px; */
+}
+
+.index__perform--font {
+  color: black;
+}
+
 .event-separator {
   margin-top: 30px;
   margin-bottom: 30px;
@@ -19,3 +40,4 @@
   width: 100%;
   height: 170px;
 }
+
