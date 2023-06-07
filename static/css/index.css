@@ -9,3 +9,25 @@
 .header-datepicker .datepicker {
   position: absolute;
 }
+
+.index__ranking {
+  color: #679B9B;
+}
+
+.index__preform--div {
+  width: 200px;
+}
+
+.index__preform--div:hover {
+  background-color: #cad8d8;
+}
+
+.index__perform--img {
+  width: 200px;
+  /* padding: 10px; */
+}
+
+.index__perform--font {
+  color: black;
+}
+

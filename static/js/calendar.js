@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     dayMaxEvents: 1,
     headerToolbar: {
       start: '',
-      right: 'prev,next today'
+      right: 'prev,next today',
     },
     events: function(info, successCallback, failureCallback) {
       $.ajax({
@@ -124,6 +124,22 @@ document.addEventListener('DOMContentLoaded', function () {
     $(datepickerEl).datepicker('setDate', todayDate);
     calendar.gotoDate(todayDate);
   });
+
+  datepickerEl.style.paddingLeft = '10px';
+  datepickerEl.style.border = '1px solid var(--fourth-color)';
+  datepickerEl.style.fontSize = '20px';
+
+  // prevButton.style.backgroundColor = 'white';
+  // prevButton.style.border = '1px solid var(--fourth-color)';
+  // prevButton.style.color = 'black';
+  // nextButton.style.backgroundColor = 'white';
+  // nextButton.style.border = '1px solid var(--fourth-color)';
+  // nextButton.style.color = 'black';
+
+  prevButton.style.backgroundColor = 'var(--fourth-color)';
+  prevButton.style.border = 'none';
+  nextButton.style.backgroundColor = 'var(--fourth-color)';
+  nextButton.style.border = 'none';
 
 });
 
