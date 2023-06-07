@@ -83,6 +83,17 @@ def index(request):
     return render(request, 'tcat/index.html', context)
 
 
+def other_calendar(request, username):
+    person = User.objects.get(username=username)
+    tcat_list = Tcat.objects.filter(user=person)
+
+    context = {
+        'tcat_list': tcat_list,
+        'person': person,
+    }
+    return render(request, 'tcat/other_calendar.html', context)
+
+
 def detail(request, tcat_pk):
     tcat = Tcat.objects.get(pk=tcat_pk)
     try:
@@ -180,6 +191,23 @@ def update(request, tcat_pk):
 @login_required
 def all_events(request):
     all_events = Tcat.objects.filter(user=request.user)
+    out = []
+    for event in all_events:
+        out.append({
+            'date': event.date,
+            'title': event.title,
+            'image_url': event.image_url,
+            'location': event.location,
+            'review': strip_tags(event.review),
+            'tcat_pk': event.id,
+        })
+
+    return JsonResponse(out, safe=False)
+
+
+def other_events(request, username):
+    person = User.objects.get(username=username)
+    all_events = Tcat.objects.filter(user__username=person)
     out = []
     for event in all_events:
         out.append({
