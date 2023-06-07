@@ -63,7 +63,10 @@ function drawChartPosts() {
       maintainAspectRatio: true,
       scales: {
         y: {
-          beginAtZero: true
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1  // 수정된 부분
+          }
         }
       },
       plugins: {

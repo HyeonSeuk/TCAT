@@ -35,7 +35,7 @@
 }
 
 .main__image{
-  justify-content: center;
+  /* justify-content: center; */
   margin-bottom: 20px;
   border: 1px solid lightcoral;
 }
@@ -53,12 +53,15 @@
 
 .contents__title--title{
   padding-top: 7px;
+  height: 50px;
   width: 150px;
+  font-size: 25px;
 }
 
 .contents__title--input{
   height: 50px;
   width: 880px;
+  font-size: 25px;
 }
 
 .contents__date {
@@ -111,12 +114,41 @@ input[type="date"]{
   margin-bottom: 12px;
 }
 
+/* 동적필드 제목 */
+.contents__add--title{
+  height: 50px;
+  width: 150px;
+  font-size: 25px;
+  margin-bottom: 12px;
+}
+
+/* 동적필드 내용*/
+.contents__add--input{
+  height: 50px;
+  width: 880px;
+  font-size: 25px;
+  margin-bottom: 12px;
+}
+
+.contents__add-plus{
+  background-color: #FF9A76;
+  color: white;
+  border: 2px solid rgba(0, 0, 0, 0.144);
+  margin-right: 15px;
+}
+
+.contents__add-minus{
+  background-color: #FF9A76;
+  color: white;
+  border: 2px solid rgba(0, 0, 0, 0.144);  
+}
+
 .main__input {
   font-size: 35px;
   font-weight: 500;
   position: absolute;
-  right: 430px;
-  top: 120px;
+  margin-left: 1000px;
+  top: 113px;
   border: none;
   background-color: white;
   padding: 0;
