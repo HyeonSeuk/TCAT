@@ -10,4 +10,5 @@ urlpatterns = [
     path('profile/delete/', views.delete, name='delete'),
     path('<int:user_pk>/follow/', views.follow, name='follow'),
     path('<int:user_pk>/follower/', views.follower, name='follower'),
+    path('<int:user_id>/check_follow_status/', views.check_follow_status, name='check_follow_status'),
 ]

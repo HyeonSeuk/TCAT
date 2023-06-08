@@ -56,7 +56,7 @@ form.addEventListener('submit', function (event) {
     followingsListData.forEach((following) => {
       const followingLink = document.createElement('a');
       followingLink.classList.add('modal__username--text');
-      followingLink.href = `/accounts/profile/${follower.username}`;
+      followingLink.href = `/accounts/profile/${following.username}`;
       followingLink.textContent = following.username;
       
       const followingDiv = document.createElement('div');
@@ -67,3 +67,42 @@ form.addEventListener('submit', function (event) {
     });
   })
 })
+
+
+$(document).ready(function() {
+  function updateFollowIcon(isFollowing) {
+    const followIcon = $("#follow-icon");
+
+    if (isFollowing) {
+      followIcon.show();
+    } else {
+      followIcon.hide();
+    }
+  }
+
+  function checkFollowStatus(userId) {
+    $.ajax({
+      url: `/accounts/${userId}/check_follow_status/`,
+      type: "GET",
+      dataType: "json",
+      success: function(response) {
+        const isFollowing = response.is_following;
+        updateFollowIcon(isFollowing);
+      },
+      error: function(xhr, errmsg, err) {
+        console.log(xhr.status + ": " + xhr.responseText);
+      }
+    });
+  }
+
+  // 주기적으로 팔로우 상태 확인 및 아이콘 업데이트
+  const userId = $("#follow-form").data("userId");
+  setInterval(function() {
+    checkFollowStatus(userId);
+  }, 1000); // 1초마다 확인
+
+  // 페이지 로드 시 초기 팔로우 상태 확인 및 아이콘 업데이트
+  checkFollowStatus(userId);
+});
+
+
