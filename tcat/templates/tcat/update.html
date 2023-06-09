@@ -18,9 +18,9 @@
       {% csrf_token %}
       <div class="create__main">
         <!--image-->
-        <div class="d-flex main__image">
-          <button id="webImageButton">웹 이미지</button>
-          <div>{{ form.image }}앨범사진</div>
+        <div class="main__image d-flex align-items-center mb-3">
+          <div>{{ form.image }}</div>
+          <button id="webImageButton" type="button" class="main__image--search">웹 이미지 검색</button>
         </div>
 
         <!--contents-->
@@ -77,101 +77,141 @@
 
   <!-- Modal content -->
   <div class="modal-content">
-    <span class="close">&times;</span>
+    <div class="close">&times;</div>
+   
     <!-- 통합 검색 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
-    <form id="searchForm">
-      <input type="text" id="query" placeholder="검색어를 입력하세요">
+    <form id="searchForm" style="margin: 0 auto;">
+      <input type="text" id="query" placeholder="검색어를 입력하세요" class="modal__search--input">
     </form>
-    <div>
-      <button id="kakaoSearchButton">카카오 검색</button>
-      <button id="naverSearchButton">네이버 검색</button>
+    <div style="margin: 0 auto;">
+      <button id="kakaoSearchButton" class="modal__kakaoSearch--button">카카오 검색</button>
+      <button id="naverSearchButton" class="modal__naverSearch--button">네이버 검색</button>
+      <button id="goBack" class="modal__goback--button">&larr; 뒤로</button>
     </div>
-    <button id="loadMore">더보기</button>
-    
+    <!--이미지 크게보기-->
+    <div id="enlargedImage" style="margin: 0 auto;">       
+      <img src="" alt=""/>
+    </div>
+    <!--이미지 결과-->
     <div id="searchResult"></div>
+    <button id="loadMore" class="modal__more--button">더보기</button>
     
     <script>
-    var images = [];
-    var visibleImages = 8;
-    var searchSource = '';
+      // Get the modal
+      var modal = document.getElementById("myModal");
     
-    function showImages() {
+      // Get the button that opens the modal
+      var btn = document.getElementById("webImageButton");
+    
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+    
+      // Get the "go back" button that closes the enlarged image
+      var goBackBtn = document.getElementById("goBack");
+    
+      // When the user clicks on the button, open the modal
+      btn.onclick = function() {
+        modal.style.display = "block";
+      }
+    
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function() {
+        modal.style.display = "none";
+        // Add this to clear search results when the modal is closed
+        images = [];
+        $("#searchResult").empty();
+        $("#myModal .modal-content img").attr("src", "");
+      }
+    
+      // When the user clicks on the "go back" button, close the enlarged image
+      goBackBtn.onclick = function() {
+        $("#enlargedImage img").attr("src", ""); // Clear the enlarged image
+        $("#enlargedImage").hide();  // Hide the enlarged image
+        showImages();  // Show the search results again
+      }
+    
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+          // Add this to clear search results when the modal is closed
+          images = [];
+          $("#searchResult").empty();
+          $("#myModal .modal-content img").attr("src", "");
+        }
+      }
+    
+      var images = [];
+      var visibleImages = 8;
+      var searchSource = '';
+    
+      function showImages() {
         $("#searchResult").empty();
         for (var i = 0; i < visibleImages && i < images.length; i++) {
-            var img = $('<img />', { 
-              'src': searchSource === 'kakao' ? images[i]['thumbnail_url'] : images[i]['thumbnail'], 
-              'alt': searchSource === 'kakao' ? images[i]['display_sitename'] : images[i]['title']
-            });
-            $('#searchResult').append(img);
+          var img = $('<img />', { 
+            'src': searchSource === 'kakao' ? images[i]['image_url'] : images[i]['link'], 
+            'alt': searchSource === 'kakao' ? images[i]['display_sitename'] : images[i]['title']
+          });
+          $('#searchResult').append(img);
         }
-    }
-    
-    $("#loadMore").click(function() {
+      }
+      
+      $("#loadMore").click(function() {
         visibleImages += 8;
         showImages();
-    });
+      });
     
-    $("#kakaoSearchButton").click(function() {
+      $("#kakaoSearchButton").click(function() {
         searchSource = 'kakao';
         searchImages("{% url 'tcat:kakao_image_search' %}");
-    });
-
-    $("#naverSearchButton").click(function() {
+      });
+    
+      $("#naverSearchButton").click(function() {
         searchSource = 'naver';
         searchImages("{% url 'tcat:naver_image_search' %}");
-    });
-
-    function searchImages(url) {
+      });
+    
+      function searchImages(url) {
         var query = $("#query").val();
     
         $.ajax({
-            url: url,
-            data: {
-              'query': query
-            },
-            dataType: 'json',
-            success: function(data) {
-              images = searchSource === 'kakao' ? data['documents'] : data['items'];
-              visibleImages = 8;
-              showImages();
-            }
+          url: url,
+          data: {
+            'query': query,
+            'resolution': 'high'
+          },
+          dataType: 'json',
+          success: function(data) {
+            images = searchSource === 'kakao' ? data['documents'] : data['items'];
+            visibleImages = 8;
+            showImages();
+          }
         });
-    }
+      }
+    
+      // 이미지를 클릭할 때 모달을 표시하는 이벤트 리스너를 추가
+      $("#searchResult").on("click", "img", function() {
+        var src = $(this).attr("src");  // 클릭한 이미지의 URL을 가져옴
+        $("#enlargedImage img").attr("src", src);  // Enlarged image의 src를 변경
+        $("#searchResult").empty();  // 검색 결과를 비움
+        $("#enlargedImage").show();  // Show the enlarged image
+      });
+    
+      // 모달 외부를 클릭하면 모달을 숨김
+      $(window).click(function(event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+          // Add this to clear search results when the modal is closed
+          images = [];
+          $("#searchResult").empty();
+          $("#myModal .modal-content img").attr("src", "");
+        }
+      });
     </script>
   </div>
-
-
 </div>
-
-<script>
-  // Get the modal
-  var modal = document.getElementById("myModal");
-
-  // Get the button that opens the modal
-  var btn = document.getElementById("webImageButton");
-
-  // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("close")[0];
-
-  // When the user clicks on the button, open the modal
-  btn.onclick = function() {
-    modal.style.display = "block";
-  }
-
-  // When the user clicks on <span> (x), close the modal
-  span.onclick = function() {
-    modal.style.display = "none";
-  }
-
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  }
-</script>
 
 
 {% endblock content %}
