@@ -11,6 +11,10 @@
     <div class="create__header">
       <div><a class="create__header--text" href="{% url 'tcat:index' %}">취소</a></div>
       <div class="create__header--title">기록 추가</div>
+      {% comment %} <div type="submit" onclick="document.getElementById('tcatForm').submit();">
+        등록
+      </div>
+      <input type="submit" onclick="document.getElementById('tcatForm').submit();"> {% endcomment %}
     </div>
 
     <!--main-->
@@ -18,19 +22,11 @@
       {% csrf_token %}
       <div class="create__main">
         <!--image-->
-        <div class="d-flex align-items-center mb-3">
-          <div class="filebox preview-image">
-            <label for="input-file">사진 첨부하기 (1장)</label> 
-            {% comment %} <input class="upload-name" value="파일선택" disabled="disabled" >         {% endcomment %}
-            <input type="file" id="input-file" class="upload-hidden" name="image"> 
-          </div>
-
-          <button id="webImageButton" type="button" class="main__image--search">웹 이미지 검색</button>
+        <div class="d-flex main__image">
+          <div>앨범 사진 추가하기 : {{ form.image }}</div>
+          <button id="webImageButton">웹 이미지 검색 후 저장하기</button>
+          <input type="hidden" id="selectedImage" name="selectedImage" value="">
         </div>
-
-        {% comment %} <div class="main__image">
-          <div>{{ form.image }}</div>
-        </div> {% endcomment %}        
 
         <!--contents-->
         <div class="main__contents">
@@ -87,26 +83,25 @@
 
   <!-- Modal content -->
   <div class="modal-content">
-    <div class="close">&times;</div>
-   
+    <span class="close">&times;</span>
+    <div id="enlargedImage">
+      
+      <img src="" alt=""/>
+    </div>
     <!-- 통합 검색 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
-    <form id="searchForm" style="margin: 0 auto;">
-      <input type="text" id="query" placeholder="검색어를 입력하세요" class="modal__search--input">
+    <form id="searchForm">
+      <input type="text" id="query" placeholder="검색어를 입력하세요">
     </form>
-    <div style="margin: 0 auto;">
-      <button id="kakaoSearchButton" class="modal__kakaoSearch--button">카카오 검색</button>
-      <button id="naverSearchButton" class="modal__naverSearch--button">네이버 검색</button>
-      <button id="goBack" class="modal__goback--button">&larr; 뒤로</button>
+    <div>
+      <button id="kakaoSearchButton">카카오 검색</button>
+      <button id="naverSearchButton">네이버 검색</button>
+      <button id="goBack">&larr; 뒤로</button>
     </div>
-    <!--이미지 크게보기-->
-    <div id="enlargedImage" style="margin: 0 auto;">       
-      <img src="" alt=""/>
-    </div>
-    <!--이미지 결과-->
+    <button id="loadMore">더보기</button>
+    
     <div id="searchResult"></div>
-    <button id="loadMore" class="modal__more--button">더보기</button>
     
     <script>
       // Get the modal
@@ -220,6 +215,16 @@
         }
       });
     </script>
+    <script>
+      $("#searchResult").on("click", "img", function() {
+        var src = $(this).attr("src");  
+        $("#enlargedImage img").attr("src", src);  
+        $("#searchResult").empty();  
+        $("#enlargedImage").show();  
+        $("#selectedImage").val(src);
+      });
+      
+    </script>
   </div>
 </div>
 
@@ -229,5 +234,4 @@
 {% block javascript %}
   <script type="text/javascript" src="{% static 'js/create.js' %}"></script>
   <script src='{% static "js/calendar.js" %}'></script> <!-- 달력 -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {% endblock javascript %}

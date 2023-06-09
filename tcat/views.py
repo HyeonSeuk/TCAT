@@ -17,6 +17,9 @@ from django.db.models import Sum
 from django.db.models.functions import TruncMonth
 from django.db.models import Count
 from django.utils.html import strip_tags
+from PIL import Image
+from io import BytesIO
+from django.core.files import File
 
 # Create your views here.
 def index_redirect(request):
@@ -122,15 +125,24 @@ def create(request):
                 dynamic_field = form.save(commit=False)
                 dynamic_field.tcat = tcat
                 dynamic_field.save()
-
-
+                
         if tcat.image:
             tcat.image_url = settings.MEDIA_URL + str(tcat.image)
             tcat.save()
 
+        selected_image_url = request.POST.get('selectedImage', None)
+        if selected_image_url:
+            response = requests.get(selected_image_url)
+            img = Image.open(BytesIO(response.content))
+            img_io = BytesIO()
+            img.save(img_io, format='JPEG', quality=100)
+            image_name = selected_image_url.split("/")[-1]
+            tcat.image.save(image_name, File(img_io), save=True)
+            tcat.image_url = settings.MEDIA_URL + str(tcat.image)
+            tcat.save()  # This line is added
+
         return redirect('tcat:detail', tcat.pk)
 
-        
     else:
         tcat_form = TcatForm()
         dynamic_form = DynamicFieldFormSet(prefix='dynamic_formset')
