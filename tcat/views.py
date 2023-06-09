@@ -137,8 +137,8 @@ def create(request):
             img_io = BytesIO()
             img.save(img_io, format='JPEG', quality=100)
             image_name = selected_image_url.split("/")[-1]
-            tcat.image.save(image_name, File(img_io), save=True)
-            tcat.image_url = settings.MEDIA_URL + str(tcat.image)
+            tcat.web_image.save(image_name, File(img_io), save=True)
+            tcat.web_image_url = settings.MEDIA_URL + str(tcat.web_image)
             tcat.save()  # This line is added
 
         return redirect('tcat:detail', tcat.pk)
@@ -209,6 +209,7 @@ def all_events(request):
             'date': event.date,
             'title': event.title,
             'image_url': event.image_url,
+            'web_image_url': event.web_image_url,
             'location': event.location,
             'review': strip_tags(event.review),
             'tcat_pk': event.id,
@@ -226,6 +227,7 @@ def other_events(request, username):
             'date': event.date,
             'title': event.title,
             'image_url': event.image_url,
+            'web_image_url': event.web_image_url,
             'location': event.location,
             'review': strip_tags(event.review),
             'tcat_pk': event.id,

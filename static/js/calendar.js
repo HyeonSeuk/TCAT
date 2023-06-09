@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
               rendering: 'background',
               extendedProps: {
                 image_url: event.image_url,
+                web_image_url: event.web_image_url,
                 tcat_pk: event.tcat_pk
               }
             };
@@ -47,6 +48,10 @@ document.addEventListener('DOMContentLoaded', function () {
       if (arg.event.extendedProps.image_url) {
         return {
           html: '<img src="' + arg.event.extendedProps.image_url + '" alt="Event Image" style="width:100%; height:170px;">'
+        };
+      } else if (arg.event.extendedProps.web_image_url) {
+        return {
+          html: '<img src="' + arg.event.extendedProps.web_image_url + '" alt="Web Image" style="width:100%;  height:170px;">'
         };
       } else {
         return {
@@ -65,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return {
           title: seg.event.title,
           image_url: seg.event.extendedProps.image_url,
+          web_image_url: seg.event.extendedProps.web_image_url,
           location: seg.event.extendedProps.location,
           review: seg.event.extendedProps.review ? stripTags(seg.event.extendedProps.review) : '',
           tcat_pk: seg.event.extendedProps.tcat_pk
@@ -117,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
       var eventImage = document.createElement('img');
       eventImage.classList.add('col-md-5', 'modal-img');
-      eventImage.src = event.image_url || '/static/image/noimg.png'; // 이미지가 없는 경우 대체 이미지로 설정
+      eventImage.src = event.image_url ? event.image_url : (event.web_image_url ? event.web_image_url : '/static/image/noimg.png');
       eventContainer.appendChild(eventImage);
 
       eventContainer.addEventListener('click', function() {

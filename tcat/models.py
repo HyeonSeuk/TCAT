@@ -11,6 +11,8 @@ class Tcat(models.Model):
     price = models.IntegerField(blank=True, null=True)
     image = models.ImageField(blank=True, null=True, upload_to='ticket_diarys/')
     image_url = models.URLField(blank=True)
+    web_image = models.ImageField(blank=True, null=True, upload_to='ticket_diarys/')
+    web_image_url = models.CharField(max_length=255, null=True, blank=True)
     review = RichTextField(blank=True, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     categori = models.CharField(max_length=50, blank=True, null=True)
