@@ -38,9 +38,15 @@
 <!--main-->
 <div class="detail__container">
   <!--이미지-->
-  {% if tcat.image %}
+  {% if tcat.image and tcat.web_image %}
+    <img src="{{ tcat.image.url }}" alt="이미지" class="detail__image" style='width: 49%;'>
+    <img src="{{ tcat.web_image.url }}" alt="이미지" class="detail__image" style='width: 49%;'>
+  {% elif tcat.image %}
     <img src="{{ tcat.image.url }}" alt="이미지" class="detail__image">
+  {% elif tcat.web_image %}
+    <img src="{{ tcat.web_image.url }}" alt="이미지" class="detail__image">
   {% endif %}
+
 
   <!--세부정보-->
   <div class="detail__title">{{ tcat.title }}</div>
