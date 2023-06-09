@@ -36,13 +36,105 @@
 
 .main__image{
   /* justify-content: center; */
-  margin-bottom: 20px;
-  border: 1px solid lightcoral;
+  /* margin-bottom: 20px;
+  border: 1px solid lightcoral; */
 }
 
-.main__contents {
-
+.main__image--search{
+  color: #FF9A76;
+  font-size: 17px;
+  background-color: #fdfdfd;
+  cursor: pointer;
+  border: 1px solid #FF9A76;
+  border-radius: .25em;  
+  height: 40.3px;
+  margin-left: 30px;
 }
+
+.filebox label {
+  display: inline-block;
+  padding: .5em .75em;
+  color: #FF9A76;
+  font-size: 17px;
+  line-height: normal;
+  vertical-align: middle;
+  background-color: #fdfdfd;
+  cursor: pointer;
+  border: 1px solid #FF9A76;
+  border-radius: .25em;
+}
+
+.filebox input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip:rect(0,0,0,0);
+  border: 0;
+}
+
+/* named upload */
+/* .filebox .upload-name {
+  display: inline-block;
+  padding: .5em .75em;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: normal;
+  vertical-align: middle;
+  background-color: #f5f5f5;
+  border: 1px solid #ebebeb;
+  border-bottom-color: #e2e2e2;
+  border-radius: .25em;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+} */
+
+/* imaged preview */
+.filebox .upload-display {  /* 이미지가 표시될 지역 */
+  margin-bottom: 5px;
+}
+
+@media(min-width: 100px) { 
+  .filebox .upload-display {
+    display: inline-block;
+    margin-bottom: 0;
+  }
+}
+
+.filebox .upload-thumb-wrap {  /* 추가될 이미지를 감싸는 요소 */
+  display: inline-block;
+  width: 60px;
+  padding: 2px;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.filebox .upload-display img {  /* 추가될 이미지 */
+  display: block;
+  max-width: 100%;
+  width: 100% \9;
+  height: auto;
+}
+
+/* 이미지 파일 선택 */
+/* #id_image {
+  height: 50px;
+  border: 2px solid yellow;
+}
+
+input[type=file]::file-selector-button {
+  height: 50px;
+  border: 2px solid red;
+  &:hover {
+    background: rgb(77,77,77);
+    color: #fff;
+  }
+} */
 
 .contents__title {
   display: flex;
@@ -135,12 +227,14 @@ input[type="date"]{
   color: white;
   border: 2px solid rgba(0, 0, 0, 0.144);
   margin-right: 15px;
+  border-radius: .15em;
 }
 
 .contents__add-minus{
   background-color: #FF9A76;
   color: white;
-  border: 2px solid rgba(0, 0, 0, 0.144);  
+  border: 2px solid rgba(0, 0, 0, 0.144); 
+  border-radius: .15em; 
 }
 
 .main__input {
@@ -159,11 +253,15 @@ input[type="date"]{
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
+
 #searchResult img {
-  width: 500px;
-  height: 500px;
-  object-fit: contain;
+  width: 350px;
+  height: 350px;
+  /* object-fit: contain; */
+  object-fit: cover;
+  margin: 6.7px;
 }
+
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -176,6 +274,7 @@ input[type="date"]{
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
+
 .modal-content {
   background-color: #fefefe;
   margin: 15% auto; /* 15% from the top and centered */
@@ -183,20 +282,68 @@ input[type="date"]{
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
 }
+
 .close {
   color: #aaa;
-  float: right;
+  /* float: right; */
+  margin-left: auto;
   font-size: 28px;
   font-weight: bold;
 }
+
 .close:hover,
 .close:focus {
 color: black;
 text-decoration: none;
 cursor: pointer;
-
 }
+
 #enlargedImage img {
-  width: 100%;
-  height: auto;
+  /* width: 100%;
+  height: auto; */
+  width: auto;
+  height: 800px;
+  margin: 0 auto;
+}
+
+.modal__search--input{
+  font-size: 18px;
+  width: 325px;
+}
+
+.modal__kakaoSearch--button {
+  color: black;
+  font-size: 18px;
+  background-color: #FEE501;
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: .1em;  
+}
+
+.modal__naverSearch--button {
+  color: white;
+  font-size: 18px;
+  background-color: #02C75A;
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: .1em;  
+  margin: 20px 30px;
+}
+
+.modal__goback--button {
+  color: black;
+  font-size: 18px;
+  background-color: rgba(128, 128, 128, 0.161);
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: .1em;  
+}
+
+.modal__more--button{
+  color: black;
+  font-size: 18px;
+  background-color: rgba(128, 128, 128, 0.161);
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: .1em;  
 }
