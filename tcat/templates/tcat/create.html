@@ -31,6 +31,7 @@
 
           <button id="webImageButton" type="button" class="main__image--search">웹 이미지 검색</button>
           <input type="hidden" id="selectedImage" name="selectedImage" value="">
+          <img id="previewImage" src="" style="max-width: 100%; height: 50px; margin-left: 10px;">
         </div>
 
         {% comment %} <div class="main__image">
@@ -204,19 +205,14 @@
           }
         });
       }
-    
-      // 이미지를 클릭할 때 모달을 표시하는 이벤트 리스너를 추가
-      var isModalOpen = false;
       $("#searchResult").on("click", "img", function() {
-        var src = $(this).attr("src");  // 클릭한 이미지의 URL을 가져옴
-        var filename = $(this).attr("alt");
-        $("#enlargedImage img").attr("src", src);  // Enlarged image의 src를 변경
-        $("#searchResult").empty();  // 검색 결과를 비움
-        $("#enlargedImage").show();  // Show the enlarged image
+        var src = $(this).attr("src");
+        $("#enlargedImage img").attr("src", src);
+        $("#searchResult").empty();
+        $("#enlargedImage").show();
         $("#selectedImage").val(src);
-      
+        $("#previewImage").attr("src", src);
       });
-
       $("#enlargedImage").on("click", "img", function() {
         $("#myModal").hide();
       });
