@@ -41,3 +41,20 @@
   height: 170px;
 }
 
+.index__graph--btn {
+  border: 1px solid #679B9B;
+  border-radius: 15px;
+  background-color: white;
+}
+
+.index__graph--year {
+  font-weight: bold;
+  color: #679B9B;
+}
+
+.index__graph--info {
+  font-size: 20px;
+  color: #679B9B;
+}
+
+

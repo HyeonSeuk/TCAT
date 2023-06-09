@@ -63,6 +63,9 @@
     </div>
   {% else %}
     <p>검색한 결과를 찾을 수 없습니다.</p>
+    <div class='d-flex justify-content-center'>
+      <img src="{% static 'image/no_search.png' %}" alt="...">
+    </div>
   {% endif %}
 {% endblock content %}
 
