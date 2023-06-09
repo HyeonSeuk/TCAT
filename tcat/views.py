@@ -139,7 +139,7 @@ def create(request):
             image_name = selected_image_url.split("/")[-1]
             tcat.web_image.save(image_name, File(img_io), save=True)
             tcat.web_image_url = settings.MEDIA_URL + str(tcat.web_image)
-            tcat.save()  # This line is added
+            tcat.save()
 
         return redirect('tcat:detail', tcat.pk)
 
@@ -192,9 +192,13 @@ def update(request, tcat_pk):
             img_io = BytesIO()
             img.save(img_io, format='JPEG', quality=100)
             image_name = selected_image_url.split("/")[-1]
-            tcat.image.save(image_name, File(img_io), save=True)
+            tcat.web_image.save(image_name, File(img_io), save=True)
+            tcat.web_image_url = settings.MEDIA_URL + str(tcat.web_image)
+            tcat.save()
+
+        if tcat.image:
             tcat.image_url = settings.MEDIA_URL + str(tcat.image)
-            tcat.save()  
+            tcat.save()
 
         return redirect('tcat:detail', tcat.pk)
     else:
@@ -209,6 +213,7 @@ def update(request, tcat_pk):
     }
 
     return render(request, 'tcat/update.html', context)
+
 
 
 
