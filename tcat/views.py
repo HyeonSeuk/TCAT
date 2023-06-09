@@ -164,40 +164,52 @@ def delete(request, tcat_pk):
 
 def update(request, tcat_pk):
     tcat = Tcat.objects.get(pk=tcat_pk)
-    dynamic_fields = DynamicField.objects.filter(tcat=tcat)
-    dynamic_form = DynamicFieldFormSet(request.POST, prefix='dynamic_formset', initial=dynamic_fields.values())
-    if request.user == tcat.user:
-        if request.method == "POST":
-            form = TcatForm(request.POST, request.FILES, instance=tcat)
-            if form.is_valid():
-                tcat = form.save(commit=False)
-                form.save()
-
-            if dynamic_form.is_valid():
-                DynamicField.objects.filter(tcat=tcat).delete()
-                for form in dynamic_form:
-                    dynamic_field = form.save(commit=False)
-                    dynamic_field.tcat = tcat
-                    dynamic_field.save()
-            
-            if tcat.image:
-                tcat.image_url = settings.MEDIA_URL + tcat.image.name
-                tcat.save()
-                    
-            return redirect('tcat:detail', tcat.pk)
-        else:
-            form = TcatForm(instance=tcat)
-            dynamic_form = DynamicFieldFormSet(prefix='dynamic_formset', initial=dynamic_fields.values())
-    else:
+    if request.user != tcat.user:
         return redirect('tcat:index')
+
+    if request.method == "POST":
+        tcat_form = TcatForm(request.POST, request.FILES, instance=tcat)
+        dynamic_form = DynamicFieldFormSet(request.POST, prefix='dynamic_formset')
+
+        if tcat_form.is_valid():
+            tcat = tcat_form.save(commit=False)
+
+        if dynamic_form.is_valid():
+            DynamicField.objects.filter(tcat=tcat).delete()
+            for form in dynamic_form:
+                dynamic_field = form.save(commit=False)
+                dynamic_field.tcat = tcat
+                dynamic_field.save()
+
+        if tcat.image:
+            tcat.image_url = settings.MEDIA_URL + str(tcat.image)
+            tcat.save()
+
+        selected_image_url = request.POST.get('selectedImage', None)
+        if selected_image_url:
+            response = requests.get(selected_image_url)
+            img = Image.open(BytesIO(response.content))
+            img_io = BytesIO()
+            img.save(img_io, format='JPEG', quality=100)
+            image_name = selected_image_url.split("/")[-1]
+            tcat.image.save(image_name, File(img_io), save=True)
+            tcat.image_url = settings.MEDIA_URL + str(tcat.image)
+            tcat.save()  
+
+        return redirect('tcat:detail', tcat.pk)
+    else:
+        dynamic_fields = DynamicField.objects.filter(tcat=tcat)
+        tcat_form = TcatForm(instance=tcat)
+        dynamic_form = DynamicFieldFormSet(prefix='dynamic_formset', initial=dynamic_fields.values())
 
     context = {
         'tcat': tcat,
-        'form': form,
+        'form': tcat_form,
         'dynamic_form': dynamic_form,
     }
 
     return render(request, 'tcat/update.html', context)
+
 
 
 @login_required
