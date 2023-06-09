@@ -47,7 +47,7 @@ function drawChartExpenses() {
   let data = {
     labels: labels,
     datasets: [{
-      label: '월별 총 사용액',
+      label: '월별 총 사용액 (단위: 원)',
       data: monthly_totals,
       backgroundColor: 'rgba(255, 154, 118, 0.2)',
       borderColor: 'rgba(255, 154, 118, 1)',

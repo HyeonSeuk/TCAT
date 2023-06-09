@@ -21,31 +21,52 @@
 <div>
   <!-- 캘린더 -->
   <div class='mb-2 d-flex justify-content-between align-items-center' style='min-width: 1030px;'>
+
     <div class="dropdown d-flex align-items-center">
-      <p style='font-size: 25px;'><i class="fa-regular fa-calendar-days">    
-      </i> 나의 캘린더 
+      <p style='font-size: 25px;'>
+        <i class="fa-regular fa-calendar-days"></i> 나의 캘린더 
+      </p>
       <div class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
       </div>
-      <ul class="dropdown-menu">
+      <ul class="dropdown-menu" style='width: 210px;'>
         <li>
           <p class='p-3 m-0'>캘린더 내의 날짜를 클릭하거나, 오른쪽 Menu에서 기록 생성하기 버튼으로 회원님의 기록을 생성할 수 있습니다.</p>
         </li>
       </ul>
     </div>    
-    </p>
+    
+    <div>
+      <div>
 
-    <!-- Menu 버튼 -->
-    <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style='background-color: var(--main-color);'>Menu</button>
-      <ul class="dropdown-menu">
-        <li onclick="window.location.href = '{% url 'tcat:create' %}';">
-          <a class="dropdown-item" href="#"><i class="fa-solid fa-pen-to-square"></i> 기록 생성하기</a>
-        </li>
+      </div>
 
-        <li id="save">
-          <a class="dropdown-item" href="#"><i class="fa-solid fa-camera"></i> 캘린더 캡쳐</a>
-        </li>
-      </ul>
+      <!-- Menu 버튼 -->
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style='background-color: var(--main-color);'>Menu</button>
+        <ul class="dropdown-menu">
+          <li onclick="window.location.href = '{% url 'tcat:create' %}';">
+            <a class="dropdown-item" href="#"><i class="fa-solid fa-pen-to-square"></i> 기록 생성하기</a>
+          </li>
+
+          <li id="save">
+            <a class="dropdown-item" href="#"><i class="fa-solid fa-camera"></i> 캘린더 캡쳐</a>
+          </li>
+
+          <li>
+            <a class="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="fa-regular fa-clipboard"></i> 기록 모아보기</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasScrollingLabel">내 기록 모아보기</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <p>Try scrolling the rest of the page to see this option in action.</p>
+        </div>
+      </div>
     </div>
 
     {% comment %} <button class='p-2 me-2' type="button" id="save" style='border: 0; border-radius: 5px; background-color: white'><i class="fa-solid fa-camera"></i> 캘린더 캡쳐</button>
@@ -58,38 +79,38 @@
     <div id="calendar"></div>
   </div>
 
-<!-- 모달 HTML -->
-<div class="modal" id="eventModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="modalDate"></h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="d-flex flex-row event-separator">
-          <img class="col-md-5 modal-img" id="modalImage" src="" alt="Event Image">
-          <div class="row">
-            <h5 class="modal-title" id="modalTitle"></h5>
-            <div class="modalLocation" id="modalLocation"></div>
-            <div class="modalReview" id="modalReview"></div>
+  <!-- 모달 HTML -->
+  <div class="modal" id="eventModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalDate"></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex flex-row event-separator">
+            <img class="col-md-5 modal-img" id="modalImage" src="" alt="Event Image">
+            <div class="row">
+              <h5 class="modal-title" id="modalTitle"></h5>
+              <div class="modalLocation" id="modalLocation"></div>
+              <div class="modalReview" id="modalReview"></div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 
 
 
 
   <hr class='mt-5' style='min-width: 1030px; border-top: 1px solid black'>
-  <h2 class='mt-3 mb-4'>티켓 Ranking <i class="fa-solid fa-crown"></i></h2>
-  <hr class='mt-3 mb-5' style='min-width: 1030px; border-top: 1px solid black'>
+  <h2 class='mt-4 mb-4'>티켓 Ranking <i class="fa-solid fa-crown"></i></h2>
+  <hr class='mt-3 mb-4' style='min-width: 1030px; border-top: 1px solid black'>
   
   <!-- 티켓 리스트 -->
   <div style='min-width: 1030px;'>
@@ -108,7 +129,7 @@
       {% endfor %}
     </div>
 
-    <h3 class='index__ranking mb-4'><i class="fa-solid fa-baseball"></i> 스포츠</h3>
+    <h3 class='index__ranking mb-4 mt-4'><i class="fa-solid fa-baseball"></i> 스포츠</h3>
     <div class='d-flex'>
     {% for item in interpark_sport %}
       <div class='index__preform--div'>
@@ -123,7 +144,7 @@
     {% endfor %}
     </div>
 
-    <h3 class='index__ranking mb-4'><i class="fa-solid fa-film"></i> 전시 / 행사</h3>
+    <h3 class='index__ranking mb-4 mt-4'><i class="fa-solid fa-film"></i> 전시 / 행사</h3>
     <div class='d-flex'>
     {% for item in interpark_exhibitions %}
       <div class='index__preform--div'>
@@ -138,28 +159,50 @@
     {% endfor %}
     </div>
   </div>
-</div>
-<!-- 그래프 -->
-<div style="display: flex; justify-content: space-between;">
-  <div style="margin-right: 100px;">
-      <button id="prevYearExpenses">이전 연도</button>
-      <span id="currentYearExpenses"></span>
-      <button id="nextYearExpenses">다음 연도</button>
-      <div style="width: 600px; height: 400px;">
-        <canvas id="myChartExpenses"></canvas>
+
+  <hr class='mt-4' style='min-width: 1030px; border-top: 1px solid black'>
+  <h2 class='mt-4 mb-4'>월별 그래프 <i class="fa-solid fa-chart-simple"></i></h2>
+  <hr class='mt-3 mb-3' style='min-width: 1030px; border-top: 1px solid black'>
+
+  <!-- 그래프 -->
+  {% if request.user.is_authenticated %}
+    <div class='mt-4 d-flex flex-column align-items-center' style='min-width: 1030px;'>
+      <div>
+        <p class='index__graph--info'><i class="fa-solid fa-coins"></i><b> 총 사용액</b></p>
+        <button class='index__graph--btn me-1 mt-2 mb-2' id="prevYearExpenses">이전 연도</button>
+
+        <span class='index__graph--year' id="currentYearExpenses"></span>
+
+        <button class='index__graph--btn ms-1' id="nextYearExpenses">다음 연도</button>
+
+        <div style="width: 900px; height: 550px;">
+          <canvas id="myChartExpenses"></canvas>
+        </div>
       </div>
-  </div>
-  <div>
-      <button id="prevYearPosts">이전 연도</button>
-      <span id="currentYearPosts"></span>
-      <button id="nextYearPosts">다음 연도</button>
-      <div style="width: 600px; height: 400px;">
-        <canvas id="myChartPosts"></canvas>
+
+      <div>
+        <p class='index__graph--info'><i class="fa-regular fa-images"></i><b> 총 게시물 수</b></p>
+        <button class='index__graph--btn me-1 mt-2 mb-2' id="prevYearPosts">이전 연도</button>
+
+        <span class='index__graph--year' id="currentYearPosts"></span>
+
+        <button class='index__graph--btn ms-1' id="nextYearPosts">다음 연도</button>
+
+        <div style="width: 900px; height: 550px;">
+          <canvas id="myChartPosts"></canvas>
+        </div>
       </div>
-  </div>
+    </div>
+
+  {% else %}
+    <div class='d-flex justify-content-center' style='min-width: 1030px;'>
+      <img src="{% static 'image/need_login.png' %}" alt="">
+    </div>
+  {% endif %}
+
 </div>
 
-<!-- 그래프 -->
+
 {% endblock content %}
 
 

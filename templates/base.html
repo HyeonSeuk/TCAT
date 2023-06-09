@@ -23,7 +23,7 @@
         <img src="{% static 'image/logo2.png' %}" style='height: 80px;' alt="...">
       </a>
 
-      <div class="container-fluid">
+      <div class="container-fluid" style='width: 500px;'>
         <form class="d-flex" role="search" method="GET" action="{% url 'tcat:search' %}">
             <div class="position-relative" style='width: 100%;'>
                 <input class="form-control" name="query" type="search" placeholder="콘텐츠, 컬렉션, 유저를 검색하세요." aria-label="Search">
@@ -32,9 +32,25 @@
                 </button>
             </div>
         </form>
-    </div>
+      </div>
       
       {% if request.user.is_authenticated %}
+        {% if request.user.image %}
+          <a href="{% url 'accounts:profile' user.username %}">
+            <span style='color: #679B9B;'>{{ user.username }}</span>
+            <img class='nav__profile--img me-1' src="{{ user.image.url }}" alt="profile_img">
+          </a>
+        {% else %}
+          <a href="{% url 'accounts:profile' user.username %}">
+            <span style='color: #679B9B;'>{{ user.username }}</span>
+            <img class='nav__profile--img me-1' src="{% static 'image/no-profile-img.png' %}" alt="profile_img">
+            {% comment %} <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="black" class="bi bi-person-circle me-1" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+            </svg>  {% endcomment %}
+          </a>
+        {% endif %}
+
         <form action="{% url 'accounts:logout' %}">
           {% csrf_token %}
           <input type="submit" value='로그아웃' class="account-menu" style="border:none; background-color: white;">
@@ -61,18 +77,25 @@
 
     <!-- footer -->
     <footer class='mt-5'>
-      <div class='container d-flex justify-content-around footer__div'>
-        <div style='width: 50%;'>footer</div>
-        <div class='footer__div--line'></div>
-        <div class='d-flex flex-column footer__div--link' style='width: 50%;'>
-          <p class='mb-5' style='color: var(--main-color); font-weight: bold; font-size: 22px;'>About Team</p>
-          <a href="https://github.com/YongJuDo">도용주</a>
-          <hr style='border-top: 1px solid black;'>
-          <a href="https://github.com/j1-y00n">변지윤</a>
-          <hr style='border-top: 1px solid black;'>
-          <a href="https://github.com/HyeonSeuk">서현석</a>
-          <hr style='border-top: 1px solid black;'>
-          <a href="https://github.com/ldwlgus12">전지현</a>
+      <div class='container d-flex justify-content-around footer__div ps-4 pe-4'>
+        <div style='width: 50%;'>
+          <img src="{% static 'image/logo2.png' %}" alt="..." class='mb-2' style='width: 220px;'>
+          <p class='footer__info ms-2 mb-2'>멀티캠퍼스 풀스택 개발자 취업캠프(Python)_2기 - 최종 프로젝트</p>
+          <p class='footer__info2 ms-2 mb-2'>프로젝트 기간: 2023.05.22 ~ 2023.06.16</p>
+          <p class='ms-2'><a href="https://github.com/HyeonSeuk/TCAT" class='footer__pjt--link'><i class="fa-brands fa-github"></i> 프로젝트 링크</a></p>
+        </div>
+
+        {% comment %} <div class='footer__div--line'></div> {% endcomment %}
+
+        <div class='d-flex flex-column align-items-end footer__div--link' style='width: 50%;'>
+          <p class='mb-4' style='color: var(--main-color); font-weight: bold; font-size: 22px;'>About Team</p>
+          <a href="https://github.com/HyeonSeuk" class='mb-1'>서현석(팀장, BE)</a>
+          {% comment %} <hr style='border-top: 1px solid black;'> {% endcomment %}
+          <a href="https://github.com/j1-y00n" class='mb-1'>변지윤(FE)</a>
+          
+          <a href="https://github.com/YongJuDo" class='mb-1'>도용주(BE)</a>
+          
+          <a href="https://github.com/ldwlgus12">전지현(FE)</a>
         </div>
       </div>
     </footer>

@@ -6,14 +6,14 @@
 }
 
 .nav__div {
-    min-width: 850px;
+    min-width: 930px;
     height: 85px;
     border-bottom: 1px solid rgb(224, 224, 224);
 }
 
-.container-fluid {
+/* .container-fluid {
     width: 500px;
-}
+} */
 
 .nav__div--logo--img {
     height: 75px;
@@ -33,6 +33,13 @@
 .nav__div--signup {
     text-decoration: none;
     color: var(--main-color);
+}
+
+.nav__profile--img {
+    width: 35px; 
+    height: 35px; 
+    border: 1px solid black;
+    border-radius: 50% 50%;
 }
 
 .container{
@@ -70,6 +77,21 @@ footer {
     font-size: 16px;
     color: black
 }
+
+.footer__info {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.footer__info2 {
+    font-size: 13px;
+    color: gray;
+}
+
+.footer__pjt--link {
+    color: #679B9B;
+}
+
 
 
 
