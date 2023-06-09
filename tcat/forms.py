@@ -14,7 +14,6 @@ class DynamicFieldForm(forms.ModelForm):
         self.fields['field_value'].widget.attrs['class'] = 'contents__add--input'
         
 
-
 class TcatForm(forms.ModelForm):
     class Meta:
         model = Tcat
@@ -31,6 +30,13 @@ class TcatForm(forms.ModelForm):
         widget = {
             'review': forms.CharField(widget=CKEditorWidget()),
         }
+
+    # image = forms.ImageField(
+    #     required=False,
+    #     widget=forms.ClearableFileInput (
+    #         attrs={'class': 'form-control mb-2', 
+    #                'style': 'width: 360px; height: 50px; color: red;',}))
+
 
     categori = forms.ChoiceField(choices=[
         ('','카테고리를 선택해주세요'),
