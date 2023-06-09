@@ -9,6 +9,7 @@ from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.contrib.auth import authenticate
 
+
 def login(request):
     if request.user.is_authenticated:
         return redirect('tcat:index')
@@ -109,3 +110,11 @@ def follower(request, user_pk):
     user = User.objects.get(pk=user_pk)
     followers = [{'username': f.username, 'pk': f.pk} for f in user.followers.all()]
     return JsonResponse({'followers': followers})
+
+
+def check_follow_status(request, user_id):
+    User = get_user_model()
+    target_user = User.objects.get(id=user_id)
+    is_following = (request.user in target_user.followers.all()) and (target_user in request.user.followers.all())
+    
+    return JsonResponse({"is_following": is_following})
