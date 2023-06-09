@@ -19,8 +19,9 @@
       <div class="create__main">
         <!--image-->
         <div class="main__image d-flex align-items-center mb-3">
-          <div>{{ form.image }}</div>
-          <button id="webImageButton" type="button" class="main__image--search">웹 이미지 검색</button>
+          <div>앨범 사진 추가하기 : {{ form.image }}</div>
+          <button id="webImageButton">웹 이미지 검색 후 저장하기</button>
+          <input type="hidden" id="selectedImage" name="selectedImage" value="">
         </div>
 
         <!--contents-->
@@ -78,7 +79,7 @@
   <!-- Modal content -->
   <div class="modal-content">
     <div class="close">&times;</div>
-   
+
     <!-- 통합 검색 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
@@ -113,6 +114,7 @@
     
       // When the user clicks on the button, open the modal
       btn.onclick = function() {
+        event.preventDefault();
         modal.style.display = "block";
       }
     
@@ -210,9 +212,17 @@
         }
       });
     </script>
+    <script>
+      $("#searchResult").on("click", "img", function() {
+        var src = $(this).attr("src");  
+        $("#enlargedImage img").attr("src", src);  
+        $("#searchResult").empty();  
+        $("#enlargedImage").show();  
+        $("#selectedImage").val(src);
+      });
+    </script>
   </div>
 </div>
-
 
 {% endblock content %}
 
