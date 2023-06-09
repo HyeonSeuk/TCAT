@@ -18,9 +18,14 @@
       {% csrf_token %}
       <div class="create__main">
         <!--image-->
-        <div class="main__image d-flex align-items-center mb-3">
-          <div>앨범 사진 추가하기 : {{ form.image }}</div>
-          <button id="webImageButton">웹 이미지 검색 후 저장하기</button>
+        <div class="d-flex align-items-center mb-3">
+          <div class="filebox preview-image">
+            <label for="input-file">사진 첨부하기 (1장)</label> 
+            {% comment %} <input class="upload-name" value="파일선택" disabled="disabled" >         {% endcomment %}
+            <input type="file" id="input-file" class="upload-hidden" name="image"> 
+          </div>
+
+          <button id="webImageButton" type="button" class="main__image--search">웹 이미지 검색</button>
           <input type="hidden" id="selectedImage" name="selectedImage" value="">
         </div>
 
@@ -194,11 +199,19 @@
       }
     
       // 이미지를 클릭할 때 모달을 표시하는 이벤트 리스너를 추가
+      var isModalOpen = false;
       $("#searchResult").on("click", "img", function() {
         var src = $(this).attr("src");  // 클릭한 이미지의 URL을 가져옴
+        var filename = $(this).attr("alt");
         $("#enlargedImage img").attr("src", src);  // Enlarged image의 src를 변경
         $("#searchResult").empty();  // 검색 결과를 비움
         $("#enlargedImage").show();  // Show the enlarged image
+        $("#selectedImage").val(src);
+      
+      });
+
+      $("#enlargedImage").on("click", "img", function() {
+        $("#myModal").hide();
       });
     
       // 모달 외부를 클릭하면 모달을 숨김
@@ -212,7 +225,7 @@
         }
       });
     </script>
-    <script>
+    {% comment %} <script>
       $("#searchResult").on("click", "img", function() {
         var src = $(this).attr("src");  
         $("#enlargedImage img").attr("src", src);  
@@ -220,7 +233,7 @@
         $("#enlargedImage").show();  
         $("#selectedImage").val(src);
       });
-    </script>
+    </script> {% endcomment %}
   </div>
 </div>
 
