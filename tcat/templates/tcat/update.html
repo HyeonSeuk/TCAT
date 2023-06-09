@@ -23,7 +23,6 @@
             <label for="input-file">사진 첨부하기 (1장)</label> 
             <input type="file" id="input-file" class="upload-hidden" name="image"> 
           </div>
-          <p id='filename'></p>
           <button id="webImageButton" type="button" class="main__image--search">웹 이미지 검색</button>
           <input type="hidden" id="selectedImage" name="selectedImage" value="">
           <img id="previewImage" src="" style="max-width: 100%; height: 50px">
@@ -220,7 +219,11 @@
         
         if (div) {
           div.appendChild(message);
-        }
+        }    
+      });
+
+      $("#enlargedImage").on("click", "img", function() {
+        $("#myModal").hide();
       });
       
     
