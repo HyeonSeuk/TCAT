@@ -69,6 +69,7 @@ form.addEventListener('submit', function (event) {
 })
 
 
+// 맞팔 시 캘린더 버튼 표현
 $(document).ready(function() {
   function updateFollowIcon(isFollowing) {
     const followIcon = $("#follow-icon");

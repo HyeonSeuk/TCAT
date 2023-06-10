@@ -18,11 +18,17 @@
       {% csrf_token %}
       <div class="create__main">
         <!--image-->
-        <div class="main__image d-flex align-items-center mb-3">
-          <div>앨범 사진 추가하기 : {{ form.image }}</div>
-          <button id="webImageButton">웹 이미지 검색 후 저장하기</button>
+        <div class="d-flex align-items-center mb-3">
+          <div class="filebox preview-image">
+            <label for="input-file">사진 첨부하기 (1장)</label> 
+            <input type="file" id="input-file" class="upload-hidden" name="image"> 
+          </div>
+
+          <p id='filename'></p>
+          <button id="webImageButton" type="button" class="main__image--search">웹 이미지 검색</button>
           <input type="hidden" id="selectedImage" name="selectedImage" value="">
         </div>
+
 
         <!--contents-->
         <div class="main__contents">

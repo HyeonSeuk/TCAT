@@ -6,6 +6,14 @@
 
 {% block content %}
   <div>
+    <!--설정-->
+    {% if request.user.username == person.username %}      
+      <a href="{% url 'accounts:update' %}" class="text-decoration-none text-dark">
+        <div class="btn user__update">설정</div>
+      </a>
+        
+    {% endif %}
+
     <!--header-->
     <div class="d-flex profile__header">
       <div>
@@ -89,17 +97,16 @@
           {% endif %}
         {% endif %}
       </div>  
-      <!--캘린더 버튼 비동기 적용해야함-->
+      <!--맞팔한 유저 캘린더 버튼-->
       {% if request.user in person.followers.all and person in request.user.followers.all %}
-
         <div id="follow-icon">
-        <div><a href="{% url 'tcat:other_calendar' username=person.username %}">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#679B9B" class="bi bi-calendar-week" viewBox="0 0 16 16">
-            <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
-            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-          </svg>
-        </a></div>
-      </div>
+          <div style="text-align: center; margin-top: 15px;"><a href="{% url 'tcat:other_calendar' username=person.username %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#679B9B" class="bi bi-calendar-week" viewBox="0 0 16 16">
+              <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+              <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+            </svg>
+          </a></div>
+        </div>
       {% endif %}
     </div>
   </div>
@@ -144,7 +151,17 @@
 
 <hr style="margin-top:50px;">
 <div>
-  아이콘 출처 :       <a href="https://www.flaticon.com/free-icons/cat" title="cat icons"  style="font-size: 14px; color: gray;">Cat icons created by Freepik - Flaticon</a>
+  <p>user level</p>
+  <div class="d-flex">
+    <div class="footer__level"><img src="{% static 'image/Lv1.png' %}" alt="Lv1" class="footer__level--img">  Lv1 : 게시물 0개 이상</div>
+    <div class="footer__level"><img src="{% static 'image/Lv2.png' %}" alt="Lv1" class="footer__level--img">  Lv2 : 게시물 5개 이상</div>
+    <div class="footer__level"><img src="{% static 'image/Lv3.png' %}" alt="Lv1" class="footer__level--img">  Lv3 : 게시물 10개 이상</div>
+    <div class="footer__level"><img src="{% static 'image/Lv4.png' %}" alt="Lv1" class="footer__level--img">  Lv4 : 게시물 20개 이상</div>
+    <div class="footer__level"><img src="{% static 'image/Lv5.png' %}" alt="Lv1" class="footer__level--img">  Lv5 : 게시물 30개 이상</div>
+  </div>
+
+  <p style="font-size: 13px; color: gray; margin-top:40px; margin-bottom: 0;">아이콘 출처 : <a href="https://www.flaticon.com/free-icons/cat" title="cat icons" style="font-size: 13px; color: gray;">Cat icons created by Freepik - Flaticon</a></p>
+
 </div>
 
 {% endblock content %}

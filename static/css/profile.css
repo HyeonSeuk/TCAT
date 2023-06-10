@@ -5,9 +5,13 @@
   --fourth-color: #679B9B;
 }
 
-/* div {
-  border: 1px solid rgb(230, 209, 253);
-} */
+.user__update {
+  position: fixed;
+  right: 50px;
+  border: 1px solid black;
+  background-color: #FFEADB;
+  font-size: 16px;
+}
 
 .profile__header{
   width: 355px;
@@ -99,4 +103,13 @@
 .modal__username--text {
   font-size: 20px;
   color: black;
+}
+
+.footer__level {
+  margin: 5px 30px;
+  color: rgb(89, 89, 89);
+}
+
+.footer__level--img {
+  width: 40px;
 }
