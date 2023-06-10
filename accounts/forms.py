@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm, PasswordChangeForm
 from captcha.fields import ReCaptchaField
 
 class CustomUserCreationForm(UserCreationForm):
@@ -34,7 +34,6 @@ class CustomUserCreationForm(UserCreationForm):
         )
 
 
-
 class CustomAuthenticationForm(AuthenticationForm):
     username = forms.CharField(
         label='', label_suffix='',
@@ -57,3 +56,67 @@ class CustomAuthenticationForm(AuthenticationForm):
                 'placeholder': '비밀번호',
                 }))
     
+    
+class CustomUserChangeForm(UserChangeForm):
+    email = forms.EmailField(
+        label="이메일",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "이메일을 입력하세요",
+                "style": 'width: 360px; height: 40px;',
+            }
+        ),
+    )
+
+    image = forms.ImageField(
+        label="사진",
+        widget=forms.FileInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "사진을 선택하세요",
+                "style": "width: 360px;",
+            }
+        ),
+    )
+
+    password = None
+
+    class Meta(UserChangeForm.Meta):
+        model = get_user_model()
+        fields = ("email", "image")
+
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(
+        label=False,
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "기존 비밀번호",
+                "style": 'width: 360px; height: 40px;',
+            }
+        ),
+    )
+    new_password1 = forms.CharField(
+        label=False,
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "새 비밀번호",
+                "style": 'width: 360px; height: 40px;',
+            }
+        ),
+        help_text="",
+    )
+    new_password2 = forms.CharField(
+        label=False,
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "새 비밀번호 확인",
+                "style": 'width: 360px; height: 40px;',
+            }
+        ),
+        help_text="",
+    )
