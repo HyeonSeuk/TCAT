@@ -100,3 +100,7 @@
   font-size: 20px;
   color: black;
 }
+
+.profile__icon {
+  cursor: default;
+}
