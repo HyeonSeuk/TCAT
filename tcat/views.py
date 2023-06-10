@@ -110,6 +110,7 @@ def detail(request, tcat_pk):
     return render(request, 'tcat/detail.html', context)
 
 
+@login_required
 def create(request):
     if request.method == 'POST':
         tcat_form = TcatForm(request.POST, request.FILES)
@@ -155,6 +156,7 @@ def create(request):
     return render(request, 'tcat/create.html', context)
 
 
+@login_required
 def delete(request, tcat_pk):
     tcat = Tcat.objects.get(pk=tcat_pk)
     if request.user == tcat.user:
@@ -162,6 +164,7 @@ def delete(request, tcat_pk):
     return redirect('tcat:index')
 
 
+@login_required
 def update(request, tcat_pk):
     tcat = Tcat.objects.get(pk=tcat_pk)
     if request.user != tcat.user:

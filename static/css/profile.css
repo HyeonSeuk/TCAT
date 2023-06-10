@@ -105,6 +105,7 @@
   color: black;
 }
 
+
 .footer__level {
   margin: 5px 30px;
   color: rgb(89, 89, 89);
@@ -112,4 +113,9 @@
 
 .footer__level--img {
   width: 40px;
+}
+
+.profile__icon {
+  cursor: default;
+
 }

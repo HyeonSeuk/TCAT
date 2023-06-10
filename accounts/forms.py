@@ -20,7 +20,7 @@ class CustomUserCreationForm(UserCreationForm):
     password2 = forms.CharField(label='비밀번호 확인', label_suffix='', widget=forms.PasswordInput(
         attrs={'class': 'form-control placeholder-font', 'style': 'width: 360px;','placeholder': '비밀번호 확인',}))
 
-    captcha = ReCaptchaField()
+    captcha = ReCaptchaField(label='',)
 
     class Meta(UserCreationForm.Meta):
         model = get_user_model()

@@ -24,14 +24,14 @@
         <!--image-->
         <div class="d-flex align-items-center mb-3">
           <div class="filebox preview-image">
-            <label for="input-file">사진 첨부하기 (1장)</label> 
+            <label for="input-file">사진 첨부하기</label> 
             {% comment %} <input class="upload-name" value="파일선택" disabled="disabled" >         {% endcomment %}
             <input type="file" id="input-file" class="upload-hidden" name="image"> 
           </div>
 
-          <p id='filename'></p>
-          <button id="webImageButton" type="button" cass="main__image--search">웹 이미지 검색</button>
+          <button id="webImageButton" type="button" class="main__image--search">웹 이미지 검색</button>
           <input type="hidden" id="selectedImage" name="selectedImage" value="">
+          <img id="previewImage" src="" style="max-width: 100%; height: 50px; margin-left: 10px;">
         </div>
 
         {% comment %} <div class="main__image">
@@ -205,18 +205,15 @@
           }
         });
       }
-    
-      // 이미지를 클릭할 때 모달을 표시하는 이벤트 리스너를 추가
       $("#searchResult").on("click", "img", function() {
-        var src = $(this).attr("src");  // 클릭한 이미지의 URL을 가져옴
-        var filename = $(this).attr("alt");
-        $("#enlargedImage img").attr("src", src);  // Enlarged image의 src를 변경
-        $("#searchResult").empty();  // 검색 결과를 비움
-        $("#enlargedImage").show();  // Show the enlarged image
-
-        $("#filename").text(filename);
-        
-        // 모달 닫기
+        var src = $(this).attr("src");
+        $("#enlargedImage img").attr("src", src);
+        $("#searchResult").empty();
+        $("#enlargedImage").show();
+        $("#selectedImage").val(src);
+        $("#previewImage").attr("src", src);
+      });
+      $("#enlargedImage").on("click", "img", function() {
         $("#myModal").hide();
       });
     
@@ -231,7 +228,7 @@
         }
       });
     </script>
-    <script>
+    {% comment %} <script>
       $("#searchResult").on("click", "img", function() {
         var src = $(this).attr("src");  
         $("#enlargedImage img").attr("src", src);  
@@ -240,7 +237,7 @@
         $("#selectedImage").val(src);
       });
       
-    </script>
+    </script> {% endcomment %}
   </div>
 </div>
 
