@@ -142,8 +142,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
       var eventLocation = document.createElement('div');
       eventLocation.classList.add('modalLocation');
-      if (event.review) {
-        eventLocation.innerText = "위치 : " + event.location;
+      if (event.location) {
+        eventLocation.innerText = "장소 : " + event.location;
       } else {
         eventLocation.innerText = "";
       }
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var eventReview = document.createElement('div');
       eventReview.classList.add('modalReview');
       if (event.review) {
-        eventReview.innerText = "리뷰: " + stripTags(event.review);
+        eventReview.innerText = "내용: " + stripTags(event.review);
       } else {
         eventReview.innerText = "";  // 리뷰가 없을 경우 빈 문자열로 설정
       }
