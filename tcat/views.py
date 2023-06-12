@@ -189,7 +189,6 @@ def update(request, tcat_pk):
 
         if tcat.image:
             tcat.image_url = settings.MEDIA_URL + str(tcat.image)
-            tcat.save()
 
         selected_image_url = request.POST.get('selectedImage', None)
         if selected_image_url:
@@ -200,13 +199,11 @@ def update(request, tcat_pk):
             image_name = selected_image_url.split("/")[-1]
             tcat.web_image.save(image_name, File(img_io), save=True)
             tcat.web_image_url = settings.MEDIA_URL + str(tcat.web_image)
-            tcat.save()
 
-        if tcat.image:
-            tcat.image_url = settings.MEDIA_URL + str(tcat.image)
-            tcat.save()
+        tcat.save()
 
         return redirect('tcat:detail', tcat.pk)
+
     else:
         dynamic_fields = DynamicField.objects.filter(tcat=tcat)
         tcat_form = TcatForm(instance=tcat)
@@ -219,6 +216,7 @@ def update(request, tcat_pk):
     }
 
     return render(request, 'tcat/update.html', context)
+
 
 
 @login_required
