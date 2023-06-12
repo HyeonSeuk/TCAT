@@ -309,34 +309,38 @@ cursor: pointer;
 .modal__search--input{
   font-size: 18px;
   width: 325px;
+  margin-bottom: 10px;
 }
 
 .modal__kakaoSearch--button {
-  color: black;
-  font-size: 18px;
-  background-color: #FEE501;
-  cursor: pointer;
-  border: 1px solid black;
-  border-radius: .1em;  
+  border: none;
+  background-color: white;
+}
+
+.modal__kakaoSearch--button > img {
+  width: 100px; 
+  height: 40px;
 }
 
 .modal__naverSearch--button {
-  color: white;
-  font-size: 18px;
-  background-color: #02C75A;
-  cursor: pointer;
-  border: 1px solid black;
-  border-radius: .1em;  
-  margin: 20px 30px;
+  border: none;
+  background-color: white;
+  margin: 0 10px;
+}
+
+.modal__naverSearch--button > img {
+  width: 100px; 
+  height: 40px;
 }
 
 .modal__goback--button {
-  color: black;
-  font-size: 18px;
-  background-color: rgba(128, 128, 128, 0.161);
-  cursor: pointer;
-  border: 1px solid black;
-  border-radius: .1em;  
+  border: none;
+  background-color: white;
+}
+
+.modal__goback--button img {
+  width: 70px; 
+  height: 70px;
 }
 
 .modal__more--button{
@@ -344,8 +348,9 @@ cursor: pointer;
   font-size: 18px;
   background-color: rgba(128, 128, 128, 0.161);
   cursor: pointer;
-  border: 1px solid black;
-  border-radius: .1em;  
+  /* border: 1px solid black; */
+  border: none;
+  border-radius: .3em;
 }
 
 .modal-backdrop {
