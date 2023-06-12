@@ -205,11 +205,11 @@
     <div class='mt-4 d-flex flex-column align-items-center' style='min-width: 1030px;'>
       <div>
         <p class='index__graph--info'><i class="fa-solid fa-coins"></i><b> 총 사용액</b></p>
-        <button class='index__graph--btn me-1 mt-2 mb-2' id="prevYearExpenses">이전 년도</button>
+        <button class='index__graph--btn me-1 mt-2 mb-2' id="prevYearExpenses">이전 연도</button>
 
         <span class='index__graph--year' id="currentYearExpenses"></span>
 
-        <button class='index__graph--btn ms-1' id="nextYearExpenses">다음 년도</button>
+        <button class='index__graph--btn ms-1' id="nextYearExpenses">다음 연도</button>
 
         <div style="width: 900px; height: 550px;">
           <canvas id="myChartExpenses"></canvas>
@@ -218,11 +218,11 @@
 
       <div>
         <p class='index__graph--info'><i class="fa-regular fa-images"></i><b> 총 게시물 수</b></p>
-        <button class='index__graph--btn me-1 mt-2 mb-2' id="prevYearPosts">이전 년도</button>
+        <button class='index__graph--btn me-1 mt-2 mb-2' id="prevYearPosts">이전 연도</button>
 
         <span class='index__graph--year' id="currentYearPosts"></span>
 
-        <button class='index__graph--btn ms-1' id="nextYearPosts">다음 년도</button>
+        <button class='index__graph--btn ms-1' id="nextYearPosts">다음 연도</button>
 
         <div style="width: 900px; height: 550px;">
           <canvas id="myChartPosts"></canvas>
@@ -238,6 +238,9 @@
 
 </div>
 
+<script>
+  var staticPath = "{% static 'image/noimg.png' %}";
+</script>
 
 {% endblock content %}
 
