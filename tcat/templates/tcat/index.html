@@ -114,7 +114,7 @@
     <h3 class='index__ranking mb-4'><i class="fa-solid fa-ticket"></i> 종합</h3>
     <div class='d-flex'>
       {% for item in interpark_total %}
-      <div class='index__preform--div'>
+      <div class='index__preform--div me-4'>
         <a href="https://tickets.interpark.com/goods/{{ item.product_link }}">
           <img class='index__perform--img p-2' src="{{ item.image }}" alt="...">
           <div class='p-2'>
@@ -129,7 +129,7 @@
     <h3 class='index__ranking mb-4 mt-4'><i class="fa-solid fa-baseball"></i> 스포츠</h3>
     <div class='d-flex'>
     {% for item in interpark_sport %}
-      <div class='index__preform--div'>
+      <div class='index__preform--div me-4'>
         <a href="https://tickets.interpark.com/goods/{{ item.product_link }}">
           <img class='index__perform--img p-2' src="{{ item.image }}" alt="...">
           <div class='p-2'>
@@ -144,7 +144,7 @@
     <h3 class='index__ranking mb-4 mt-4'><i class="fa-solid fa-film"></i> 전시 / 행사</h3>
     <div class='d-flex'>
     {% for item in interpark_exhibitions %}
-      <div class='index__preform--div'>
+      <div class='index__preform--div me-4'>
         <a href="https://tickets.interpark.com/goods/{{ item.product_link }}">
           <img class='index__perform--img p-2' src="{{ item.image }}" alt="...">
           <div class='p-2'>
