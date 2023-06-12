@@ -221,8 +221,6 @@ def update(request, tcat_pk):
     return render(request, 'tcat/update.html', context)
 
 
-
-
 @login_required
 def all_events(request):
     all_events = Tcat.objects.filter(user=request.user)
