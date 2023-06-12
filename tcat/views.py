@@ -26,6 +26,8 @@ def index_redirect(request):
     return redirect('tcat:index')
 
 def index(request):
+    tcats = Tcat.objects.order_by('-pk')
+
     # 인터파크 크롤링
     current_date = datetime.now().strftime("%Y%m%d")
     interpark_total_url = 'http://ticket.interpark.com/contents/Ranking/RankList?pKind=P&pCate=&pType=D&pDate={}'.format(current_date)
@@ -81,6 +83,7 @@ def index(request):
         'interpark_total': interpark_total,
         'interpark_sport': interpark_sport,
         'interpark_exhibitions': interpark_exhibitions,
+        'tcats' : tcats,
     }
 
     return render(request, 'tcat/index.html', context)

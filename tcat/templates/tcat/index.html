@@ -36,10 +36,6 @@
     </div>    
     
     <div>
-      <div>
-
-      </div>
-
       <!-- Menu 버튼 -->
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style='background-color: var(--main-color);'>Menu</button>
@@ -63,8 +59,66 @@
           <h5 class="offcanvas-title" id="offcanvasScrollingLabel">내 기록 모아보기</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
+        <hr class='mt-1 mb-1' style='border-top: 1px solid black'>
+        
+        <!-- offcanvas 기록 모아보기 -->
         <div class="offcanvas-body">
-          <p>Try scrolling the rest of the page to see this option in action.</p>
+          {% if request.user.is_authenticated %}
+            {% for tcat in tcats %}
+              {% if tcat %}
+                {% if tcat.user.pk == request.user.pk %}
+                  {% if tcat.image %}
+                    <div>
+                      <img src="{{ tcat.image.url }}" alt="">
+                      <p>{{ tcat.title }}</p>
+                      <p>{{ tcat.date }}</p>
+                      <hr class='mt-1' style='border-top: 1px solid gray'>
+                    </div>
+
+                  {% else %}
+                    <div>
+                      <p>{{ tcat.title }}</p>
+                      <p>{{ tcat.date }}</p>
+                      <hr class='mt-1' style='border-top: 1px solid gray'>
+                    </div>
+                  {% endif %}
+
+                {% else %}
+                  <img src="{% static 'image/create.png' %}" alt="" style='width: 360px; height: 260px;'>                 
+                {% endif %}            
+              {% endif %}
+            {% endfor %}
+
+          {% else %}
+            <img src="{% static 'image/need_login2.png' %}" alt="" style='width: 360px; height: 260px;'>
+          {% endif %}
+
+
+
+
+          {% comment %} {% for tcat in tcats %}
+            {% if tcat %}
+              {% if tcat.user.pk == request.user.pk %}
+                <div>
+                  <p>{{ tcat.image_url }}</p>
+                  <p>{{ tcat.title }}</p>
+                  <p>{{ tcat.date }}</p>
+                  <hr class='mt-1' style='border-top: 1px solid gray'>
+                </div>
+              {% else %}
+                <img src="{% static 'image/create.png' %}" alt="" style='width: 360px; height: 260px;'>
+                
+              {% endif %}
+
+            {% else %}
+              <img src="{% static 'image/create.png' %}" alt="">
+            
+            
+            {% endif %}
+          {% endfor %} {% endcomment %}
+
+
+          
         </div>
       </div>
     </div>
