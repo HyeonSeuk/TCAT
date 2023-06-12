@@ -108,7 +108,8 @@
 
 
 .footer__level {
-  margin: 5px 30px;
+  width: 210px;
+  margin: 5px 25px;
   color: rgb(89, 89, 89);
 }
 
