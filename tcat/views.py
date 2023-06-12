@@ -178,7 +178,7 @@ def update(request, tcat_pk):
         dynamic_form = DynamicFieldFormSet(request.POST, prefix='dynamic_formset')
 
         if tcat_form.is_valid():
-            tcat = tcat_form.save()
+            tcat = tcat_form.save(commit=False)
 
         if dynamic_form.is_valid():
             DynamicField.objects.filter(tcat=tcat).delete()
@@ -187,9 +187,8 @@ def update(request, tcat_pk):
                 dynamic_field.tcat = tcat
                 dynamic_field.save()
 
-        # if tcat.image:
-        #     tcat.image_url = settings.MEDIA_URL + str(tcat.image)
-        #     tcat.save()
+        if tcat.image:
+            tcat.image_url = settings.MEDIA_URL + str(tcat.image)
 
         selected_image_url = request.POST.get('selectedImage', None)
         if selected_image_url:
@@ -200,13 +199,11 @@ def update(request, tcat_pk):
             image_name = selected_image_url.split("/")[-1]
             tcat.web_image.save(image_name, File(img_io), save=True)
             tcat.web_image_url = settings.MEDIA_URL + str(tcat.web_image)
-            tcat.save()
 
-        if tcat.image:
-            tcat.image_url = settings.MEDIA_URL + str(tcat.image)
-            tcat.save()
+        tcat.save()
 
         return redirect('tcat:detail', tcat.pk)
+
     else:
         dynamic_fields = DynamicField.objects.filter(tcat=tcat)
         tcat_form = TcatForm(instance=tcat)
@@ -219,6 +216,7 @@ def update(request, tcat_pk):
     }
 
     return render(request, 'tcat/update.html', context)
+
 
 
 @login_required
