@@ -57,31 +57,33 @@ function deleteDiv() {
 // }); 
 
 //preview image file
-var imgTarget = $('.preview-image .upload-hidden');
+$(document).ready(function() {
+  var imgTarget = $('#input-file');
+  var select_previewImage = $('#select_previewImage');
+  var select_modalImage = $('#select_modalImage');
+  var modal = new bootstrap.Modal(document.getElementById('select_exampleModal'));
 
-imgTarget.on('change', function(){
-    var parent = $(this).parent();
-    parent.children('.upload-display').remove();
+  imgTarget.on('change', function() {
+    if (window.FileReader) {
+      if (!$(this)[0].files[0].type.match(/image\//)) return;
 
-    if(window.FileReader){
-        // image 파일만
-        if (!$(this)[0].files[0].type.match(/image\//)) return;
-        
-        var reader = new FileReader();
-        reader.onload = function(e){
-            var src = e.target.result;
-            parent.append('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
-        }
-        reader.readAsDataURL($(this)[0].files[0]);
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var src = e.target.result;
+        select_previewImage.attr('src', src);
+        select_modalImage.attr('src', src);
+      }
+      reader.readAsDataURL($(this)[0].files[0]);
     }
+  });
 
-    else {
-        $(this)[0].select();
-        $(this)[0].blur();
-        var imgSrc = document.selection.createRange().text;
-        parent.append('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
+  select_previewImage.on('click', function() {
+    modal.show();
+  });
+});
 
-        var img = $(this).siblings('.upload-display').find('img');
-        img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
-    }
+$('#select_exampleModal').on('hidden.bs.modal', function() {
+  select_previewImage.attr('src', ''); // 이미지 초기화
+  select_modalImage.attr('src', ''); // 이미지 초기화
+  $('#input-file').val(''); // input 파일 선택 초기화
 });

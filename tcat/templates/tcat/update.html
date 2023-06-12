@@ -22,10 +22,39 @@
           <div class="filebox preview-image">
             <label for="input-file">사진 수정하기</label> 
             <input type="file" id="input-file" class="upload-hidden" name="image"> 
+
+            <img id="select_previewImage" class="image-thumbnail" src="{{ tcat.image_url }}" style="max-width: 100%; height: 50px; margin-left: 10px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#select_exampleModal">
+
+            <div class="modal fade" id="select_exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 10;">
+              <div class="modal-dialog modal-dialog-centered" style="max-width: 800px;">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body text-center" style="display: flex; justify-content: center; align-items: center;">
+                    <img id="select_modalImage" src="{{ tcat.image_url }}" style="width: 500px; height: auto;">
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <button id="webImageButton" type="button" class="main__image--search">웹 이미지 수정</button>
           <input type="hidden" id="selectedImage" name="selectedImage" value="">
-          <img id="previewImage" src="" style="max-width: 100%; height: 50px; margin-left: 10px;">
+
+          <img id="previewImage" src="{{ tcat.web_image_url }}" style="max-width: 100%; height: 50px; margin-left: 10px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" style="max-width: 800px;">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center" style="display: flex; justify-content: center; align-items: center;">
+                  <img id="modalImage" src="{{ tcat.web_image_url }}" style="width: 500px; height: auto;">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
 
@@ -199,11 +228,19 @@
       }
       $("#searchResult").on("click", "img", function() {
         var src = $(this).attr("src");
+
+        if (src === "None") {
+          src = ""; // 이미지가 없을 경우 빈 문자열로 설정
+        }
+
         $("#enlargedImage img").attr("src", src);
         $("#searchResult").empty();
         $("#enlargedImage").show();
         $("#selectedImage").val(src);
         $("#previewImage").attr("src", src);
+
+
+        $("#modalImage").attr("src", src);
       });
       $("#enlargedImage").on("click", "img", function() {
         $("#myModal").hide();
@@ -219,17 +256,14 @@
           $("#myModal .modal-content img").attr("src", "");
         }
       });
+
+      var previewImage = document.getElementById("previewImage");
+      var src = previewImage.getAttribute("src");
+
+      if (src === "None") {
+        previewImage.setAttribute("src", ""); // 이미지가 없을 경우 빈 문자열로 설정
+      }
     </script>
-    {% comment %} <script>
-      $("#searchResult").on("click", "img", function() {
-        var src = $(this).attr("src");  
-        $("#enlargedImage img").attr("src", src);  
-        $("#searchResult").empty();  
-        $("#enlargedImage").show();  
-        $("#selectedImage").val(src);
-        $("#previewImage").attr("src", src);
-      });
-    </script> {% endcomment %}
   </div>
 </div>
 
