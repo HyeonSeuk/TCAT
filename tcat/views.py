@@ -376,6 +376,8 @@ def search(request):
             }
             if tcat.image:
                 tcat_data['image'] = tcat.image.url
+            elif tcat.web_image:
+                tcat_data['image'] = tcat.web_image_url
             results.append(tcat_data)
 
     return render(request, 'tcat/search.html', {'results': results})
