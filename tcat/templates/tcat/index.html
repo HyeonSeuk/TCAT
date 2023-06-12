@@ -10,8 +10,7 @@
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
-
-{% comment %} <link rel="stylesheet" href="{% static 'css/index.css' %}"> {% endcomment %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
 
 {% endblock style %}
 
@@ -54,7 +53,7 @@
         </ul>
       </div>
 
-      <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+      <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasScrollingLabel">내 기록 모아보기</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -65,58 +64,44 @@
         <div class="offcanvas-body">
           {% if request.user.is_authenticated %}
             {% for tcat in tcats %}
-              {% if tcat %}
-                {% if tcat.user.pk == request.user.pk %}
-                  {% if tcat.image %}
-                    <div>
-                      <img src="{{ tcat.image.url }}" alt="">
+              {% if tcat.user.pk == request.user.pk %}
+                {% if tcat.image and tcat.web_image %}
+                  <div>
+                    <a href="{% url 'tcat:detail' tcat.pk %}">
+                      <img src="{{ tcat.image.url }}" alt="이미지" style='width: 360px; height: 260px;'>
                       <p>{{ tcat.title }}</p>
                       <p>{{ tcat.date }}</p>
                       <hr class='mt-1' style='border-top: 1px solid gray'>
-                    </div>
-
-                  {% else %}
-                    <div>
+                    </a>
+                  </div>
+                {% elif tcat.image %}
+                  <div>
+                    <a href="{% url 'tcat:detail' tcat.pk %}">
+                      <img src="{{ tcat.image.url }}" alt="" style='width: 360px; height: 260px;'>
                       <p>{{ tcat.title }}</p>
                       <p>{{ tcat.date }}</p>
                       <hr class='mt-1' style='border-top: 1px solid gray'>
-                    </div>
-                  {% endif %}
-
-                {% else %}
-                  <img src="{% static 'image/create.png' %}" alt="" style='width: 360px; height: 260px;'>                 
-                {% endif %}            
+                    </a>
+                  </div>
+                {% elif tcat.web_image %}
+                  <div>
+                    <a href="{% url 'tcat:detail' tcat.pk %}">
+                      <img src="{{ tcat.web_image.url }}" alt="" style='width: 360px; height: 260px;'>
+                      <p>{{ tcat.title }}</p>
+                      <p>{{ tcat.date }}</p>
+                      <hr class='mt-1' style='border-top: 1px solid gray'>
+                    </a>
+                  </div>
+                {% endif %}
+              {% else %}
+                {% if forloop.counter == 1 %}
+                  <img src="{% static 'image/create.png' %}" alt="" style='width: 360px; height: 260px;'>
+                {% endif %}
               {% endif %}
             {% endfor %}
-
           {% else %}
             <img src="{% static 'image/need_login2.png' %}" alt="" style='width: 360px; height: 260px;'>
           {% endif %}
-
-
-
-
-          {% comment %} {% for tcat in tcats %}
-            {% if tcat %}
-              {% if tcat.user.pk == request.user.pk %}
-                <div>
-                  <p>{{ tcat.image_url }}</p>
-                  <p>{{ tcat.title }}</p>
-                  <p>{{ tcat.date }}</p>
-                  <hr class='mt-1' style='border-top: 1px solid gray'>
-                </div>
-              {% else %}
-                <img src="{% static 'image/create.png' %}" alt="" style='width: 360px; height: 260px;'>
-                
-              {% endif %}
-
-            {% else %}
-              <img src="{% static 'image/create.png' %}" alt="">
-            
-            
-            {% endif %}
-          {% endfor %} {% endcomment %}
-
 
           
         </div>

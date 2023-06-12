@@ -327,6 +327,7 @@ def naver_image_search(request):
 
     return JsonResponse(result)
 
+
 def search(request):
     query = request.GET.get('query')
     results = []
