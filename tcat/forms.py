@@ -31,13 +31,6 @@ class TcatForm(forms.ModelForm):
             'review': forms.CharField(widget=CKEditorWidget()),
         }
 
-    # image = forms.ImageField(
-    #     required=False,
-    #     widget=forms.ClearableFileInput (
-    #         attrs={'class': 'form-control mb-2', 
-    #                'style': 'width: 360px; height: 50px; color: red;',}))
-
-
     categori = forms.ChoiceField(choices=[
         ('','카테고리를 선택해주세요'),
         ('뮤지컬','뮤지컬'),

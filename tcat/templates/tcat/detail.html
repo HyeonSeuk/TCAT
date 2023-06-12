@@ -16,6 +16,7 @@
       </svg>
     </button>
   </div>
+  {% if request.user.username == tcat.user.username %}
   <div class="button__update">
     <a href="{% url 'tcat:update' tcat.pk %}">
       <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="#679B9B" class="bi bi-gear-fill" viewBox="0 0 16 16">
@@ -32,7 +33,8 @@
         </svg>
       </button>
     </form>
-  </div>
+  </div>  
+  {% endif %}
 </div>
 
 <!--main-->
@@ -80,12 +82,8 @@
         </div>
       {% endfor %}
     {% endif %}
-
   </div>
   
-
-
-
   <!--리뷰-->
   {% if tcat.review %}
     <div>{{ tcat.review | safe }}</div>
@@ -103,10 +101,3 @@
 <script src='{% static "js/detail.js" %}'></script>
 <script type="text/javascript" src="{% static 'js/create.js' %}"></script>
 {% endblock javascript %}
-
-{% comment %} {% if tcat.dynamic_field.exists %}
-<h2>Dynamic Field</h2>
-  {% for field in tcat.dynamic_field.all %}
-    <p>{{ field.field_title }}: {{ field.field_value }}</p>
-  {% endfor %}
-{% endif %} {% endcomment %}
