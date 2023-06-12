@@ -53,10 +53,12 @@
   display: flex;
   justify-content: space-around;
   margin-bottom: 40px;
+  flex-wrap: wrap;
 }
 
 .result__tcat{
   width: 600px;
+  margin: 30px 20px;
 }
 
 .result__header {

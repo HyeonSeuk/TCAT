@@ -11,10 +11,6 @@
     <div class="create__header">
       <div><a class="create__header--text" href="{% url 'tcat:index' %}">취소</a></div>
       <div class="create__header--title">기록 추가</div>
-    {% comment %} <div type="submit" onclick="document.getElementById('tcatForm').submit();">
-        등록
-      </div>
-      <input type="submit" onclick="document.getElementById('tcatForm').submit();"> {% endcomment %}
     </div>
 
     <!--main-->
@@ -34,18 +30,14 @@
           <img id="previewImage" src="" style="max-width: 100%; height: 50px; margin-left: 10px;">
         </div>
 
-        {% comment %} <div class="main__image">
-          <div>{{ form.image }}</div>
-        </div> {% endcomment %}
-
         <!--contents-->
         <div class="main__contents">
           <div class="contents__title">
-            <div class="contents__title--title">제목</div>
+            <div class="contents__title--title">제목<span style="color: red;">*</span></div>
             <input type="text" name="title" class="contents__title--input" required>
           </div>
           <div class="d-flex contents__date">
-            <div class="contents__title--title">일시</div>
+            <div class="contents__title--title">일시<span style="color: red;">*</span></div>
             <input type="date" name="date" id="calendar-date-input" value="select_date">
           </div>
           <div class="d-flex contents__location">
@@ -57,7 +49,7 @@
             {{ form.price }}
           </div>
           <div class="d-flex contents__categori">
-            <div class="contents__title--title">카테고리</div>
+            <div class="contents__title--title">카테고리<span style="color: red;">*</span></div>
             {{ form.categori }}
           </div>
 
@@ -65,15 +57,15 @@
             {{ dynamic_form.management_form }}
             {% for formset_form in dynamic_form %}
               <div>
-                <input type="text" name="{{ formset_form.prefix }}-field_title" placeholder="필드 제목">
-                <input type="text" name="{{ formset_form.prefix }}-field_value" placeholder="필드 값">
+                <input type="text" name="{{ formset_form.prefix }}-field_title" placeholder="제목">
+                <input type="text" name="{{ formset_form.prefix }}-field_value" placeholder="내용">
               </div>
             {% endfor %}
           </div>
   
           <div class="contents__add">
-            <input type="button" value="+ 필드 추가" onclick='createDiv()' class="contents__add-plus">
-            <input type="button" value="- 필드 삭제" onclick="deleteDiv()" class="contents__add-minus">
+            <input type="button" value="+ 항목 추가" onclick='createDiv()' class="contents__add-plus">
+            <input type="button" value="- 항목 삭제" onclick="deleteDiv()" class="contents__add-minus">
           </div>
           
           <div class="d-flex contents__review">
@@ -103,10 +95,11 @@
     <div style="margin: 0 auto;">
       <button id="kakaoSearchButton" class="modal__kakaoSearch--button">카카오 검색</button>
       <button id="naverSearchButton" class="modal__naverSearch--button">네이버 검색</button>
-      <button id="goBack" class="modal__goback--button">&larr; 뒤로</button>
+      <button id="goBack" class="modal__goback--button">&larr; 뒤로</button>    
+      <p style="color: red;">이미지를 클릭 후 한 번 더 클릭하면 첨부됩니다</p>  
     </div>
     <!--이미지 크게보기-->
-    <div id="enlargedImage" style="margin: 0 auto;">       
+    <div id="enlargedImage" style="margin: 0 auto;">   
       <img src="" alt=""/>
     </div>
     <!--이미지 결과-->
