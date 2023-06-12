@@ -120,8 +120,10 @@
       <input type="text" id="query" placeholder="검색어를 입력하세요" class="modal__search--input">
     </form>
     <div style="margin: 0 auto;">
-      <button id="kakaoSearchButton" class="modal__kakaoSearch--button">카카오 검색</button>
-      <button id="naverSearchButton" class="modal__naverSearch--button">네이버 검색</button>
+      {% comment %} <button id="kakaoSearchButton" class="modal__kakaoSearch--button">카카오 검색<img src="{% static 'image/kakaoBtn.jpeg' %}" alt="" style="width: 30px; height: 20px;"></button>
+      <button id="naverSearchButton" class="modal__naverSearch--button">네이버 검색</button> {% endcomment %}
+      <button id="kakaoSearchButton" style="border: none; background-color: white;"><img src="{% static 'image/kakaoBtn.jpeg' %}" alt="" style="width: 70px; height: 40px;"></button>
+      <button id="naverSearchButton" style="border: none; background-color: white;"><img src="{% static 'image/naverBtn1.png' %}" alt="" style="width: 80px; height: 40px;"></button>
       <button id="goBack" class="modal__goback--button">&larr; 뒤로</button>    
       <p style="color: red;">이미지를 클릭 후 한 번 더 클릭하면 첨부됩니다</p>  
     </div>
