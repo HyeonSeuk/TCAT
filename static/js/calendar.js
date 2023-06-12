@@ -47,15 +47,16 @@ document.addEventListener('DOMContentLoaded', function () {
       // 이벤트 내용을 커스터마이즈하여 이미지를 추가
       if (arg.event.extendedProps.image_url) {
         return {
-          html: '<img src="' + arg.event.extendedProps.image_url + '" alt="Event Image" style="width:100%; height:170px;">'
+          html: '<img src="' + arg.event.extendedProps.image_url + '" alt="Event Image" style="width:100%; height:140px;">'
         };
       } else if (arg.event.extendedProps.web_image_url) {
         return {
-          html: '<img src="' + arg.event.extendedProps.web_image_url + '" alt="Web Image" style="width:100%;  height:170px;">'
+          html: '<img src="' + arg.event.extendedProps.web_image_url + '" alt="Web Image" style="width:100%;  height:140px;">'
         };
       } else {
+        var imageUrl = staticPath;
         return {
-          html: '<img src="/static/image/noimg.png" alt="No Image" style="width:100%; height:170px;">'
+          html: '<img src="' + imageUrl + '" alt="No Image" style="width:100%; height:140px;">'
         };
       }
     },
@@ -136,18 +137,26 @@ document.addEventListener('DOMContentLoaded', function () {
   
       var eventTitle = document.createElement('h5');
       eventTitle.classList.add('modal-title');
-      eventTitle.innerText = event.title;
+      eventTitle.innerText = "제목 : " + event.title;
       eventInfo.appendChild(eventTitle);
 
       var eventLocation = document.createElement('div');
       eventLocation.classList.add('modalLocation');
-      eventLocation.innerText = event.location;
+      if (event.review) {
+        eventLocation.innerText = "위치 : " + event.location;
+      } else {
+        eventLocation.innerText = "";
+      }
       eventInfo.appendChild(eventLocation);
 
 
       var eventReview = document.createElement('div');
       eventReview.classList.add('modalReview');
-      eventReview.innerText = event.review ? stripTags(event.review) : '';
+      if (event.review) {
+        eventReview.innerText = "리뷰: " + stripTags(event.review);
+      } else {
+        eventReview.innerText = "";  // 리뷰가 없을 경우 빈 문자열로 설정
+      }
       eventInfo.appendChild(eventReview);
   
       eventContainer.appendChild(eventInfo);
