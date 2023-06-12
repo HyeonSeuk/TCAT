@@ -178,7 +178,7 @@ def update(request, tcat_pk):
         dynamic_form = DynamicFieldFormSet(request.POST, prefix='dynamic_formset')
 
         if tcat_form.is_valid():
-            tcat = tcat_form.save(commit=False)
+            tcat = tcat_form.save()
 
         if dynamic_form.is_valid():
             DynamicField.objects.filter(tcat=tcat).delete()
@@ -187,9 +187,9 @@ def update(request, tcat_pk):
                 dynamic_field.tcat = tcat
                 dynamic_field.save()
 
-        if tcat.image:
-            tcat.image_url = settings.MEDIA_URL + str(tcat.image)
-            tcat.save()
+        # if tcat.image:
+        #     tcat.image_url = settings.MEDIA_URL + str(tcat.image)
+        #     tcat.save()
 
         selected_image_url = request.POST.get('selectedImage', None)
         if selected_image_url:
