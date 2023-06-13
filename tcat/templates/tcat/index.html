@@ -12,6 +12,12 @@
 
 <link rel="stylesheet" href="{% static 'css/index.css' %}">
 
+<style>
+  .dropdown-toggle::after {
+    content: none;
+  }
+</style>
+
 {% endblock style %}
 
 
@@ -21,15 +27,21 @@
   <!-- 캘린더 -->
   <div class='mb-2 d-flex justify-content-between align-items-center' style='min-width: 1030px;'>
 
-    <div class="dropdown d-flex align-items-center">
+    <div class="dropdown d-flex">
       <p style='font-size: 25px;'>
         <i class="fa-regular fa-calendar-days"></i> 나의 캘린더 
       </p>
-      <div class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <div class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="margin-left: 5px;
+      padding-top: 10px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+          <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+        </svg>
       </div>
-      <ul class="dropdown-menu" style='width: 210px;'>
+      <ul class="dropdown-menu" style='width: 440px;'>
         <li>
           <p class='p-3 m-0'>캘린더 내의 날짜를 클릭하거나, 오른쪽 Menu에서 기록 생성하기 버튼으로 회원님의 기록을 생성할 수 있습니다.</p>
+          <p class='p-3 m-0'>일지를 기록하고 캘린더에 표시된 사진을 드래그하여 사용자가 원하는 다른 날짜로 사진을 이동할 수 있습니다.</p>
         </li>
       </ul>
     </div>    
@@ -39,7 +51,7 @@
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style='background-color: var(--main-color);'>Menu</button>
         <ul class="dropdown-menu">
-          <li onclick="window.location.href = '{% url 'tcat:create' %}';">
+          <li onclick="createDate();">
             <a class="dropdown-item" href="#"><i class="fa-solid fa-pen-to-square"></i> 기록 생성하기</a>
           </li>
 
@@ -341,6 +353,11 @@
 
 <script>
   var staticPath = "{% static 'image/noimg.png' %}";
+  function createDate(url) {
+    localStorage.setItem('isDateClicked', true);
+    localStorage.removeItem('selectedDate');
+    window.location.href = '/tcat/create/';
+  }
 </script>
 
 {% endblock content %}
