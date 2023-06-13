@@ -59,58 +59,140 @@
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <hr class='mt-1 mb-1' style='border-top: 1px solid black'>
-        
+
         <!-- offcanvas 기록 모아보기 -->
+
         <div class="offcanvas-body">
           {% if request.user.is_authenticated %}
-            {% for tcat in tcats %}
-              {% if tcat.user.pk == request.user.pk %}
-                {% if tcat.image and tcat.web_image %}
-                  <div>
+            {% if tcats %}
+              {% for tcat in tcats %}
+                {% if tcat.image %}
+
+                  <!-- 일반 이미지 있을 때  -->
+                  <div class="card mb-2" style="width: 342px;">
                     <a href="{% url 'tcat:detail' tcat.pk %}">
-                      <img src="{{ tcat.image.url }}" alt="이미지" style='width: 360px; height: 260px;'>
+                      <img src="{{ tcat.image.url }}" class="card-img-top" alt="" style='width: 340px; border-radius: 5px;'>
+                      <div class="card-body p-3">                  
+                        <p class='index__offcanvas--p-title'>{{ tcat.title }}</p>
+                        <p class='index__offcanvas--p'>{{ tcat.categori }} / <span>{{ tcat.location }}</span></p>
+                        <p class='index__offcanvas--p-date'>{{ tcat.date }}</p>
+                      </div>
+                    </a>  
+                  </div>
+
+                  {% comment %} <div>
+                    <a href="{% url 'tcat:detail' tcat.pk %}">
+                      <img src="{{ tcat.image.url }}" alt="" style='width: 340px;'>
                       <p>{{ tcat.title }}</p>
                       <p>{{ tcat.date }}</p>
-                      <hr class='mt-1' style='border-top: 1px solid gray'>
-                    </a>
-                  </div>
-                {% elif tcat.image %}
-                  <div>
-                    <a href="{% url 'tcat:detail' tcat.pk %}">
-                      <img src="{{ tcat.image.url }}" alt="" style='width: 360px; height: 260px;'>
-                      <p>{{ tcat.title }}</p>
-                      <p>{{ tcat.date }}</p>
-                      <hr class='mt-1' style='border-top: 1px solid gray'>
-                    </a>
-                  </div>
+                    </a>  
+                    <hr class='mt-1' style='border-top: 1px solid gray'>
+                  </div> {% endcomment %}
+
+                <!-- 웹 이미지 있을 때 -->
                 {% elif tcat.web_image %}
-                  <div>
+                  <div class="card mb-2" style="width: 342px;">
                     <a href="{% url 'tcat:detail' tcat.pk %}">
-                      <img src="{{ tcat.web_image.url }}" alt="" style='width: 360px; height: 260px;'>
-                      <p>{{ tcat.title }}</p>
-                      <p>{{ tcat.date }}</p>
-                      <hr class='mt-1' style='border-top: 1px solid gray'>
-                    </a>
+                      <img src="{{ tcat.web_image.url }}" class="card-img-top" alt="" style='width: 340px; border-radius: 5px;'>
+                      <div class="card-body p-3">
+                        <p class='index__offcanvas--p-title'>{{ tcat.title }}</p>
+                        <p class='index__offcanvas--p'>{{ tcat.categori }} / <span>{{ tcat.location }}</span></p>
+                        <p class='index__offcanvas--p-date'>{{ tcat.date }}</p>
+                      </div>
+                    </a>                      
                   </div>
-                {% endif %}
-              {% else %}
-                {% if forloop.counter == 1 %}
-                  <img src="{% static 'image/create.png' %}" alt="" style='width: 360px; height: 260px;'>
-                {% endif %}
-              {% endif %}
-            {% endfor %}
+
+                <!-- 일반 이미지 & 웹 이미지 있을 때 -->
+                {% elif tcat.web.image and tcat.image %}
+                  <div class="card mb-2" style="width: 342px;">
+                    <a href="{% url 'tcat:detail' tcat.pk %}">
+                      <img src="{{ tcat.image.url }}" class="card-img-top" alt="" style='width: 340px; border-radius: 5px;'>
+                      <div class="card-body p-3">
+                        <p class='index__offcanvas--p-title'>{{ tcat.title }}</p>
+                        <p class='index__offcanvas--p'>{{ tcat.categori }} / <span>{{ tcat.location }}</span></p>
+                        <p class='index__offcanvas--p-date'>{{ tcat.date }}</p>
+                      </div>
+                    </a>  
+                  </div>
+      
+                <!-- 이미지 없을 때 -->
+                {% else %}
+                  <div class="card mb-2" style="width: 342px;">
+                    <a href="{% url 'tcat:detail' tcat.pk %}">
+                      <div class="card-body p-3">
+                        <p class='index__offcanvas--p-title'>{{ tcat.title }}</p>
+                        <p class='index__offcanvas--p'>{{ tcat.categori }} / <span>{{ tcat.location }}</span></p>
+                        <p class='index__offcanvas--p-date'>{{ tcat.date }}</p>
+                      </div>
+                    </a>  
+                  </div>
+                {% endif %}   
+              {% endfor %}
+              
+            <!-- 등록된 글이 없을 때 -->
+            {% else %}
+              <img src="{% static 'image/create.png' %}" alt="게시글이 없을때" style='width: 360px; height: 260px;'>                 
+            {% endif %}
+        
+          <!-- 로그인 안했을 때 -->
           {% else %}
-            <img src="{% static 'image/need_login2.png' %}" alt="" style='width: 360px; height: 260px;'>
+            <img src="{% static 'image/need_login2.png' %}" alt="로그인안했을때" style='width: 360px; height: 260px;'>
           {% endif %}
 
-          
+
+          {% comment %} <div class="offcanvas-body">
+            {% if request.user.is_authenticated %}
+              {% for tcat in tcats %}
+                {% if tcat.user.pk == request.user.pk %}
+                  {% if tcat.image and tcat.web_image %}
+                    <div>
+                      <a href="{% url 'tcat:detail' tcat.pk %}">
+                        <img src="{{ tcat.image.url }}" alt="이미지" style='width: 360px; height: 260px;'>
+                        <p>{{ tcat.title }}</p>
+                        <p>{{ tcat.date }}</p>
+                        <hr class='mt-1' style='border-top: 1px solid gray'>
+                      </a>
+                    </div>
+                  {% elif tcat.image %}
+                    <div>
+                      <a href="{% url 'tcat:detail' tcat.pk %}">
+                        <img src="{{ tcat.image.url }}" alt="" style='width: 360px; height: 260px;'>
+                        <p>{{ tcat.title }}</p>
+                        <p>{{ tcat.date }}</p>
+                        <hr class='mt-1' style='border-top: 1px solid gray'>
+                      </a>
+                    </div>
+                  {% elif tcat.web_image %}
+                    <div>
+                      <a href="{% url 'tcat:detail' tcat.pk %}">
+                        <img src="{{ tcat.web_image.url }}" alt="" style='width: 360px; height: 260px;'>
+                        <p>{{ tcat.title }}</p>
+                        <p>{{ tcat.date }}</p>
+                        <hr class='mt-1' style='border-top: 1px solid gray'>
+                      </a>
+                    </div>
+                  {% else %}
+                    <div>
+                      <a href="{% url 'tcat:detail' tcat.pk %}">
+                        <p>{{ tcat.title }}</p>
+                        <p>{{ tcat.date }}</p>
+                        <hr class='mt-1' style='border-top: 1px solid gray'>
+                      </a>
+                    </div>
+                  {% endif %}
+                {% else %}
+                  {% if forloop.counter == 1 %}
+                    <img src="{% static 'image/create.png' %}" alt="" style='width: 360px; height: 260px;'>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              <img src="{% static 'image/need_login2.png' %}" alt="" style='width: 360px; height: 260px;'>
+            {% endif %}
+          </div> {% endcomment %}
         </div>
       </div>
     </div>
-
-    {% comment %} <button class='p-2 me-2' type="button" id="save" style='border: 0; border-radius: 5px; background-color: white'><i class="fa-solid fa-camera"></i> 캘린더 캡쳐</button>
-    
-    <button class='p-2' onclick="window.location.href = '{% url 'tcat:create' %}';" style='color: white; border:0; border-radius: 5px; background-color: var(--main-color);'>기록 생성하기</button> {% endcomment %}
   </div>
 
   <div class="header-datepicker" style='min-width: 1030px;'>
@@ -197,14 +279,25 @@
   </div>
 
   <hr class='mt-4' style='min-width: 1030px; border-top: 1px solid black'>
-  <h2 class='mt-4 mb-4'>월별 그래프 <i class="fa-solid fa-chart-simple"></i></h2>
+  <div class='mt-4 mb-4 d-flex align-items-center'>
+    <p style='margin-bottom: 0px; margin-right: 6px; font-size: 32px;'>월별 그래프</p> 
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
+    <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
+  </svg></div>
   <hr class='mt-3 mb-3' style='min-width: 1030px; border-top: 1px solid black'>
 
   <!-- 그래프 -->
   {% if request.user.is_authenticated %}
     <div class='mt-4 d-flex flex-column align-items-center' style='min-width: 1030px;'>
       <div>
-        <p class='index__graph--info'><i class="fa-solid fa-coins"></i><b> 총 사용액</b></p>
+        <p class='index__graph--info d-flex align-items-center'>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-coin" viewBox="0 0 16 16">
+            <path d="M5.5 9.511c.076.954.83 1.697 2.182 1.785V12h.6v-.709c1.4-.098 2.218-.846 2.218-1.932 0-.987-.626-1.496-1.745-1.76l-.473-.112V5.57c.6.068.982.396 1.074.85h1.052c-.076-.919-.864-1.638-2.126-1.716V4h-.6v.719c-1.195.117-2.01.836-2.01 1.853 0 .9.606 1.472 1.613 1.707l.397.098v2.034c-.615-.093-1.022-.43-1.114-.9H5.5zm2.177-2.166c-.59-.137-.91-.416-.91-.836 0-.47.345-.822.915-.925v1.76h-.005zm.692 1.193c.717.166 1.048.435 1.048.91 0 .542-.412.914-1.135.982V8.518l.087.02z"/>
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11zm0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"/>
+          </svg>
+          <b class='ms-1'>총 사용액</b>
+        </p>
         <button class='index__graph--btn me-1 mt-2 mb-2' id="prevYearExpenses">이전 년도</button>
 
         <span class='index__graph--year' id="currentYearExpenses"></span>
@@ -217,7 +310,13 @@
       </div>
 
       <div>
-        <p class='index__graph--info'><i class="fa-regular fa-images"></i><b> 총 게시물 수</b></p>
+        <p class='index__graph--info d-flex align-items-center'>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-images" viewBox="0 0 16 16">
+            <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+            <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2zM14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1zM2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10z"/>
+          </svg>
+          <b class='ms-1'> 총 게시물 수</b>
+        </p>
         <button class='index__graph--btn me-1 mt-2 mb-2' id="prevYearPosts">이전 년도</button>
 
         <span class='index__graph--year' id="currentYearPosts"></span>
