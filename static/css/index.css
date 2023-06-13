@@ -61,6 +61,24 @@
   opacity: 0.5;
 }
 
+
+.index__offcanvas--p {
+  color: black;
+  margin-bottom: 10px;
+}
+
+.index__offcanvas--p-title {
+  font-weight: bold;
+  color: #679B9B;
+  font-size: 20px;
+}
+
+.index__offcanvas--p-date {
+  color: gray;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
 .event-separator {
   cursor: pointer;
 }
@@ -70,3 +88,4 @@
   font-weight: bold;
   float: right;
 } 
+
