@@ -130,9 +130,14 @@
       <input type="text" id="query" placeholder="검색어를 입력하세요" class="modal__search--input">
     </form>
     <div style="margin: 0 auto;">
-      <button id="kakaoSearchButton" class="modal__kakaoSearch--button">카카오 검색</button>
-      <button id="naverSearchButton" class="modal__naverSearch--button">네이버 검색</button>
-      <button id="goBack" class="modal__goback--button">&larr; 뒤로</button>
+      <button id="kakaoSearchButton" class="modal__kakaoSearch--button"><img src="{% static 'image/kakaoBtn2.png' %}" alt="카카오검색"></button>
+      <button id="naverSearchButton" class="modal__naverSearch--button"><img src="{% static 'image/naverBtn2.png' %}" alt="네이버검색"></button>
+      <button id="goBack" class="modal__goback--button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
+        </svg>
+      </button>    
+      <p style="color: red; margin-top: 10px;">이미지를 클릭 후 한 번 더 클릭하면 첨부됩니다</p>  
     </div>
     <!--이미지 크게보기-->
     <div id="enlargedImage" style="margin: 0 auto;">       

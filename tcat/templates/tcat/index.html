@@ -86,7 +86,7 @@
                       <img src="{{ tcat.image.url }}" class="card-img-top" alt="" style='width: 340px; border-radius: 5px;'>
                       <div class="card-body p-3">                  
                         <p class='index__offcanvas--p-title'>{{ tcat.title }}</p>
-                        <p class='index__offcanvas--p'>{{ tcat.categori }} / <span>{{ tcat.location }}</span></p>
+                        <p class='index__offcanvas--p'>{{ tcat.categori }} {% if tcat.location %} / <span>{{ tcat.location }}</span>{% endif %}</p>
                         <p class='index__offcanvas--p-date'>{{ tcat.date }}</p>
                       </div>
                     </a>  
@@ -108,7 +108,7 @@
                       <img src="{{ tcat.web_image.url }}" class="card-img-top" alt="" style='width: 340px; border-radius: 5px;'>
                       <div class="card-body p-3">
                         <p class='index__offcanvas--p-title'>{{ tcat.title }}</p>
-                        <p class='index__offcanvas--p'>{{ tcat.categori }} / <span>{{ tcat.location }}</span></p>
+                        <p class='index__offcanvas--p'>{{ tcat.categori }} {% if tcat.location %} / <span>{{ tcat.location }}</span>{% endif %}</p>
                         <p class='index__offcanvas--p-date'>{{ tcat.date }}</p>
                       </div>
                     </a>                      
@@ -121,7 +121,7 @@
                       <img src="{{ tcat.image.url }}" class="card-img-top" alt="" style='width: 340px; border-radius: 5px;'>
                       <div class="card-body p-3">
                         <p class='index__offcanvas--p-title'>{{ tcat.title }}</p>
-                        <p class='index__offcanvas--p'>{{ tcat.categori }} / <span>{{ tcat.location }}</span></p>
+                        <p class='index__offcanvas--p'>{{ tcat.categori }} {% if tcat.location %} / <span>{{ tcat.location }}</span>{% endif %}</p>
                         <p class='index__offcanvas--p-date'>{{ tcat.date }}</p>
                       </div>
                     </a>  
@@ -133,7 +133,7 @@
                     <a href="{% url 'tcat:detail' tcat.pk %}">
                       <div class="card-body p-3">
                         <p class='index__offcanvas--p-title'>{{ tcat.title }}</p>
-                        <p class='index__offcanvas--p'>{{ tcat.categori }} / <span>{{ tcat.location }}</span></p>
+                        <p class='index__offcanvas--p'>{{ tcat.categori }} {% if tcat.location %} / <span>{{ tcat.location }}</span>{% endif %}</p>
                         <p class='index__offcanvas--p-date'>{{ tcat.date }}</p>
                       </div>
                     </a>  
@@ -358,6 +358,7 @@
     localStorage.removeItem('selectedDate');
     window.location.href = '/tcat/create/';
   }
+  var staticPath = "{% static 'image/noImg.png' %}";
 </script>
 
 {% endblock content %}
