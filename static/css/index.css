@@ -2,6 +2,10 @@
   min-height: 155px;
 }
 
+.fc-event {
+  border-color: white;
+}
+
 .header-datepicker {
   position: relative;
 }

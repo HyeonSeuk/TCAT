@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
               date: event.date,
               title: event.title,
               location: event.location,
+              rendering: 'normal', // 배경 없는 이벤트를 일반 이벤트로 설정
               review: stripTags(event.review),
               rendering: 'background',
               extendedProps: {
