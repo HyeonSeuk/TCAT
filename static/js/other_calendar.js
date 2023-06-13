@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
       var eventImage = document.createElement('img');
       eventImage.classList.add('col-md-5', 'modal-img');
-      eventImage.src = event.image_url ? event.image_url : (event.web_image_url ? event.web_image_url : '/static/image/noimg.png');
+      eventImage.src = event.image_url ? event.image_url : (event.web_image_url ? event.web_image_url : '/static/image/noImg.png');
       eventContainer.appendChild(eventImage);
 
       eventContainer.addEventListener('click', function() {
