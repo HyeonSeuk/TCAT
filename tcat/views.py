@@ -26,7 +26,8 @@ def index_redirect(request):
     return redirect('tcat:index')
 
 def index(request):
-    tcats = Tcat.objects.order_by('-pk')
+    tcats_all = Tcat.objects.order_by('-date')
+    tcats = tcats_all.filter(user=request.user.pk)
 
     # 인터파크 크롤링
     current_date = datetime.now().strftime("%Y%m%d")
