@@ -82,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
       arg.event.preventDefault();
     },
+
     
     dateClick: function(info) {
       var selectedDate = info.dateStr;

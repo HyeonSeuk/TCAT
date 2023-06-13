@@ -24,6 +24,7 @@
             <input type="file" id="input-file" class="upload-hidden" name="image"> 
           
             <img id="select_previewImage" class="image-thumbnail" src="" style="max-width: 100%; height: 50px; margin-left: 10px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#select_exampleModal">
+            <button type="button" id="cancelSelectImage" class="btn-close" style="display: none;"></button>
             <div class="modal fade" id="select_exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 10;">
               <div class="modal-dialog modal-dialog-centered" style="max-width: 800px;">
                 <div class="modal-content">
@@ -42,6 +43,7 @@
           <input type="hidden" id="selectedImage" name="selectedImage" value="">
 
           <img id="previewImage" src="" style="max-width: 100%; height: 50px; margin-left: 10px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <button type="button" id="cancelPreviewImage" class="btn-close" style="display: none; margin-left: 5px;"></button>
           <!-- Modal -->
           <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" style="max-width: 800px;">
@@ -65,7 +67,7 @@
           </div>
           <div class="d-flex contents__date">
             <div class="contents__title--title">일시<span style="color: red;">*</span></div>
-            <input type="date" name="date" id="calendar-date-input" value="select_date">
+            <input type="date" name="date" id="calendar-date-input">
           </div>
           <div class="d-flex contents__location">
             <div class="contents__title--title">장소</div>
@@ -237,10 +239,27 @@
         $("#selectedImage").val(src);
         $("#previewImage").attr("src", src);
         $("#modalImage").attr("src", src);
+
+        $("#cancelPreviewImage").show();
       });
       $("#enlargedImage").on("click", "img", function() {
         $("#myModal").hide();
       });
+
+      var cancelImageBtn = document.getElementById("cancelPreviewImage");
+
+      // When the user clicks on the cancel selected image button, clear the selected image
+      cancelImageBtn.onclick = function() {
+        clearpreviewImage();
+      }
+
+      function clearpreviewImage() {
+        var previewImage = document.getElementById("previewImage");
+        previewImage.src = ""; // 이미지 초기화
+        $("#selectedImage").val("");
+
+        $("#cancelPreviewImage").hide();
+      }
     
       // 모달 외부를 클릭하면 모달을 숨김
       $(window).click(function(event) {

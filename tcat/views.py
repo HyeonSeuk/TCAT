@@ -180,6 +180,7 @@ def update(request, tcat_pk):
 
         if tcat_form.is_valid():
             tcat = tcat_form.save(commit=False)
+            tcat.save()
 
         if dynamic_form.is_valid():
             DynamicField.objects.filter(tcat=tcat).delete()
@@ -190,6 +191,8 @@ def update(request, tcat_pk):
 
         if tcat.image:
             tcat.image_url = settings.MEDIA_URL + str(tcat.image)
+            tcat.save()
+
 
         selected_image_url = request.POST.get('selectedImage', None)
         if selected_image_url:
@@ -268,6 +271,36 @@ def update_event(request):
         return JsonResponse({'status': 'success'})
     
     return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+
+
+def delete_image(request, tcat_pk):
+    tcat = Tcat.objects.get(pk=tcat_pk)
+    if request.method == 'POST':
+        tcat.image.delete()
+
+        image_url = tcat.image_url
+        if image_url:
+            tcat.image_url = ''  # 또는 None으로 설정
+            tcat.save()
+
+        return JsonResponse({'message': '이미지 삭제가 완료되었습니다.'})
+
+    return JsonResponse({'message': '잘못된 요청입니다.'})
+
+
+def delete_web_image(request, tcat_pk):
+    tcat = Tcat.objects.get(pk=tcat_pk)
+    if request.method == 'POST':
+        tcat.web_image.delete()
+
+        web_image_url = tcat.web_image_url
+        if web_image_url:
+            tcat.web_image_url = ''  # 또는 None으로 설정
+            tcat.save()
+
+        return JsonResponse({'message': '이미지 삭제가 완료되었습니다.'})
+
+    return JsonResponse({'message': '잘못된 요청입니다.'})
 
 
 @csrf_exempt

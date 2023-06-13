@@ -1,9 +1,16 @@
-// 동적필드 추가
 document.addEventListener('DOMContentLoaded', function() {
-  var selectedDate = localStorage.getItem('selectedDate');
+  var isDateClicked = localStorage.getItem('isDateClicked');
   var dateInput = document.getElementById('calendar-date-input');
-  dateInput.value = selectedDate;
+  
+  if (isDateClicked) {
+    dateInput.setAttribute('name', 'date');
+    var selectedDate = localStorage.getItem('selectedDate');
+    dateInput.value = selectedDate;
+  } else {
+    dateInput.removeAttribute('name');
+  }
 });
+
 
 var maxFields = 5;  // 최대 필드 개수
 
@@ -86,4 +93,24 @@ $('#select_exampleModal').on('hidden.bs.modal', function() {
   select_previewImage.attr('src', ''); // 이미지 초기화
   select_modalImage.attr('src', ''); // 이미지 초기화
   $('#input-file').val(''); // input 파일 선택 초기화
+});
+
+
+document.getElementById('input-file').addEventListener('change', function() {
+  var select_previewImage = document.getElementById('select_previewImage');
+  var cancelImageBtn = document.getElementById('cancelSelectImage');
+
+  select_previewImage.src = URL.createObjectURL(this.files[0]);
+  cancelImageBtn.style.display = 'inline-block';
+});
+
+// 이미지 취소 버튼 클릭 이벤트 처리
+document.getElementById('cancelSelectImage').addEventListener('click', function() {
+  var inputFile = document.getElementById('input-file');
+  var select_previewImage = document.getElementById('select_previewImage');
+  var cancelImageBtn = document.getElementById('cancelSelectImage');
+
+  inputFile.value = '';
+  select_previewImage.src = '';
+  cancelImageBtn.style.display = 'none';
 });
