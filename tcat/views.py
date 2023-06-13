@@ -325,6 +325,8 @@ def naver_image_search(request):
     response = requests.get("https://openapi.naver.com/v1/search/image", headers=headers, params=params)
     result = response.json()
 
+    result['items'] = [item for item in result['items'] if item['link'].startswith('https://')]
+
     return JsonResponse(result)
 
 
