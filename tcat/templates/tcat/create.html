@@ -67,16 +67,13 @@
           </div>
           <div class="d-flex contents__date">
             <div class="contents__title--title">일시<span style="color: red;">*</span></div>
-            <input type="date" name="date" id="calendar-date-input">
+            <input type="date" name="date" id="calendar-date-input" required>
           </div>
           <div class="d-flex contents__location">
             <div class="contents__title--title">장소</div>
             {{ form.location }}
           </div>
-          <div class="d-flex contents__price">
-            <div class="contents__title--title">금액</div>
-            {{ form.price }}
-          </div>
+          
           <div class="d-flex contents__categori">
             <div class="contents__title--title">카테고리<span style="color: red;">*</span></div>
             {{ form.categori }}
@@ -203,6 +200,21 @@
         visibleImages += 8;
         showImages();
       });
+
+      // Enter로 카카오 검색
+      document.getElementById('query').addEventListener('keydown', function(event) {
+        if (event.keyCode === 13) { 
+          event.preventDefault(); 
+          
+          searchKakao();
+        }
+      });
+    
+      function searchKakao() {
+        var query = $("#query").val();
+        searchSource = 'kakao';
+        searchImages("{% url 'tcat:kakao_image_search' %}");
+      }
     
       $("#kakaoSearchButton").click(function() {
         searchSource = 'kakao';

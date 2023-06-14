@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
               date: event.date,
               title: event.title,
               location: event.location,
-              review: stripTags(event.review),
+              categori: event.categori,
               rendering: 'background',
               extendedProps: {
                 image_url: event.image_url,
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
           image_url: seg.event.extendedProps.image_url,
           web_image_url: seg.event.extendedProps.web_image_url,
           location: seg.event.extendedProps.location,
-          review: seg.event.extendedProps.review ? stripTags(seg.event.extendedProps.review) : '',
+          categori: seg.event.extendedProps.categori,
           tcat_pk: seg.event.extendedProps.tcat_pk
         };
       });
@@ -132,19 +132,26 @@ document.addEventListener('DOMContentLoaded', function () {
   
       var eventTitle = document.createElement('h5');
       eventTitle.classList.add('modal-title');
-      eventTitle.innerText = event.title;
+      eventTitle.innerText = "제목 : " + event.title;
       eventInfo.appendChild(eventTitle);
 
       var eventLocation = document.createElement('div');
       eventLocation.classList.add('modalLocation');
-      eventLocation.innerText = event.location;
+      if (event.location) {
+        eventLocation.innerText = "장소 : " + event.location;
+      } else {
+        eventLocation.innerText = "";
+      }
       eventInfo.appendChild(eventLocation);
 
-
-      var eventReview = document.createElement('div');
-      eventReview.classList.add('modalReview');
-      eventReview.innerText = event.review ? stripTags(event.review) : '';
-      eventInfo.appendChild(eventReview);
+      var eventCategori = document.createElement('div');
+      eventCategori.classList.add('modalCategori');
+      if (event.categori) {
+        eventCategori.innerText = "카테고리 : " + event.categori;
+      } else {
+        eventCategori.innerText = "";
+      }
+      eventInfo.appendChild(eventCategori);
   
       eventContainer.appendChild(eventInfo);
       modalBody.appendChild(eventContainer);

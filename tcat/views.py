@@ -113,6 +113,7 @@ def detail(request, tcat_pk):
     }
     return render(request, 'tcat/detail.html', context)
 
+from django.contrib.humanize.templatetags.humanize import intcomma
 
 @login_required
 def create(request):
@@ -234,7 +235,7 @@ def all_events(request):
             'image_url': event.image_url,
             'web_image_url': event.web_image_url,
             'location': event.location,
-            'review': strip_tags(event.review),
+            'categori': event.categori,
             'tcat_pk': event.id,
         })
 
@@ -252,7 +253,7 @@ def other_events(request, username):
             'image_url': event.image_url,
             'web_image_url': event.web_image_url,
             'location': event.location,
-            'review': strip_tags(event.review),
+            'categori': event.categori,
             'tcat_pk': event.id,
         })
 

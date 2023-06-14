@@ -1,10 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
-  var isDateClicked = localStorage.getItem('isDateClicked');
+  var selectedDate = localStorage.getItem('selectedDate');
   var dateInput = document.getElementById('calendar-date-input');
   
-  if (isDateClicked) {
+  if (selectedDate) {
     dateInput.setAttribute('name', 'date');
-    var selectedDate = localStorage.getItem('selectedDate');
     dateInput.value = selectedDate;
   } else {
     dateInput.removeAttribute('name');
