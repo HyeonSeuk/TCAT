@@ -212,6 +212,21 @@
         visibleImages += 8;
         showImages();
       });
+
+      // Enter로 카카오 검색
+      document.getElementById('query').addEventListener('keydown', function(event) {
+        if (event.keyCode === 13) { 
+          event.preventDefault(); 
+          
+          searchKakao();
+        }
+      });
+    
+      function searchKakao() {
+        var query = $("#query").val();
+        searchSource = 'kakao';
+        searchImages("{% url 'tcat:kakao_image_search' %}");
+      }
     
       $("#kakaoSearchButton").click(function() {
         searchSource = 'kakao';
