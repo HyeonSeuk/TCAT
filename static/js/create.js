@@ -1,12 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
-  var selectedDate = localStorage.getItem('selectedDate');
+  var isDateClicked = localStorage.getItem('isDateClicked');
   var dateInput = document.getElementById('calendar-date-input');
   
-  if (selectedDate) {
+  if (isDateClicked == true) {
+    var currentDate = new Date().toISOString().slice(0, 10);
     dateInput.setAttribute('name', 'date');
-    dateInput.value = selectedDate;
+    dateInput.value = currentDate;
   } else {
-    dateInput.removeAttribute('name');
+    dateInput.setAttribute('name', 'date');
+    var selectedDate = localStorage.getItem('selectedDate');
+    dateInput.value = selectedDate;
   }
 });
 
