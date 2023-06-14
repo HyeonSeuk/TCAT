@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', function () {
               title: event.title,
               location: event.location,
               rendering: 'normal', // 배경 없는 이벤트를 일반 이벤트로 설정
-              review: stripTags(event.review),
               rendering: 'background',
+              categori: event.categori,
               extendedProps: {
                 image_url: event.image_url,
                 web_image_url: event.web_image_url,
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
           image_url: seg.event.extendedProps.image_url,
           web_image_url: seg.event.extendedProps.web_image_url,
           location: seg.event.extendedProps.location,
-          review: seg.event.extendedProps.review ? stripTags(seg.event.extendedProps.review) : '',
+          categori: seg.event.extendedProps.categori,
           tcat_pk: seg.event.extendedProps.tcat_pk
         };
       });
@@ -151,15 +151,14 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       eventInfo.appendChild(eventLocation);
 
-
-      var eventReview = document.createElement('div');
-      eventReview.classList.add('modalReview');
-      if (event.review) {
-        eventReview.innerText = "내용: " + stripTags(event.review);
+      var eventCategori = document.createElement('div');
+      eventCategori.classList.add('modalCategori');
+      if (event.categori) {
+        eventCategori.innerText = "카테고리 : " + event.categori;
       } else {
-        eventReview.innerText = "";  // 리뷰가 없을 경우 빈 문자열로 설정
+        eventCategori.innerText = "";
       }
-      eventInfo.appendChild(eventReview);
+      eventInfo.appendChild(eventCategori);
   
       eventContainer.appendChild(eventInfo);
       modalBody.appendChild(eventContainer);

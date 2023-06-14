@@ -226,7 +226,7 @@
             <div class="row">
               <h5 class="modal-title" id="modalTitle"></h5>
               <div class="modalLocation" id="modalLocation"></div>
-              <div class="modalReview" id="modalReview"></div>
+              <div class="modalCategori" id="modalCategori"></div>
             </div>
           </div>
         </div>
@@ -355,11 +355,9 @@
 <script>
   var staticPath = "{% static 'image/noimg.png' %}";
   function createDate(url) {
-    localStorage.setItem('isDateClicked', true);
     localStorage.removeItem('selectedDate');
     window.location.href = '/tcat/create/';
   }
-  var staticPath = "{% static 'image/noImg.png' %}";
 </script>
 
 {% endblock content %}
