@@ -1,0 +1,393 @@
+[
+{
+    "model": "tcat.tcat",
+    "pk": 1,
+    "fields": {
+        "title": "오페라의 유령",
+        "date": "2023-05-07",
+        "location": "부산 드림씨어터",
+        "price": 189998,
+        "image": "",
+        "image_url": "",
+        "web_image": "ticket_diarys/20230605090310652ayaq.jpg",
+        "web_image_url": "/media/ticket_diarys/20230605090310652ayaq.jpg",
+        "review": "<h1><span style=\"color:#27ae60\">오리지널 버전보다 재밌었다.~</span></h1>",
+        "user": 3,
+        "categori": "뮤지컬"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 2,
+    "fields": {
+        "title": "데스노트",
+        "date": "2023-04-07",
+        "location": "샤롯데씨어터",
+        "price": 140000,
+        "image": "",
+        "image_url": "",
+        "web_image": "ticket_diarys/20230215103305969tsot.png",
+        "web_image_url": "/media/ticket_diarys/20230215103305969tsot.png",
+        "review": "<p><span style=\"background-color:#f39c12\">홍광호 발성 무슨일</span></p>\r\n\r\n<p><span style=\"background-color:#f39c12\">김성철 연기 너무 잘해</span></p>",
+        "user": 3,
+        "categori": "뮤지컬"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 3,
+    "fields": {
+        "title": "롯데 야구",
+        "date": "2023-06-06",
+        "location": "사직야구장",
+        "price": 13000,
+        "image": "ticket_diarys/자이언츠.png",
+        "image_url": "/media/ticket_diarys/자이언츠.png",
+        "web_image": "",
+        "web_image_url": null,
+        "review": "<p>졌다 ........ 노잼</p>",
+        "user": 3,
+        "categori": "스포츠"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 5,
+    "fields": {
+        "title": "요시고 사진전",
+        "date": "2023-06-11",
+        "location": "KT&G상상마당부산",
+        "price": 15000,
+        "image": "ticket_diarys/요시고.jpeg",
+        "image_url": "/media/ticket_diarys/요시고.jpeg",
+        "web_image": "ticket_diarys/2023051006118153.jpg",
+        "web_image_url": "/media/ticket_diarys/2023051006118153.jpg",
+        "review": "<p><span style=\"font-size:26px\"><span style=\"font-family:Comic Sans MS,cursive\"><span style=\"background-color:#f1c40f\">여행</span>가고 싶다~<img alt=\"yes\" height=\"23\" src=\"http://localhost:8000/static/ckeditor/ckeditor/plugins/smiley/images/thumbs_up.png\" title=\"yes\" width=\"23\" /></span></span></p>",
+        "user": 3,
+        "categori": "전시회"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 6,
+    "fields": {
+        "title": "가디언즈 오브 갤럭시 VOL. 3",
+        "date": "2023-06-03",
+        "location": "아트몰링",
+        "price": 11998,
+        "image": "ticket_diarys/로켓.jpeg",
+        "image_url": "/media/ticket_diarys/로켓.jpeg",
+        "web_image": "ticket_diarys/img_8qNuKUi.jpg",
+        "web_image_url": "/media/ticket_diarys/img_8qNuKUi.jpg",
+        "review": "<p>시작부터 <span style=\"color:#2980b9\">눈물 줄줄</span></p>\r\n\r\n<p>역시 내 감성은 가오갤.... 너무 재밌어서 또 보고 싶음<img alt=\"yes\" height=\"23\" src=\"http://localhost:8000/static/ckeditor/ckeditor/plugins/smiley/images/thumbs_up.png\" title=\"yes\" width=\"23\" /></p>",
+        "user": 3,
+        "categori": "영화"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 7,
+    "fields": {
+        "title": "순천만 국제정원박람회",
+        "date": "2023-04-29",
+        "location": "순천만",
+        "price": 15000,
+        "image": "",
+        "image_url": "",
+        "web_image": "ticket_diarys/img_wZZYxgt.jpg",
+        "web_image_url": "/media/ticket_diarys/img_wZZYxgt.jpg",
+        "review": "",
+        "user": 3,
+        "categori": "입장권"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 8,
+    "fields": {
+        "title": "치앙마이 항공권",
+        "date": "2023-01-10",
+        "location": "치앙마이",
+        "price": 500000,
+        "image": "",
+        "image_url": "",
+        "web_image": "ticket_diarys/br92mkitzyxdokniemx1.jpg",
+        "web_image_url": "/media/ticket_diarys/br92mkitzyxdokniemx1.jpg",
+        "review": "",
+        "user": 3,
+        "categori": "항공권"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 9,
+    "fields": {
+        "title": "그랜마즈 쿠킹클래스",
+        "date": "2023-01-10",
+        "location": "Grandma's Home Cooking School",
+        "price": 41100,
+        "image": "",
+        "image_url": "",
+        "web_image": "ticket_diarys/20230518EFBCBF100346.jpgtypew966",
+        "web_image_url": "/media/ticket_diarys/20230518EFBCBF100346.jpgtypew966",
+        "review": "<p>쿠킹클래스 장소가 너무 예뻤고</p>\r\n\r\n<p>하나하나 도와줘서 편하게 요리 할 수 있었다</p>\r\n\r\n<p>맛도 아주 좋았다</p>",
+        "user": 3,
+        "categori": "기타"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 10,
+    "fields": {
+        "title": "시카고 오리지널 내한",
+        "date": "2023-05-28",
+        "location": "블루스퀘어 신한카드홀",
+        "price": 170000,
+        "image": "ticket_diarys/시카고.gif",
+        "image_url": "/media/ticket_diarys/시카고.gif",
+        "web_image": "",
+        "web_image_url": null,
+        "review": "",
+        "user": 3,
+        "categori": "뮤지컬"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 11,
+    "fields": {
+        "title": "시카고 - 부산",
+        "date": "2018-09-09",
+        "location": "소향씨어터 신한카드홀",
+        "price": 140000,
+        "image": "ticket_diarys/시카고_부산.gif",
+        "image_url": "/media/ticket_diarys/시카고_부산.gif",
+        "web_image": "",
+        "web_image_url": null,
+        "review": "<p><span style=\"font-size:28px\"><span style=\"color:#9b59b6\">캐스팅 완벽~</span></span></p>\r\n\r\n<p><span style=\"font-size:28px\">다음에 </span><span style=\"color:#c0392b\"><span style=\"font-size:28px\">오리지널 내한 </span></span><span style=\"font-size:28px\">오면 보러 가야지!</span></p>",
+        "user": 3,
+        "categori": "뮤지컬"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 13,
+    "fields": {
+        "title": "부산 국제 연극제",
+        "date": "2023-06-15",
+        "location": "부산 하늘바람소극장",
+        "price": 20000,
+        "image": "",
+        "image_url": "",
+        "web_image": "",
+        "web_image_url": null,
+        "review": "",
+        "user": 3,
+        "categori": "연극"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 14,
+    "fields": {
+        "title": "뮤지컬 〈드라큘라〉",
+        "date": "2023-01-08",
+        "location": "올림픽공원 우리금융아트홀",
+        "price": 130000,
+        "image": "ticket_diarys/드라큘라.jpg",
+        "image_url": "/media/ticket_diarys/드라큘라.jpg",
+        "web_image": "",
+        "web_image_url": null,
+        "review": "<p>신성우, 안재욱 배우 최고~~</p>",
+        "user": 5,
+        "categori": "뮤지컬"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 15,
+    "fields": {
+        "title": "뮤지컬 〈마틸다〉",
+        "date": "2023-02-12",
+        "location": "대성 디큐브아트센터",
+        "price": 130000,
+        "image": "ticket_diarys/마틸다.jpg",
+        "image_url": "/media/ticket_diarys/마틸다.jpg",
+        "web_image": "",
+        "web_image_url": null,
+        "review": "<p>아역 배우들이 연기를 너무 잘해서 재밌었다!</p>",
+        "user": 5,
+        "categori": "뮤지컬"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 16,
+    "fields": {
+        "title": "난타(NANTA) - 명동공연",
+        "date": "2023-02-08",
+        "location": "명동난타극장",
+        "price": 66000,
+        "image": "ticket_diarys/난타.PNG",
+        "image_url": "/media/ticket_diarys/난타.PNG",
+        "web_image": "",
+        "web_image_url": null,
+        "review": "<p>역시 실망시키지 않는 뮤지컬 난타!!</p>",
+        "user": 5,
+        "categori": "뮤지컬"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 17,
+    "fields": {
+        "title": "고양시 킨텍스 캠핑장",
+        "date": "2023-03-11",
+        "location": "킨텍스 캠핑장",
+        "price": 130000,
+        "image": "ticket_diarys/캠핑.PNG",
+        "image_url": "/media/ticket_diarys/캠핑.PNG",
+        "web_image": "ticket_diarys/kEFBCBFcampingEFBCBFimg03EFBCBFmap.jpgtypew773",
+        "web_image_url": "/media/ticket_diarys/kEFBCBFcampingEFBCBFimg03EFBCBFmap.jpgtypew773",
+        "review": "<p>시설이 너무 잘 돼 있어서 놀랐다.. 앞으로 가족들과 캠핑은 여기로 자주 갈듯!</p>",
+        "user": 5,
+        "categori": "입장권"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 18,
+    "fields": {
+        "title": "다나카 1st 내한 콘서트 ［꼬ㅊ보다 TANAKA］ - 대전",
+        "date": "2023-04-02",
+        "location": "충남대학교 정심화홀",
+        "price": 77000,
+        "image": "ticket_diarys/다나카.gif",
+        "image_url": "/media/ticket_diarys/다나카.gif",
+        "web_image": "",
+        "web_image_url": null,
+        "review": "<p>노래뿐 아니라 콩트 다양한 부캐들의 향연, 그리고 DJ 유카의 EDM 타임까지!! 1타다피 정말 재밌었다~~<img alt=\"yes\" height=\"23\" src=\"http://localhost:8000/static/ckeditor/ckeditor/plugins/smiley/images/thumbs_up.png\" title=\"yes\" width=\"23\" /></p>",
+        "user": 5,
+        "categori": "콘서트"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 19,
+    "fields": {
+        "title": "두산 vs LG (5.7)",
+        "date": "2023-05-07",
+        "location": "잠실야구장",
+        "price": 48000,
+        "image": "",
+        "image_url": "",
+        "web_image": "ticket_diarys/20220422083141887rrec.jpg",
+        "web_image_url": "/media/ticket_diarys/20220422083141887rrec.jpg",
+        "review": "<p>역시 야구는 최고의 스포츠! 너무 재밌다</p>",
+        "user": 5,
+        "categori": "스포츠"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 20,
+    "fields": {
+        "title": "뮤지컬 〈맘마미아!〉",
+        "date": "2023-05-05",
+        "location": "충무아트센터 대극장",
+        "price": 130000,
+        "image": "ticket_diarys/맘마미아.jpg",
+        "image_url": "/media/ticket_diarys/맘마미아.jpg",
+        "web_image": "ticket_diarys/img_y67G7bV.jpg",
+        "web_image_url": "/media/ticket_diarys/img_y67G7bV.jpg",
+        "review": "<p>절대 실망시키지 않는 라인업!!</p>\r\n\r\n<p>최고최고ㅠㅠ♡♡<img alt=\"yes\" height=\"23\" src=\"http://localhost:8000/static/ckeditor/ckeditor/plugins/smiley/images/thumbs_up.png\" title=\"yes\" width=\"23\" /></p>",
+        "user": 5,
+        "categori": "뮤지컬"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 21,
+    "fields": {
+        "title": "제천 청풍호반 케이블카",
+        "date": "2023-05-20",
+        "location": "제천 케이블카",
+        "price": 17000,
+        "image": "ticket_diarys/제천.jpg",
+        "image_url": "/media/ticket_diarys/제천.jpg",
+        "web_image": "",
+        "web_image_url": null,
+        "review": "<p>케이블카 타는게 좀 무서웠지만 보이는 풍경은 너무 좋았다ㅎㅎ</p>",
+        "user": 5,
+        "categori": "입장권"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 22,
+    "fields": {
+        "title": "뮤지컬 〈시카고〉 25주년 기념 오리지널 내한",
+        "date": "2023-06-04",
+        "location": "블루스퀘어 신한카드홀",
+        "price": 140000,
+        "image": "ticket_diarys/시카고.jpg",
+        "image_url": "/media/ticket_diarys/시카고.jpg",
+        "web_image": "",
+        "web_image_url": null,
+        "review": "<p><strong><span class=\"marker\">시카고 내한</span></strong>.. 진짜 최고ㅠㅠ!<img alt=\"crying\" height=\"23\" src=\"http://localhost:8000/static/ckeditor/ckeditor/plugins/smiley/images/cry_smile.png\" title=\"crying\" width=\"23\" /></p>",
+        "user": 5,
+        "categori": "뮤지컬"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 23,
+    "fields": {
+        "title": "거장의 시선, 사람을 향하다 - 영국 내셔널갤러리 명화전",
+        "date": "2023-06-04",
+        "location": "국립중앙박물관 기획전시실(자세히)",
+        "price": 18000,
+        "image": "ticket_diarys/거장.gif",
+        "image_url": "/media/ticket_diarys/거장.gif",
+        "web_image": "",
+        "web_image_url": null,
+        "review": "<p>서양회화의 역사를 간략하면서도 핵심적으로 아우를 수 있는 전시!</p>",
+        "user": 5,
+        "categori": "전시회"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 24,
+    "fields": {
+        "title": "［HYBE INSIGHT］The Daydream Believers : 꿈, 마침내",
+        "date": "2023-06-10",
+        "location": "리드빌딩",
+        "price": 35000,
+        "image": "ticket_diarys/하이브.jpg",
+        "image_url": "/media/ticket_diarys/하이브.jpg",
+        "web_image": "",
+        "web_image_url": null,
+        "review": "<p>돈 좀 벌줄 아는 하이브 놈들.. 얘들아 사랑해...<img alt=\"heart\" height=\"23\" src=\"http://localhost:8000/static/ckeditor/ckeditor/plugins/smiley/images/heart.png\" title=\"heart\" width=\"23\" /></p>",
+        "user": 5,
+        "categori": "전시회"
+    }
+},
+{
+    "model": "tcat.tcat",
+    "pk": 25,
+    "fields": {
+        "title": "롯데월드 어드벤처 종합이용권 6월",
+        "date": "2023-06-11",
+        "location": "롯데월드 어드벤처",
+        "price": 33500,
+        "image": "",
+        "image_url": "",
+        "web_image": "",
+        "web_image_url": null,
+        "review": "<p><strong>롯데월드</strong> 넘 재밌당ㅎㅎ<img alt=\"cheeky\" height=\"23\" src=\"http://localhost:8000/static/ckeditor/ckeditor/plugins/smiley/images/tongue_smile.png\" title=\"cheeky\" width=\"23\" /></p>",
+        "user": 5,
+        "categori": "테마파크"
+    }
+}
+]
